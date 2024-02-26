@@ -41,9 +41,19 @@ export default function Login() {
             <Text>Don't have an account ? Sign Up</Text>
           </Pressable>
         </View>
-        </View>
+      </View>
   
   )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+
+  container:{
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor:'lightblue'
+    
+
+  }
+})

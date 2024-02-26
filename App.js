@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import Enter from "./components/Enter";
+import Enter from "./screens/Enter";
 
 
 export default function App() {
