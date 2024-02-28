@@ -5,11 +5,11 @@ export default function SelectLanguage({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.box}>
-        <Text style={{fontSize:20,fontWeight:'bold'}}>Select your language</Text>
+        <Text style={{fontSize:25,fontWeight:'bold', opacity:1}}>Select your language</Text>
       </View>
 
       <Pressable
-        android_ripple={{ color: "#eee", radius: 60 }}
+        android_ripple={{ color: "#eee", radius: 80 }}
         style={styles.btn}
         onPress={() => navigation.navigate("Login")}
       >
@@ -44,20 +44,22 @@ const styles = StyleSheet.create({
   box:{
     marginTop: 15,
     marginBottom: 45,
-    paddingVertical: 10,
-    width: 350,
+    paddingVertical: 20,
+    width: '80%',
     borderRadius: 10,
     backgroundColor: "white",
     flexDirection: "row",
     textAlign: "center",
     justifyContent: "center",
     paddingHorizontal:30,
+    opacity:0.7,
+    
   },
   btn: {
     marginTop: 15,
     marginBottom: 45,
     paddingVertical: 10,
-    width: 300,
+    width: '70%',
     borderRadius: 50,
     backgroundColor: "black",
     flexDirection: "row",

@@ -1,11 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import Enter from "./screens/Enter";
+import PrimaryNavigator from "./navigators/PrimaryNavigator";
 
 
 export default function App() {
   return (
       <>
-      <Enter/>
+      <PrimaryNavigator/>
       <StatusBar style="auto" />
       </>    
   );
