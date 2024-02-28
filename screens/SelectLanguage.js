@@ -5,7 +5,9 @@ export default function SelectLanguage({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.box}>
-        <Text style={{fontSize:25,fontWeight:'bold', opacity:1}}>Select your language</Text>
+        <Text style={{ fontSize: 25, fontWeight: "bold", opacity: 1 }}>
+          Select your language
+        </Text>
       </View>
 
       <Pressable
@@ -41,34 +43,38 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  box:{
+  box: {
     marginTop: 15,
     marginBottom: 45,
     paddingVertical: 20,
-    width: '80%',
-    borderRadius: 10,
-    backgroundColor: "white",
+    width: "80%",
+    borderRadius: 20,
+    backgroundColor: "antiquewhite",
     flexDirection: "row",
     textAlign: "center",
     justifyContent: "center",
-    paddingHorizontal:30,
-    opacity:0.7,
-    
+    paddingHorizontal: 30,
+    opacity: 0.7,
   },
   btn: {
-    marginTop: 15,
-    marginBottom: 45,
+    marginTop: 10,
+    marginBottom: 30,
     paddingVertical: 10,
-    width: '70%',
-    borderRadius: 50,
+    width: "70%",
+    borderRadius: 20,
     backgroundColor: "black",
     flexDirection: "row",
     textAlign: "center",
     justifyContent: "center",
-    paddingHorizontal:30,
+    paddingHorizontal: 30,
+    shadowOffset: { width: -2, height: 4 },
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
   },
+
   btnText: {
-    color: "white",
+    color: "antiquewhite",
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 20,
