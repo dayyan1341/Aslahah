@@ -9,6 +9,7 @@ import {
   ImageBackground,
   useWindowDimensions,
 } from "react-native";
+import BlinkerText from "../components/BilnkerText";
 
 
 export default function Welcome( {navigation} ) {
@@ -25,19 +26,20 @@ export default function Welcome( {navigation} ) {
           source={require("../assets/static/bulb.png")}
           style={styles.bulb}
         />
-        <View style={[styles.bottom,{width}]}>
-            <Text style={styles.heroText}>Book Your technician shortly at doorstep</Text>
+        <View style={[styles.bottom,{width:width*0.9}]}>
+            <BlinkerText style={styles.heroText}>Book Your technician</BlinkerText>
+            <BlinkerText style={styles.heroText}>shortly at doorstep</BlinkerText>
             <View style={styles.separator}/>
 
             <Pressable 
             android_ripple={{color:'#eee', radius:60 }}
             style={styles.btn}
-            onPress={() => navigation.navigate('Login') }
+            onPress={() => navigation.navigate('SelectLanguage') }
             >
-            <Text style={styles.btnText}>GET STARTED</Text>
+            <BlinkerText style={styles.btnText}>GET STARTED</BlinkerText>
             <Image 
                 source={require("../assets/static/btn_arrow.png")}
-                style={{height:28,width:28,alignSelf:'center'}}    
+                style={{height:38,width:38,alignSelf:'center'}}    
             />
             </Pressable>
         </View>
@@ -64,10 +66,11 @@ const styles = StyleSheet.create({
   },
   bulb:{
     // position:'absolute',
-    left:30,
-    height: 200,
-    width: 200, 
-    marginBottom:40,
+    left:-5,
+    height: 300,
+    // width: 200, 
+    aspectRatio:1,
+    marginBottom:0,
     alignSelf: "flex-start",
     shadowColor:'black',
     shadowOpacity:1,
@@ -81,40 +84,41 @@ const styles = StyleSheet.create({
     width:'100'
   },
   heroText:{
-    fontSize : 30,
-    fontWeight:'bold',
-    marginBottom:5,  
-    alignSelf:'center',
-    opacity:0.7,
-    // marginEnd:50,
+    fontSize : 38,
+    // fontWeight:'bold',
+    // marginBottom:5,  
+    marginHorizontal:10,
+    alignSelf:'flex-start',
+    
   },
   separator: {
-    // marginVertical: 30,
+    marginVertical: 10,
     height: 3,
-    width: '80%',
+    width: '100%',
     backgroundColor:'black',
     borderRadius:10 ,
-    opacity:1,
-    
+    opacity:1, 
     alignSelf:'center'
   },
   btn: {
-    marginTop: 15,
+    marginTop: 10,
     marginBottom: 45,
-    marginStart: 40,
-    paddingVertical: 10,
-    width:200,
+    // marginStart: 40,
+    // paddingVertical: 10,
+    // paddingHorizontal: 20,
+    // width:200,
     borderRadius:50,
     backgroundColor:"white",
     flexDirection:"row",
-    textAlign:"center",
-    justifyContent:'center',    
+    justifyContent:'flex-start',    
+    alignItems:'flex-start',
   },
   btnText:{
     color: "black", 
-    textAlign: "center" ,
-    fontWeight:'bold',
-    fontSize:20,
+    marginVertical:10,
+    marginHorizontal:14,
+    fontSize:30,
+    alignSelf:'center',
     paddingHorizontal:5  
   },
 
