@@ -8,25 +8,26 @@ import ReviewCard from "../components/ReviewCard";
 function Home() {
   return (
     <View style={styles.wrapper}>
-      <View style={styles.topbox} >
-      <View style={styles.flexbox}>
-        <View>
-          <Text style={styles.usergreeting}>Hi, User</Text>
-          <Text>Let's find your</Text>
-          <Text>desired services</Text>
+      <View style={styles.topbox}>
+        <View style={styles.flexbox}>
+          <View>
+            <Text style={styles.usergreeting}>Hi, User</Text>
+            <Text>Let's find your</Text>
+            <Text>desired services</Text>
+          </View>
+          <Image
+            source={require("../assets/static/20240221_000353_0007.png")}
+            style={styles.userimg}
+          />
         </View>
-        <Image
-          source={require("../assets/static/20240221_000353_0007.png")}
-          style={styles.userimg}
-        />
+        <Search />
       </View>
-      <Search />
-      </View>
-        <Banner />
-        <ServicesShowcase />
-        <Text>What our clients say</Text>
+      <Banner />
+      <ServicesShowcase />
+      <View style={styles.reviewbox}>
+        <Text style={styles.reviewboxtext}>What our clients say</Text>
         <ReviewCard />
-      <Image />
+      </View>
       <Button title="Become a Technician"></Button>
     </View>
   );
@@ -39,8 +40,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#00e9f1",
     paddingTop: 50,
     paddingBottom: 10,
-    borderBottomLeftRadius : 50,
-    borderBottomRightRadius : 50,
+    borderBottomLeftRadius: 50,
+    borderBottomRightRadius: 50,
   },
   flexbox: {
     width: "95%",
@@ -58,5 +59,12 @@ const styles = StyleSheet.create({
   userimg: {
     aspectRatio: 1,
     width: 70,
+  },
+  reviewbox:{
+    padding:20,
+  },
+  reviewboxtext:{
+    fontWeight:'bold',
+    fontSize: 20,
   },
 });
