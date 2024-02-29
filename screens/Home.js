@@ -25,8 +25,19 @@ function Home() {
       <Banner />
       <ServicesShowcase />
       <View style={styles.reviewbox}>
-        <Text style={styles.reviewboxtext}>What our clients say</Text>
-        <ReviewCard />
+        <View style={styles.reviewboxhead}>
+          <Text style={styles.reviewboxtext}>What our clients say</Text>
+          <Image
+            source={require("../assets/static/20240221_000353_0016.png")}
+            style={styles.tripledot}
+          />
+        </View>
+        <View style={styles.cardholder}>
+          <ReviewCard />
+          <ReviewCard />
+          <ReviewCard />
+          <ReviewCard />
+        </View>
       </View>
       <Button title="Become a Technician"></Button>
     </View>
@@ -60,11 +71,31 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     width: 70,
   },
-  reviewbox:{
-    padding:20,
+  reviewbox: {
+    padding: 20,
   },
-  reviewboxtext:{
-    fontWeight:'bold',
+  reviewboxtext: {
+    fontWeight: "bold",
     fontSize: 20,
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'center',
+  },
+  reviewboxhead: {
+    marginBottom: 10,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  tripledot: {
+    height: 50,
+    width: 50,
+  },
+  cardholder: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 20,
   },
 });
