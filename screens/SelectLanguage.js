@@ -1,9 +1,15 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 
 export default function SelectLanguage({ navigation }) {
   return (
     <View style={styles.container}>
+      <View>
+      <Image
+            source={require("../assets/static/splash.png")}
+            style={styles.logo}
+          />
+      </View>
       <View style={styles.box}>
         <Text style={{ fontSize: 25, fontWeight: "bold", opacity: 1 }}>
           Select your language
@@ -43,9 +49,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  logo:{
+    width:200,
+    height:200,
+  },
   box: {
-    marginTop: 15,
-    marginBottom: 45,
+    marginTop: 60,
+    marginBottom: 30,
     paddingVertical: 20,
     width: "80%",
     borderRadius: 20,
@@ -58,7 +68,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     marginTop: 10,
-    marginBottom: 30,
+    marginBottom: 20,
     paddingVertical: 10,
     width: "70%",
     borderRadius: 20,
@@ -67,10 +77,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     justifyContent: "center",
     paddingHorizontal: 30,
-    shadowOffset: { width: -2, height: 4 },
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
   },
 
   btnText: {
