@@ -1,33 +1,21 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Home from '../screens/Home';
+import Services from '../screens/Services';
+import Cart from '../screens/Cart';
+import Profile from '../screens/Profile';
 
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!</Text>
-    </View>
-  );
-}
 
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+  return ( 
+      <Tab.Navigator screenOptions={{headerShown:false}}> 
+        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Services" component={Services} />
+        <Tab.Screen name="Cart" component={Cart} />
+        <Tab.Screen name="Profile" component={Profile} />
+      </Tab.Navigator>  
   );
 }

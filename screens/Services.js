@@ -4,8 +4,9 @@ import Search from "../components/Search";
 import Banner from "../components/Banner";
 import ServicesShowcase from "../components/ServicesShowcase";
 import ReviewCard from "../components/ReviewCard";
+import ServiceCard from "../components/ServiceCard";
 
-function Home() {
+function Services() {
   return (
     <View style={styles.wrapper}>
       <View style={styles.topbox}>
@@ -22,29 +23,16 @@ function Home() {
         </View>
         <Search />
       </View>
-      <Banner />
-      <ServicesShowcase />
-      <View style={styles.reviewbox}>
-        <View style={styles.reviewboxhead}>
-          <Text style={styles.reviewboxtext}>What our clients say</Text>
-          <Image
-            source={require("../assets/static/20240221_000353_0016.png")}
-            style={styles.tripledot}
-          />
-        </View>
-        <View style={styles.cardholder}>
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
-        </View>
-      </View>
-      <Button title="Become a Technician"></Button>
+      <ServiceCard/>
+      <ServiceCard/>
+      <ServiceCard/>
+      <ServiceCard/>
+      <ServiceCard/>
     </View>
   );
 }
 
-export default Home;
+export default Services;
 
 const styles = StyleSheet.create({
   topbox: {

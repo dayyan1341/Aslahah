@@ -17,7 +17,6 @@ export default function PrimaryNavigator() {
         <Stack.Screen name="SelectLanguage" component={SelectLanguage} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Tabs" component={BottomTabNavigator} />
-        <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>
   )
