@@ -4,6 +4,8 @@ import Login from "../screens/Login";
 import Welcome from "../screens/Welcome";
 import SelectLanguage from "../screens/SelectLanguage";
 import Home from "../screens/Home"
+import BottomTabNavigator from "../navigators/BottomTabNavigator"
+
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +16,7 @@ export default function PrimaryNavigator() {
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="SelectLanguage" component={SelectLanguage} />
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Tabs" component={BottomTabNavigator} />
         <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>
