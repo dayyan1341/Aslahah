@@ -42,12 +42,11 @@ export default function Cart() {
         <Text>Charges 1</Text> <Text>$104</Text>
         <Text>Charges 2</Text> <Text>$34</Text>
         <Text>Charges 3</Text> <Text>$32</Text>
-        <View/>{/*  separator */}
+        <View />
         <Text>Total</Text> <Text>$232</Text>
         <Pressable>
-            <Text>Book Now</Text>
+          <Text>Book Now</Text>
         </Pressable>
-        
       </View>
     </View>
   );

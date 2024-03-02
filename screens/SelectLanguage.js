@@ -6,7 +6,7 @@ export default function SelectLanguage({ navigation }) {
     <View style={styles.container}>
       <View>
       <Image
-            source={require("../assets/static/splash.png")}
+            source={require("../assets/static/logo.png")}
             style={styles.logo}
           />
       </View>
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
   logo:{
     width:200,
     height:200,
+    borderRadius:100,
   },
   box: {
     marginTop: 60,
