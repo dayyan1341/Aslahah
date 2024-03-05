@@ -28,7 +28,11 @@ function Home() {
               style={styles.tripledot}
             />
           </View>
-          <ScrollView horizontal={true}>
+          <ScrollView
+            style={styles.scroll}
+            horizontal={true}
+            fadingEdgeLength={10}
+          >
             <View style={styles.cardholder}>
               <ReviewCard />
               <ReviewCard />
@@ -53,7 +57,8 @@ export default Home;
 
 const styles = StyleSheet.create({
   reviewbox: {
-    padding: 20,
+    // padding: 20,
+    margin: 20,
   },
   reviewboxtext: {
     fontWeight: "bold",
@@ -73,12 +78,14 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
   },
+  scroll: { margin: -20 },
   cardholder: {
     display: "flex",
     flex: 0.5,
     flexDirection: "row",
     // justifyContent: "space-between",
     gap: 20,
+    margin: 20,
   },
   btn: {
     marginTop: 10,
@@ -86,21 +93,20 @@ const styles = StyleSheet.create({
     padding: 5,
     gap: 3,
     borderRadius: 50,
-    backgroundColor: "white",
     flexDirection: "row",
     justifyContent: "space-between",
     verticalAlign: "middle",
   },
   btnText: {
     color: "beige",
-    textAlign:'center',
+    textAlign: "center",
     fontSize: 25,
-    marginLeft:20,
-    padding:10,
-    paddingLeft:20,
-    paddingRight:20,
-    backgroundColor:'black',
-    width:'50%',
-    borderRadius:38,
+    marginLeft: 20,
+    padding: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+    backgroundColor: "black",
+    width: "50%",
+    borderRadius: 38,
   },
 });
