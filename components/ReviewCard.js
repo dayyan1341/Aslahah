@@ -16,7 +16,7 @@ export default function ReviewCard() {
     <View style={styles.reviewerBox}>
       <View style={styles.reviewer}>
       <Image
-            source={require("../assets/static/20240221_000353_0018.png")}
+            source={require("../assets/static/profile.png")}
             style={styles.profpic}
           />
         <Text style={styles.name}>Ayane</Text>

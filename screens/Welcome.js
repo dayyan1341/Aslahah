@@ -27,8 +27,8 @@ export default function Welcome({ navigation }) {
         style={styles.bulb}
       />
       <View style={[styles.bottom, { width: width * 0.9 }]}>
-        <BlinkerText style={styles.heroText}>Book Your technician</BlinkerText>
-        <BlinkerText style={styles.heroText}>shortly at doorstep</BlinkerText>
+        <BlinkerText wazan={700} style={styles.heroText}>Book Your technician</BlinkerText>
+        <BlinkerText wazan={700} style={styles.heroText}>shortly at doorstep</BlinkerText>
         <View style={styles.separator} />
 
         <Pressable
@@ -36,7 +36,7 @@ export default function Welcome({ navigation }) {
           style={styles.btn}
           onPress={() => navigation.navigate("SelectLanguage")}
         >
-          <BlinkerText style={styles.btnText}>GET STARTED</BlinkerText>
+          <BlinkerText  style={styles.btnText}>Get Started</BlinkerText>
           <Image
             source={require("../assets/static/btn_arrow.png")}
             style={{ height: 38, width: 38, alignSelf: "center" }}

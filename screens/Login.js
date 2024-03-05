@@ -29,6 +29,7 @@ export default function Login({ navigation }) {
       </View>
       <View style={styles.wrapper}>
         <View style={styles.greeting}>
+          <BlinkerText styles={{fontSize:3}}>Hi !</BlinkerText>
           <Text style={styles.greetingmsg}>Hi !</Text>
           <Text style={styles.greetingmsg}>Welcome to</Text>
           <Text style={styles.greetingmsg}>AS-LAHAH</Text>
