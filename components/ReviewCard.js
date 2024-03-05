@@ -1,9 +1,11 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, useWindowDimensions } from 'react-native'
 import React from 'react'
 
 export default function ReviewCard() {
+  const { height, width } = useWindowDimensions();
+
   return (
-    <View style={styles.ReviewCard}>
+    <View style={[styles.ReviewCard,{width:width/1.8}]}>
       <View style={styles.reviewBox}>
       <Image
             source={require("../assets/static/20240221_000353_0015.png")}
@@ -34,6 +36,8 @@ export default function ReviewCard() {
 
 const styles = StyleSheet.create({
   ReviewCard:{
+    display:'flex',
+    flexShrink:0.5,
     width:'65%',
     backgroundColor:'#343341',
     borderRadius: 30,
@@ -50,7 +54,7 @@ const styles = StyleSheet.create({
   },
   review:{
     height:80,
-    overflow:'scroll',
+    // overflow:'scroll',
     textAlign : 'justify',
   },
   reviewerBox:{

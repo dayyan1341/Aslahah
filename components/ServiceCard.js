@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
 import React from "react";
 
-export default function ServiceCard() {
+export default function ServiceCard(props) {
   return (
     <View style={styles.ServiceCard}>
       <View style={styles.ServiceCardHead}>
-        <Text style={styles.ServiceCardText}>AC Repairing</Text>
+        <Text style={styles.ServiceCardText}>{props.name}</Text>
         <Image
           source={require("../assets/static/20240228_031623_0002.png")}
           style={styles.arrow}
@@ -17,7 +17,7 @@ export default function ServiceCard() {
         style={styles.bgimg}
       >
         <Image
-          source={require("../assets/static/20240228_031623_0005.png")}
+          source={props.cardImage}
           style={styles.cardimg}
         />
       </ImageBackground>

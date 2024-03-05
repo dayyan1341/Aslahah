@@ -1,8 +1,10 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image,ScrollView } from "react-native";
 import React from "react";
 
 export default function ServicesShowcase() {
   return (
+    <ScrollView horizontal={true} > 
+
     <View style={styles.servicesShowcase}>
       <View style={styles.servicebox}>
         <View style={styles.serviceimg}>
@@ -40,7 +42,26 @@ export default function ServicesShowcase() {
         </View>
         <Text style={styles.service}>Painting</Text>
       </View>
+      <View style={styles.servicebox}>
+        <View style={styles.serviceimg}>
+          <Image
+            source={require("../assets/static/20240221_000353_0014.png")}
+            style={styles.img}
+          />
+        </View>
+        <Text style={styles.service}>Painting</Text>
+      </View>
+      <View style={styles.servicebox}>
+        <View style={styles.serviceimg}>
+          <Image
+            source={require("../assets/static/20240221_000353_0014.png")}
+            style={styles.img}
+          />
+        </View>
+        <Text style={styles.service}>Painting</Text>
+      </View>
     </View>
+    </ScrollView>
   );
 }
 

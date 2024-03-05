@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import CheckBox from "@react-native-community/checkbox";
 import React from "react";
+import BlinkerText from "../components/BilnkerText";
 
 export default function Login({ navigation }) {
   const [text, onChangeText] = React.useState("Password");
@@ -30,7 +31,7 @@ export default function Login({ navigation }) {
         <View style={styles.greeting}>
           <Text style={styles.greetingmsg}>Hi !</Text>
           <Text style={styles.greetingmsg}>Welcome to</Text>
-          <Text style={styles.greetingmsg}>Aslahah</Text>
+          <Text style={styles.greetingmsg}>AS-LAHAH</Text>
         </View>
 
         <View style={styles.loginForm}>
@@ -48,7 +49,7 @@ export default function Login({ navigation }) {
             />
           </View>
           <View style={styles.miscbox}>
-            <Text style={styles.miscboxmsg}>Remember Me</Text>
+            <BlinkerText style={styles.miscboxmsg}>Remember Me</BlinkerText>
             <Text style={styles.miscboxmsg}>Forgot Password?</Text>
           </View>
 
@@ -107,8 +108,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   greetingmsg: {
-    fontSize: 65,
-    fontWeight: "bold",
+    fontSize: 60,
+    // fontWeight: "bold",
     color: "#333341", // Use 'color' instead of 'fontcolor'
     margin: -8,
   },

@@ -5,24 +5,30 @@ export default function Profile() {
   return (
     <View>
       <Pressable>
-        <Image />
+        <Image source={require("../assets/favicon.png")} />
       </Pressable>
       <Pressable>
-        <Image />
+        <Image source={require("../assets/favicon.png")} />
       </Pressable>
       <View>
         <Text>Profile</Text>
-        <Image />
+        <Image source={require("../assets/favicon.png")} />
         <Text>User's Name</Text>
       </View>
       <View>
+        <Text>Hello world</Text>
         <View>
           <Text>Personal Information</Text>
-          <Text></Text> <Text></Text>
-          <Text></Text> <Text></Text>
-          <Text></Text> <Text></Text>
-          <Text></Text> <Text></Text>
-          <Text></Text> <Text></Text>
+          <Text> Name </Text>
+          <Text>Mariya</Text>
+          <Text>Username</Text>
+          <Text>mariya_786</Text>
+          <Text>Gender</Text> 
+          <Text>Female</Text>
+          <Text>E-Mail</Text> 
+          <Text>hello@world.com</Text>
+          <Text>Phone</Text> 
+          <Text>97884654</Text>
           <Text>Edit Profile</Text>
           <Pressable>
             <Image />
@@ -39,8 +45,10 @@ export default function Profile() {
             <Image />
           </Pressable>
         </View>
-        <Text>About Us</Text> <Image />
-        <Text>FAQs</Text> <Image />
+        <Text>About Us</Text> 
+        <Image />
+        <Text>FAQs</Text> 
+        <Image />
         <Pressable>
           <Text>Sign Out</Text>
         </Pressable>

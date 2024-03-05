@@ -10,11 +10,13 @@ function Services() {
         <Search />
       </View>
       <View style={styles.cardholder}>
-        <ServiceCard />
-        <ServiceCard />
-        <ServiceCard />
-        <ServiceCard />
-        <ServiceCard />
+        <ServiceCard name="AC Repairing" cardImage={require("../assets/static/ac_repairing.png")} />
+        <ServiceCard name="Lift Repairing" cardImage={require("../assets/static/lift_repairing.png")} />
+        <ServiceCard name="Plumbing" cardImage={require("../assets/static/plumbing.png")} />
+        <ServiceCard name="Carpentry" cardImage={require("../assets/static/carpentry.png")} />
+        <ServiceCard name="Wall Works" cardImage={require("../assets/static/wall_works.png")} />
+        <ServiceCard name="Painter" cardImage={require("../assets/static/painter.png")} />
+        <ServiceCard name="All Services" cardImage={require("../assets/static/all_services.png")} />
       </View>
     </View>
   );
@@ -32,9 +34,10 @@ const styles = StyleSheet.create({
   },
   cardholder: {
     marginTop: 20,
+    // width:'80%',
     display: "flex",
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
     gap: 20,
     flexWrap: "wrap",
   },
