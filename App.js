@@ -5,7 +5,7 @@ import Home from "./screens/Home";
 export default function App() {
   return (
     <>
-      {/* <PrimaryNavigator /> */}
+      <PrimaryNavigator />
       <Home/>
       <StatusBar style="auto" />
     </>

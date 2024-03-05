@@ -4,15 +4,14 @@ import {
   Text,
   StyleSheet,
   Image,
-  Button,
+  Pressable,
   ScrollView,
 } from "react-native";
 import Banner from "../components/Banner";
 import ServicesShowcase from "../components/ServicesShowcase";
 import ReviewCard from "../components/ReviewCard";
 import Header from "../components/Header";
-import Btn from "../components/Btn";
-
+import BlinkerText from "../components/BilnkerText";
 function Home() {
   return (
     <ScrollView>
