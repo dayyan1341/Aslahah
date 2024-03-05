@@ -41,7 +41,7 @@ function Home() {
           style={styles.btn}
           onPress={() => navigation.navigate("SelectLanguage")}
         >
-          <BlinkerText style={styles.btnText}>Become a Technician</BlinkerText>
+          <BlinkerText style={styles.btnText}>Become a technician</BlinkerText>
         </Pressable>
       </View>
     </ScrollView>
@@ -91,7 +91,15 @@ const styles = StyleSheet.create({
     verticalAlign: "middle",
   },
   btnText: {
-    color: "black",
-    fontSize: 30,
+    color: "beige",
+    textAlign:'center',
+    fontSize: 25,
+    marginLeft:20,
+    padding:10,
+    paddingLeft:20,
+    paddingRight:20,
+    backgroundColor:'black',
+    width:'50%',
+    borderRadius:38,
   },
 });
