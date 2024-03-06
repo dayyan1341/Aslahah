@@ -27,7 +27,8 @@ export default function ServiceCard(props) {
 
 const styles = StyleSheet.create({
   ServiceCard: {
-    width: "40%",
+    paddingTop:10,
+    width: "45%",
     backgroundColor: "#00e9f1",
     borderRadius: 20,
     overflow: "hidden",

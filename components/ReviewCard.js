@@ -15,9 +15,9 @@ export default function ReviewCard() {
     <View style={[styles.ReviewCard, { width: width / 1.8 }]}>
       <ImageBackground
         source={require("../assets/static/stars.png")}
-        width={50}
-        height={100}
-        resizeMode={"stretch"}
+        // width={20}
+        // height={20}
+        resizeMode={"repeat"}
         style={styles.reviewBox}
       >
         {/* <View style={styles.reviewBox}> */}
