@@ -12,7 +12,7 @@ export default function ReviewCard() {
   const { height, width } = useWindowDimensions();
 
   return (
-    <View style={[styles.ReviewCard, { width: width / 1.8 }]}>
+    <View style={[styles.ReviewCard, { width: width / 1.5 }]}>
       <ImageBackground
         source={require("../assets/static/stars.png")}
         width={50}
@@ -54,42 +54,53 @@ export default function ReviewCard() {
     </View>
   );
 }
+const topRad = 30;
+const bottomRad = 15;
 
 const styles = StyleSheet.create({
   ReviewCard: {
     display: "flex",
-    flexShrink: 0.5,
-    width: "65%",
+    // flexShrink: 0.5,
+    // width: "80%",
     backgroundColor: "#343341",
-    borderRadius: 30,
+    // borderRadius: rad,
+    borderTopStartRadius:topRad,
+    borderTopEndRadius:topRad,
+    borderBottomStartRadius:bottomRad,
+    borderBottomEndRadius:bottomRad,
   },
   reviewBox: {
-    borderRadius: 30,
-    padding: 20,
-    paddingTop: 10,
+    borderTopStartRadius:topRad,
+    borderTopEndRadius:topRad,
+    borderBottomStartRadius:22,
+    borderBottomEndRadius:22,
+    padding: 18,
+    paddingTop:5,
     flex: 1,
     width: "100%",
     height: "100%",
     backgroundColor: "#00e9f1",
   },
   img: {
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
   },
   review: {
     height: 80,
     // overflow:'scroll',
     textAlign: "justify",
+    marginTop:10,
   },
   reviewerBox: {
-    padding: 10,
-    paddingBottom: 15,
-    borderBottomEndRadius: 30,
-    borderBottomLeftRadius: 30,
+    padding: 8,
+    paddingBottom: 10,
+    // paddingHorizontal:10,
+    borderBottomEndRadius: bottomRad,
+    borderBottomStartRadius: bottomRad,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingRight: 20,
+    // paddingRight: 20,
   },
   reviewer: {
     display: "flex",
