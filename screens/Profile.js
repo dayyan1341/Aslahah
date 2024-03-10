@@ -1,4 +1,4 @@
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View,ScrollView } from "react-native";
 import React from "react";
 
 export default function Profile() {
@@ -18,6 +18,8 @@ export default function Profile() {
           />
         </Pressable>
       </View>
+      <ScrollView>
+
       <View style={styles.profbox}>
         <Text style={styles.headings}>Profile</Text>
         <Image
@@ -89,6 +91,7 @@ export default function Profile() {
           />
         </Pressable>
       </View>
+      </ScrollView>
     </View>
   );
 }

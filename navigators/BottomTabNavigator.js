@@ -16,8 +16,10 @@ export default function BottomTabNavigator() {
         screenOptions={{
           tabBarStyle: {
             backgroundColor: "#00e9f1",
-            borderTopStartRadius: 20,
-            borderTopEndRadius: 20,
+            // borderTopStartRadius: 20,
+            // borderTopEndRadius: 20,
+            shadowOpacity:0,
+            borderTopWidth:0,
           },
           tabBarItemStyle: {
             margin: 5,
