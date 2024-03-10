@@ -20,13 +20,11 @@ export default function Search() {
 
 const styles = StyleSheet.create({
   searchbar: {
-    width: "70%",
     height: 40,
     display: "flex",
     flexDirection: "row",
     alignSelf: "center",
     backgroundColor: "white",
-    margin: 10,
     alignItems: "center",
     justifyContent: "space-between",
     borderRadius: 40,
