@@ -1,11 +1,19 @@
-import { Image, Pressable, StyleSheet, Text, View,ScrollView } from "react-native";
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+} from "react-native";
+import CartItem from "../components/CartItem";
 import React from "react";
 
 export default function Cart() {
   return (
     <View style={styles.wrapper}>
-      <View style={styles.bookingWrapper}> 
-      <Pressable style={styles.bookingBtn}>
+      <View style={styles.bookingWrapper}>
+        <Pressable style={styles.bookingBtn}>
           <Text style={styles.bookingBtnText}>Current Orders</Text>
         </Pressable>
         <Pressable style={styles.bookingBtn}>
@@ -13,7 +21,7 @@ export default function Cart() {
         </Pressable>
       </View>
       <View style={styles.bookingWrapper}>
-      <Pressable style={styles.bookingBtn}>
+        <Pressable style={styles.bookingBtn}>
           <Text style={styles.bookingBtnText}>Coupons</Text>
         </Pressable>
         <Pressable style={styles.bookingBtn}>
@@ -21,31 +29,33 @@ export default function Cart() {
         </Pressable>
       </View>
       <ScrollView>
+        <View style={[styles.box, styles.white]}>
+          <Text style={styles.headings}>My Cart</Text>
 
-      <View style={[styles.box,styles.white]}>
-     
-        <Text style={styles.headings}>My Cart</Text>
-   
-        
+          <View style={styles.itembox}>
+            <CartItem />
+            <CartItem />
+            <CartItem />
+          </View>
 
-        <View style={[styles.box,styles.primary]}>
-          <Text style={styles.headings}>3 Services in cart</Text>
-          <View style={styles.infobox}>
-          <Text style={styles.infohead}>Charges 1 </Text>
-          <Text style={styles.info}>$104</Text>
-          <Text style={styles.infohead}>Charges 2</Text>
-          <Text style={styles.info}>$156</Text>
-          <Text style={styles.infohead}>Charges 3</Text>
-          <Text style={styles.info}>$114</Text>
-          <View style={styles.separator}/>
-          <Text style={styles.infohead}>Total</Text>
-          <Text style={styles.info}>$374</Text>
+          <View style={[styles.box, styles.primary]}>
+            <Text style={styles.headings}>3 Services in cart</Text>
+            <View style={styles.infobox}>
+              <Text style={styles.infohead}>Charges 1 </Text>
+              <Text style={styles.info}>$104</Text>
+              <Text style={styles.infohead}>Charges 2</Text>
+              <Text style={styles.info}>$156</Text>
+              <Text style={styles.infohead}>Charges 3</Text>
+              <Text style={styles.info}>$114</Text>
+              <View style={styles.separator} />
+              <Text style={styles.infohead}>Total</Text>
+              <Text style={styles.info}>$374</Text>
+            </View>
+            <Pressable style={[styles.bookingBtn, styles.center]}>
+              <Text style={styles.bookingBtnText}>Book Now</Text>
+            </Pressable>
+          </View>
         </View>
-        <Pressable style={[styles.bookingBtn,styles.center]}>
-          <Text style={styles.bookingBtnText}>Book Now</Text>
-        </Pressable>
-        </View>
-      </View>
       </ScrollView>
     </View>
   );
@@ -57,7 +67,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  bookingWrapper:{
+  bookingWrapper: {
     marginTop: 10,
     display: "flex",
     flexDirection: "row",
@@ -66,7 +76,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   bookingBtn: {
-    width:150,
+    width: 150,
   },
   bookingBtnText: {
     color: "white",
@@ -81,7 +91,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "#221410",
-    alignSelf:'center',
+    alignSelf: "center",
   },
   btnimg: {
     height: 60,
@@ -110,20 +120,25 @@ const styles = StyleSheet.create({
     margin: 10,
     marginLeft: 0,
   },
-  center:{
-    alignSelf:'center'
+  center: {
+    alignSelf: "center",
   },
   box: {
     padding: 20,
     marginTop: 15,
     borderRadius: 50,
   },
-  white:{
+  white: {
     backgroundColor: "white",
   },
-  primary:{
-    backgroundColor: "#00e9f1",
+  itembox:{
+    display:'flex',
+    gap:20,
+    marginTop:20,
 
+  },
+  primary: {
+    backgroundColor: "#00e9f1",
   },
   separator: {
     marginVertical: 10,
@@ -140,13 +155,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexWrap: "wrap",
     padding: 10,
-    paddingHorizontal:10,
+    paddingHorizontal: 10,
     gap: 10,
   },
   info: {
     width: "45%",
     // margin:10,
-    textAlign:'right',
+    textAlign: "right",
   },
   infohead: {
     width: "45%",
