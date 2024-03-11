@@ -6,7 +6,7 @@ export default function SelectLanguage({ navigation }) {
     <View style={styles.container}>
       <View>
       <Image
-            source={require("../assets/static/logo.png")}
+            source={require("../assets/static/logo1.png")}
             style={styles.logo}
           />
       </View>

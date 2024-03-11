@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
   },
-  scroll: { margin: -20 },
+  scroll: { margin: -20,  },
   cardholder: {
     display: "flex",
     flex: 0.5,

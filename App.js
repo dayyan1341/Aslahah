@@ -5,7 +5,7 @@ export default function App() {
   return (
     <>
       <PrimaryNavigator />
-      <StatusBar style="auto" />
+      <StatusBar style="auto" translucent={true} />
     </>
   );
 }
