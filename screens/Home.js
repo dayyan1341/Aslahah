@@ -57,7 +57,6 @@ export default Home;
 
 const styles = StyleSheet.create({
   reviewbox: {
-    // padding: 20,
     margin: 20,
   },
   reviewboxtext: {

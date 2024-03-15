@@ -1,9 +1,22 @@
-import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ImageBackground,
+  Pressable,
+} from "react-native";
 import React from "react";
+import { useNavigation } from "@react-navigation/native";
 
-export default function ServiceCard(props) {
+function ServiceCard(props) {
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.ServiceCard}>
+    <Pressable
+      onPress={() => navigation.navigate("Form")}
+      style={styles.ServiceCard}
+    >
       <View style={styles.ServiceCardHead}>
         <Text style={styles.ServiceCardText}>{props.name}</Text>
         <Image
@@ -16,18 +29,17 @@ export default function ServiceCard(props) {
         resizeMode="cover"
         style={styles.bgimg}
       >
-        <Image
-          source={props.cardImage}
-          style={styles.cardimg}
-        />
+        <Image source={props.cardImage} style={styles.cardimg} />
       </ImageBackground>
-    </View>
+    </Pressable>
   );
 }
 
+export default ServiceCard
+
 const styles = StyleSheet.create({
   ServiceCard: {
-    paddingTop:10,
+    paddingTop: 10,
     width: "45%",
     backgroundColor: "#00e9f1",
     borderRadius: 20,

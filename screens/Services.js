@@ -50,6 +50,10 @@ function Services() {
           name="All Services"
           cardImage={require("../assets/static/all_services.png")}
         />
+        <ServiceCard
+          name="Become a technician"
+          cardImage={require("../assets/static/all_services.png")}
+        />
       </View>
     </View>
   );
