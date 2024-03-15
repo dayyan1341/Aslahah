@@ -2,7 +2,7 @@ import { StyleSheet, Text, TextInput, View } from 'react-native'
 import React from 'react'
 import { StatusBar } from "expo-status-bar";
 import { Platform } from "react-native";
-import { useSafeAreaFrame, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function ServiceForm({navigation}) {
   console.log('Height on: ', Platform.OS, StatusBar.currentHeight);
