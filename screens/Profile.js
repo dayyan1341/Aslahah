@@ -145,8 +145,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: "center",
-    // margin:10,
-    // marginLeft:0,
   },
   box: {
     backgroundColor: "white",
