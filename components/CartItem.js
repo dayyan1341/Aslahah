@@ -1,17 +1,19 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
+import { map } from "../assets/repair_images"
 
-export default function CartItem() {
+export default function CartItem(props) {
+  console.log(map.ac)
   return (
     <View style={styles.item}>
       <View style={styles.itemimg}>
         <Image
-          source={require("../assets/static/lift_repairing.png")}
+          source={props.img}
           style={styles.img}
         />
       </View>
       <View style={styles.itemnamebox}>
-        <Text style={styles.itemname}>Lift Repairing</Text>
+        <Text style={styles.itemname}>{props.name}</Text>
       </View>
       <View style={styles.delete}>
         <Image

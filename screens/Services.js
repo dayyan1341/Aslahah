@@ -1,27 +1,43 @@
 import * as React from "react";
-import { View, Text, StyleSheet, Image, Button } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Flatlist,
+  FlatList,
+} from "react-native";
 import Search from "../components/Search";
 import ServiceCard from "../components/ServiceCard";
 
 function Services() {
+  // const servicesData = [
+  //   { name: "AC repairing", img: "../assets/static/ac_repairing.png" },
+  //   { name: "Lift repairing", img: "../assets/static/lift_repairing.png" },
+  //   { name: "Plumbing", img: "../assets/static/plumbing.png" },
+  //   { name: "Carpentry", img: "../assets/static/carpentry.png" },
+  //   { name: "Wall Works", img: "../assets/static/wall_works.png" },
+  //   { name: "Painter", img: "../assets/static/painter.png" },
+  //   { name: "All Services", img: "../assets/static/all_services.png" },
+  //   { name: "Become a technician", img: "../assets/static/all_services.png" },
+  // ];
   return (
-    <View style={styles.wrapperx}>
-      {/* <View style={styles.topbox}> */}
-        <View style={styles.flexbox}>
-          <View>
-            <Text style={styles.usergreeting}>Hi, User</Text>
-            <Text>Choose your service</Text>
-          </View>
-          <View style={styles.innerflexbox}>
-            <Image
-              source={require("../assets/static/20240221_000353_0007.png")}
-              style={styles.userimg}
-            />
-            <Search style ={{width:'100%'}}/>
-          </View>
+    <View style={styles.wrapper}>
+      <View style={styles.flexbox}>
+        <View>
+          <Text style={styles.usergreeting}>Hi, User</Text>
+          <Text>Choose your service</Text>
         </View>
-      {/* </View> */}
+        <View style={styles.innerflexbox}>
+          <Image
+            source={require("../assets/static/20240221_000353_0007.png")}
+            style={styles.userimg}
+          />
+          <Search style={{ width: "100%" }} />
+        </View>
+      </View>
       <View style={styles.cardholder}>
+
         <ServiceCard
           name="AC Repairing"
           cardImage={require("../assets/static/ac_repairing.png")}
@@ -62,19 +78,22 @@ function Services() {
 export default Services;
 
 const styles = StyleSheet.create({
+  wrapper: {
+    backgroundColor: "white",
+  },
   flexbox: {
     padding: 5,
     paddingTop: 35,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems:'flex-end',
+    alignItems: "flex-end",
   },
-  innerflexbox:{
-    display:'flex',
-    flexDirection:'column',
-    alignItems:'flex-end',
-    width: '60%',
+  innerflexbox: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-end",
+    width: "60%",
   },
   usergreeting: {
     fontSize: 30,
@@ -84,7 +103,7 @@ const styles = StyleSheet.create({
   },
   userimg: {
     width: 50,
-    height:50,
+    height: 50,
   },
   cardholder: {
     marginTop: 20,

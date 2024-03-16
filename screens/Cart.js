@@ -5,11 +5,23 @@ import {
   Text,
   View,
   ScrollView,
+  FlatList,
 } from "react-native";
 import CartItem from "../components/CartItem";
 import React from "react";
 
 export default function Cart() {
+  const arr = [
+    { name: "AC Repairing" ,img:require("../assets/static/ac_repairing.png")},
+    { name: "Lift Repairing",img:require("../assets/static/lift_repairing.png") },
+    { name: "Lift Repairing",img:require("../assets/static/lift_repairing.png") },
+    { name: "Lift Repairing",img:require("../assets/static/lift_repairing.png") },
+    { name: "Lift Repairing",img:require("../assets/static/lift_repairing.png") },
+    { name: "Lift Repairing",img:require("../assets/static/lift_repairing.png") },
+    { name: "Lift Repairing",img:require("../assets/static/lift_repairing.png") },
+    { name: "Lift Repairing",img:require("../assets/static/lift_repairing.png") },
+  ];
+
   return (
     <View style={styles.wrapper}>
       <View style={styles.bookingWrapper}>
@@ -29,40 +41,41 @@ export default function Cart() {
           <Text style={styles.bookingBtnText}>Quotations</Text>
         </Pressable>
       </View>
-      
 
       <View style={[styles.box, styles.white]}>
         <Text style={styles.headings}>My Cart</Text>
-        <ScrollView>
-        <View style={styles.itembox}>
-          <CartItem  />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          {/* <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem /> */}
-        </View>
+          <FlatList 
+            data={arr}
+            renderItem={({item}) => <CartItem name={item.name} img={item.img} />}
+            ItemSeparatorComponent={<View style={{marginVertical:10}} />}
+            
+          />
+        {/* <ScrollView> */}
+          {/* <View style={styles.itembox}>
+            <CartItem />
+            <CartItem />
+            <CartItem />
+            <CartItem />
+          </View> */}
 
-        <View style={[styles.summaryBox, styles.primary,styles.end]}>
-          <Text style={styles.headings}>3 Services in cart</Text>
-          <View style={styles.infobox}>
-            <Text style={styles.infohead}>Charges 1 </Text>
-            <Text style={styles.info}>$104</Text>
-            <Text style={styles.infohead}>Charges 2</Text>
-            <Text style={styles.info}>$156</Text>
-            <Text style={styles.infohead}>Charges 3</Text>
-            <Text style={styles.info}>$114</Text>
-            <View style={styles.separator} />
-            <Text style={styles.infohead}>Total</Text>
-            <Text style={styles.info}>$374</Text>
+          <View style={[styles.summaryBox, styles.primary, styles.end]}>
+            <Text style={styles.headings}>3 Services in cart</Text>
+            <View style={styles.infobox}>
+              <Text style={styles.infohead}>Charges 1 </Text>
+              <Text style={styles.info}>$104</Text>
+              <Text style={styles.infohead}>Charges 2</Text>
+              <Text style={styles.info}>$156</Text>
+              <Text style={styles.infohead}>Charges 3</Text>
+              <Text style={styles.info}>$114</Text>
+              <View style={styles.separator} />
+              <Text style={styles.infohead}>Total</Text>
+              <Text style={styles.info}>$374</Text>
+            </View>
+            <Pressable style={[styles.bookingBtn, styles.center]}>
+              <Text style={styles.bookingBtnText}>Book Now</Text>
+            </Pressable>
           </View>
-          <Pressable style={[styles.bookingBtn, styles.center]}>
-            <Text style={styles.bookingBtnText}>Book Now</Text>
-          </Pressable>
-        </View>
-      </ScrollView>
+        {/* </ScrollView> */}
       </View>
     </View>
   );
@@ -70,11 +83,11 @@ export default function Cart() {
 
 const styles = StyleSheet.create({
   wrapper: {
-    paddingTop:35,
+    paddingTop: 35,
     backgroundColor: "#00e9f1",
     width: "100%",
     height: "100%",
-    justifyContent:'space-between'
+    justifyContent: "space-between",
   },
   bookingWrapper: {
     marginTop: 10,
@@ -105,23 +118,23 @@ const styles = StyleSheet.create({
   center: {
     alignSelf: "center",
   },
-  end:{
-    alignSelf:'flex-end'
+  end: {
+    alignSelf: "flex-end",
   },
   box: {
     padding: 20,
-    paddingBottom:0,
+    paddingBottom: 0,
     marginTop: 15,
     borderRadius: 50,
-    borderBottomStartRadius:0,
-    borderBottomEndRadius:0,
-    height:'80%'
+    borderBottomStartRadius: 0,
+    borderBottomEndRadius: 0,
+    height: "80%",
   },
   summaryBox: {
     padding: 20,
     marginTop: 15,
     borderRadius: 50,
-    marginBottom:10,
+    marginBottom: 10,
   },
   white: {
     backgroundColor: "white",

@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 import Search from "../components/Search";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function Header() {
+  const pad = useSafeAreaInsets()
   return (
-    <View style={styles.topbox}>
+    <View style={[styles.topbox,{paddingTop:pad.top+5}]}>
       <View style={styles.flexbox}>
         <View>
           <Text style={styles.usergreeting}>Hi, User</Text>
@@ -26,7 +28,6 @@ export default function Header() {
 const styles = StyleSheet.create({
   topbox: {
     backgroundColor: "#00e9f1",
-    paddingTop: 50,
     paddingBottom: 10,
     borderBottomLeftRadius: 50,
     borderBottomRightRadius: 50,

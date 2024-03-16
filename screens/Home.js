@@ -16,7 +16,6 @@ import BlinkerText from "../components/BilnkerText";
 function Home() {
   return (
     <ScrollView>
-      <View style={styles.wrapper}>
         <Header />
         <Banner />
         <ServicesShowcase />
@@ -48,7 +47,6 @@ function Home() {
         >
           <BlinkerText style={styles.btnText}>Become a technician</BlinkerText>
         </Pressable>
-      </View>
     </ScrollView>
   );
 }
@@ -57,6 +55,7 @@ export default Home;
 
 const styles = StyleSheet.create({
   reviewbox: {
+    // padding: 20,
     margin: 20,
   },
   reviewboxtext: {

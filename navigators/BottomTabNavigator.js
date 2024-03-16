@@ -31,6 +31,7 @@ export default function BottomTabNavigator() {
         <Tab.Screen
           options={{
             tabBarLabel: "Home",
+            
             tabBarIcon: () => (
               <Image
                 source={require("../assets/static/home.png")}
