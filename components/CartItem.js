@@ -3,7 +3,7 @@ import React from "react";
 import { map } from "../assets/repair_images"
 
 export default function CartItem(props) {
-  console.log(map.ac)
+  // console.log(map.ac)
   return (
     <View style={styles.item}>
       <View style={styles.itemimg}>

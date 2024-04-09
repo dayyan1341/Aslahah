@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Image,
   Flatlist,
-  FlatList,
 } from "react-native";
 import Search from "../components/Search";
 import ServiceCard from "../components/ServiceCard";
@@ -79,6 +78,7 @@ export default Services;
 
 const styles = StyleSheet.create({
   wrapper: {
+    height:'100%',
     backgroundColor: "white",
   },
   flexbox: {

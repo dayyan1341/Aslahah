@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   dateandtimeselector:{
-    width: "80%",
+    width: "100%",
     marginTop: 5,
     marginBottom: 5,
     backgroundColor:'white',
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     padding: 10,
     backgroundColor: "black",
-    width: 120,
+    width: 240,
     borderRadius: 38,
   },
 });

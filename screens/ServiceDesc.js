@@ -36,7 +36,7 @@ export default function ServiceDesc({ navigation }) {
             id quam.
           </Text>
         </View>
-        <View style={styles.box}>
+        {/* <View style={styles.box}>
           <Text style={styles.headings}>Our Expertise:</Text>
           <Text style={styles.description}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, optio
@@ -72,14 +72,14 @@ export default function ServiceDesc({ navigation }) {
                 style={styles.iconimg}
               />
             </View>
-          </View>
-          <Review />
-        </View>
-        <Pressable>
+          </View> */}
+          {/* <Review /> */}
+        {/* </View> */}
+        {/* <Pressable>
           <View style={styles.rightbox}>
             <Text>See all reviews</Text>
           </View>
-        </Pressable>
+        </Pressable> */}
         <Pressable
           style={styles.rightbox}
           onPress={() => navigation.navigate("Form")}
@@ -92,6 +92,10 @@ export default function ServiceDesc({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  container:{
+    flex:1
+  },  
+  
   x:{
     position:'relative',
   },
@@ -105,8 +109,14 @@ const styles = StyleSheet.create({
   },
 
   wrapper: {
+    display:'flex',
     width: "90%",
+    height:'auto',
+    
     alignSelf: "center",
+    justifyContent : "space-between",
+    maxHeight:'100%',
+    flexGrow:1,
   },
   bannerimg: {
     width: "100%",
@@ -144,8 +154,11 @@ const styles = StyleSheet.create({
   rightbox: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "center",
     alignItems: "center",
+    marginBottom:10,
+    // width:'80%'
+
   },
   contactbtn: {
     marginTop: 20,
@@ -155,7 +168,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     padding: 10,
     backgroundColor: "black",
-    width: 120,
+    width: '80%',
     borderRadius: 30,
   },
 });

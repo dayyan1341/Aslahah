@@ -9,8 +9,7 @@ export default function Review() {
         style={styles.userimg}
       />
       <Text style={styles.reviewtext}>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore,
-        vitae.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
       </Text>
       <Image
         source={require("../assets/static/20240228_031623_0013.png")}
