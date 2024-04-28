@@ -14,6 +14,8 @@ export default function Login({ navigation }) {
   const [text, onChangeText] = React.useState("Password");
   const [number, onChangeNumber] = React.useState("Phone Number");
 
+  
+
   const onPressFunction = () => console.log("pressed");
   return (
     <View style={styles.container}>

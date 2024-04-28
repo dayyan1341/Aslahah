@@ -10,32 +10,61 @@ import {
 import CartItem from "../components/CartItem";
 import React from "react";
 
-export default function Cart() {
+export default function Cart({ navigation }) {
   const arr = [
-    { name: "AC Repairing" ,img:require("../assets/static/ac_repairing.png")},
-    { name: "Lift Repairing",img:require("../assets/static/lift_repairing.png") },
-    { name: "Lift Repairing",img:require("../assets/static/lift_repairing.png") },
-    { name: "Lift Repairing",img:require("../assets/static/lift_repairing.png") },
-    { name: "Lift Repairing",img:require("../assets/static/lift_repairing.png") },
-    { name: "Lift Repairing",img:require("../assets/static/lift_repairing.png") },
-    { name: "Lift Repairing",img:require("../assets/static/lift_repairing.png") },
-    { name: "Lift Repairing",img:require("../assets/static/lift_repairing.png") },
+    { name: "AC Repairing", img: require("../assets/static/ac_repairing.png") },
+    {
+      name: "Lift Repairing",
+      img: require("../assets/static/lift_repairing.png"),
+    },
+    {
+      name: "Lift Repairing",
+      img: require("../assets/static/lift_repairing.png"),
+    },
+    {
+      name: "Lift Repairing",
+      img: require("../assets/static/lift_repairing.png"),
+    },
+    {
+      name: "Lift Repairing",
+      img: require("../assets/static/lift_repairing.png"),
+    },
+    {
+      name: "Lift Repairing",
+      img: require("../assets/static/lift_repairing.png"),
+    },
+    {
+      name: "Lift Repairing",
+      img: require("../assets/static/lift_repairing.png"),
+    },
+    {
+      name: "Lift Repairing",
+      img: require("../assets/static/lift_repairing.png"),
+    },
   ];
 
   return (
     <View style={styles.wrapper}>
       <View style={styles.bookingWrapper}>
         <Pressable style={styles.bookingBtn}>
-          <Text style={styles.bookingBtnText}>Current Orders</Text>
+          <Text
+            style={styles.bookingBtnText}
+            onPress={() => navigation.navigate("CurrentOrders")}
+          >
+            Current Orders
+          </Text>
         </Pressable>
-        <Pressable style={styles.bookingBtn}>
+        <Pressable
+          style={styles.bookingBtn}
+          onPress={() => navigation.navigate("PrevOrders")}
+        >
           <Text style={styles.bookingBtnText}>Previous Orders</Text>
         </Pressable>
       </View>
 
       <View style={styles.bookingWrapper}>
         <Pressable style={styles.bookingBtn}>
-          <Text style={styles.bookingBtnText}>Coupons</Text>
+          <Text style={styles.bookingBtnText} onPress={() => navigation.navigate("Coupons")}>Coupons</Text>
         </Pressable>
         <Pressable style={styles.bookingBtn}>
           <Text style={styles.bookingBtnText}>Quotations</Text>
@@ -44,37 +73,38 @@ export default function Cart() {
 
       <View style={[styles.box, styles.white]}>
         <Text style={styles.headings}>My Cart</Text>
-          <FlatList 
-            data={arr}
-            renderItem={({item}) => <CartItem name={item.name} img={item.img} />}
-            ItemSeparatorComponent={<View style={{marginVertical:10}} />}
-            
-          />
+        <FlatList
+          data={arr}
+          renderItem={({ item }) => (
+            <CartItem name={item.name} img={item.img} />
+          )}
+          ItemSeparatorComponent={<View style={{ marginVertical: 10 }} />}
+        />
         {/* <ScrollView> */}
-          {/* <View style={styles.itembox}>
+        {/* <View style={styles.itembox}>
             <CartItem />
             <CartItem />
             <CartItem />
             <CartItem />
           </View> */}
 
-          <View style={[styles.summaryBox, styles.primary, styles.end]}>
-            <Text style={styles.headings}>3 Services in cart</Text>
-            <View style={styles.infobox}>
-              <Text style={styles.infohead}>Charges 1 </Text>
-              <Text style={styles.info}>$104</Text>
-              <Text style={styles.infohead}>Charges 2</Text>
-              <Text style={styles.info}>$156</Text>
-              <Text style={styles.infohead}>Charges 3</Text>
-              <Text style={styles.info}>$114</Text>
-              <View style={styles.separator} />
-              <Text style={styles.infohead}>Total</Text>
-              <Text style={styles.info}>$374</Text>
-            </View>
-            <Pressable style={[styles.bookingBtn, styles.center]}>
-              <Text style={styles.bookingBtnText}>Book Now</Text>
-            </Pressable>
+        <View style={[styles.summaryBox, styles.primary, styles.end]}>
+          <Text style={styles.headings}>3 Services in cart</Text>
+          <View style={styles.infobox}>
+            <Text style={styles.infohead}>Charges 1 </Text>
+            <Text style={styles.info}>$104</Text>
+            <Text style={styles.infohead}>Charges 2</Text>
+            <Text style={styles.info}>$156</Text>
+            <Text style={styles.infohead}>Charges 3</Text>
+            <Text style={styles.info}>$114</Text>
+            <View style={styles.separator} />
+            <Text style={styles.infohead}>Total</Text>
+            <Text style={styles.info}>$374</Text>
           </View>
+          <Pressable style={[styles.bookingBtn, styles.center]}>
+            <Text style={styles.bookingBtnText}>Book Now</Text>
+          </Pressable>
+        </View>
         {/* </ScrollView> */}
       </View>
     </View>

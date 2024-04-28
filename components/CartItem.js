@@ -1,16 +1,13 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
-import { map } from "../assets/repair_images"
+import { map } from "../assets/repair_images";
 
 export default function CartItem(props) {
   // console.log(map.ac)
   return (
     <View style={styles.item}>
       <View style={styles.itemimg}>
-        <Image
-          source={props.img}
-          style={styles.img}
-        />
+        <Image source={props.img} style={styles.img} />
       </View>
       <View style={styles.itemnamebox}>
         <Text style={styles.itemname}>{props.name}</Text>
@@ -39,29 +36,29 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 50,
     borderTopRightRadius: 10,
     borderBottomRightRadius: 50,
-},
-itemimg: {
+  },
+  itemimg: {
     height: 40,
     overflow: "visible",
-},
-img: {
+  },
+  img: {
     borderBottomLeftRadius: 50,
     borderTopLeftRadius: 50,
     backgroundColor: "#343341",
     width: 50,
     height: 40,
-},
-itemnamebox:{
+  },
+  itemnamebox: {
     height: "100%",
-    display:'flex',
-    flexDirection:'row',
-    alignItems:'center',
-},
-itemname: {
-    width:150,
-    fontSize:15,
-    color:'#343341',
-},
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  itemname: {
+    width: 150,
+    fontSize: 15,
+    color: "#343341",
+  },
   delete: {
     borderBottomLeftRadius: 30,
     borderTopLeftRadius: 30,
