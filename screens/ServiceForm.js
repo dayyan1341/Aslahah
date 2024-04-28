@@ -14,6 +14,8 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export default function ServiceForm({ navigation }) {
   const ins = useSafeAreaInsets();
+  const [time , setTime] = useState();
+  const [date , setDate] = useState();
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [istimePickerVisible, settimePickerVisibility] = useState(false);
 
@@ -27,6 +29,7 @@ export default function ServiceForm({ navigation }) {
 
   const handleConfirmdate = (date) => {
     console.warn("A date has been picked: ", date);
+    setDate(date)
     hideDatePicker();
   };
 
@@ -40,6 +43,7 @@ export default function ServiceForm({ navigation }) {
 
   const handleConfirmtime = (time) => {
     console.warn("A time has been picked: ", time);
+    setTime(time)
     hidetimePicker();
   };
 
@@ -101,7 +105,7 @@ export default function ServiceForm({ navigation }) {
                   source={require("../assets/static/20240228_031624_0035.png")}
                   style={styles.iconimg}
                 />
-                <Text>Select Date</Text>
+                {time && <Text>{time}</Text>}
                 <Image
                   source={require("../assets/static/20240228_031624_0033.png")}
                   style={styles.iconimg}
