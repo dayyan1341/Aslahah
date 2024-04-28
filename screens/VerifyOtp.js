@@ -9,24 +9,21 @@ import {
 } from "react-native";
 import axios from "axios";
 
-const Signup = ({navigation}) => {
-  const [name, setName] = useState("");
+const VerifyOtp = () => {
+  const [otp, setOtp] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mobile, setMobile] = useState("");
 
-  const handleSignup = async () => {
+  const handleVerify = async () => {
     try {
       const response = await axios.post("https://server.aslahah.com/api/auth/register", {
-        name: name,
+        name: otp,
         email: email,
         password: password,
         mobileNumber: mobile,
       });
       console.log("User registered successfully:", response.data);
-      if(response.user){
-        navigation.navigate("Verify")
-      }
       // You can handle navigation or any other action upon successful registration here
     } catch (error) {
       if (error.response) {
@@ -80,36 +77,17 @@ const Signup = ({navigation}) => {
           <Text style={styles.detailinfo}>Please enter details</Text>
           <View style={styles.inputbox}>
             <TextInput
-              placeholder="Name"
-              value={name}
-              onChangeText={(text) => setName(text)}
+              placeholder="Otp"
+              value={otp}
+              onChangeText={(text) => setOtp(text)}
               style={styles.input}
             />
-            <TextInput
-              placeholder="Email"
-              value={email}
-              onChangeText={(text) => setEmail(text)}
-              style={styles.input}
-            />
-            <TextInput
-              placeholder="Password"
-              value={password}
-              onChangeText={(text) => setPassword(text)}
-              secureTextEntry={true}
-              style={styles.input}
-            />
-            <TextInput
-              placeholder="Mobile Number"
-              value={mobile}
-              onChangeText={(text) => setMobile(text)}
-              keyboardType="phone-pad"
-              style={styles.input}
-            />
+            
           </View>
 
           <View style={styles.loginbtn}>
-            <Pressable onPress={handleSignup}>
-              <Text style={styles.loginbtnmsg}>Sign Up</Text>
+            <Pressable onPress={handleVerify}>
+              <Text style={styles.loginbtnmsg}>Verify</Text>
             </Pressable>
           </View>
         </View>
@@ -118,7 +96,7 @@ const Signup = ({navigation}) => {
   );
 };
 
-export default Signup;
+export default VerifyOtp;
 
 const styles = StyleSheet.create({
   container: {

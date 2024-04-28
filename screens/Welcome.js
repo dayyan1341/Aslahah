@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
   },
   heroText: {
     fontSize: 38,
+    color:'#343341',
     // fontWeight:'bold',
     // marginBottom:5,
     marginHorizontal: 10,
@@ -102,6 +103,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 45,
     padding: 5,
+    paddingHorizontal : 10 ,
     gap: 3,
     borderRadius: 50,
     backgroundColor: "white",
@@ -110,7 +112,7 @@ const styles = StyleSheet.create({
     verticalAlign:'middle'
   },
   btnText: {
-    color: "black",
+    color: "#343341",
     fontSize: 30,
   },
 });

@@ -49,7 +49,7 @@ export default function Cart({ navigation }) {
         <Pressable style={styles.bookingBtn}>
           <Text
             style={styles.bookingBtnText}
-            onPress={() => navigation.navigate("CurrentOrders")}
+            onPress={() => navigation.navigate("CurrOrders")}
           >
             Current Orders
           </Text>

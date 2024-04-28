@@ -13,7 +13,6 @@ export default function BlinkerText(props) {
   if (!fontsLoaded && !fontError) {
     return <Text {...props} style={props.style}/>;
   }
-  if (props.wazan == 100) return (<Text {...props} style={[props.style, { fontFamily: "Blinker_100Thin" }]} />)
 
   switch (props.wazan) {
     case 100:

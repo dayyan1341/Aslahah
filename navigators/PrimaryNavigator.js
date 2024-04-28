@@ -10,6 +10,7 @@ import ServiceDesc from "../screens/ServiceDesc";
 import PrevOrders from "../screens/PrevOrders";
 import CurrOrders from "../screens/CurrOrders"
 import Coupons from "../screens/Coupons";
+import VerifyOtp from "../screens/VerifyOtp";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ export default function PrimaryNavigator() {
         <Stack.Screen name="SelectLanguage" component={SelectLanguage} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Screen name="Verify" component={VerifyOtp} />
         <Stack.Screen name="Tabs" component={BottomTabNavigator} />
         <Stack.Screen name="Description" component={ServiceDesc} />
         <Stack.Screen name="Form" component={ServiceForm} />
