@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   StyleSheet,
   Image,
@@ -6,45 +7,54 @@ import {
   Pressable,
   View,
 } from "react-native";
-import React from "react";
-import { useState } from "react";
+import axios from "axios";
 
-export default function Login({ navigation }) {
+const SignupScreen = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState("");
+  const [mobile, setMobile] = useState("");
 
-  // const signIn = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const response = await signInWithEmailAndPassword(auth, email, password);
-  //     console.log(response);
-  //     navigation.navigate("Tabs");
-  //   } catch (error) {
-  //     console.log(error);
-  //     alert('SignIn failed '+ error.message);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  const signUp = async () => {
-    setLoading(true);
+  const handleSignup = async () => {
     try {
-      const response = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      console.log(response);
+      const response = await axios.post("https://server.aslahah.com/api/auth/register", {
+        name: name,
+        email: email,
+        password: password,
+        mobileNumber: mobile,
+      });
+      console.log("User registered successfully:", response.data);
+      // You can handle navigation or any other action upon successful registration here
     } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error(
+          "Failed to register user. Server responded with:",
+          error.response.data
+        );
+        console.error("Status code:", error.response.status);
+        Alert.alert(
+          "Failed to register user",
+          error.response.data.message || "Unknown error occurred"
+        );
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error(
+          "Failed to register user. No response received from server."
+        );
+        Alert.alert(
+          "Failed to register user",
+          "No response received from server"
+        );
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error("Failed to register user. Error:", error.message);
+        Alert.alert("Failed to register user", error.message);
+      }
     }
   };
 
-  const onPressFunction = () => console.log("pressed");
   return (
     <View style={styles.container}>
       <View style={styles.topright}>
@@ -59,35 +69,43 @@ export default function Login({ navigation }) {
       </View>
       <View style={styles.wrapper}>
         <View style={styles.greeting}>
-          <Text style={styles.greetingmsg}>Hi !</Text>
-          <Text style={styles.greetingmsg}>Welcome to</Text>
-          <Text style={styles.greetingmsg}>DermVision</Text>
+          <Text style={styles.greetingmsg}>Register to</Text>
+          <Text style={styles.greetingmsg}>AS-LAHAH</Text>
         </View>
 
         <View style={styles.loginForm}>
           <Text style={styles.detailinfo}>Please enter details</Text>
           <View style={styles.inputbox}>
             <TextInput
+              placeholder="Name"
+              value={name}
+              onChangeText={(text) => setName(text)}
               style={styles.input}
+            />
+            <TextInput
               placeholder="Email"
               value={email}
               onChangeText={(text) => setEmail(text)}
+              style={styles.input}
             />
             <TextInput
-              style={styles.input}
               placeholder="Password"
               value={password}
               onChangeText={(text) => setPassword(text)}
               secureTextEntry={true}
+              style={styles.input}
             />
-          </View>
-          <View style={styles.miscbox}>
-            {/* <Text style={styles.miscboxmsg}>Remember Me</Text> */}
-            {/* <Text style={styles.miscboxmsg}>Forgot Password?</Text> */}
+            <TextInput
+              placeholder="Mobile Number"
+              value={mobile}
+              onChangeText={(text) => setMobile(text)}
+              keyboardType="phone-pad"
+              style={styles.input}
+            />
           </View>
 
           <View style={styles.loginbtn}>
-            <Pressable onPress={onPressFunction}>
+            <Pressable onPress={handleSignup}>
               <Text style={styles.loginbtnmsg}>Sign Up</Text>
             </Pressable>
           </View>
@@ -95,7 +113,9 @@ export default function Login({ navigation }) {
       </View>
     </View>
   );
-}
+};
+
+export default SignupScreen;
 
 const styles = StyleSheet.create({
   container: {
