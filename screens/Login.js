@@ -6,17 +6,31 @@ import {
   Pressable,
   View,
 } from "react-native";
-import CheckBox from "@react-native-community/checkbox";
-import React from "react";
+import React, { useState } from "react";
 import BlinkerText from "../components/BilnkerText";
+import axios from "axios";
 
 export default function Login({ navigation }) {
-  const [text, onChangeText] = React.useState("Password");
-  const [number, onChangeNumber] = React.useState("Phone Number");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
 
-  
-
-  const onPressFunction = () => console.log("pressed");
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post(
+        "https://server.aslahah.com/api/auth/login",
+        {
+          id: phoneNumber,
+          password: password,
+        }
+      );
+      console.log("User logged in successfully:", response.data);
+      navigation.navigate("Tabs");
+      // You can handle navigation or any other action upon successful login here
+    } catch (error) {
+      console.error("Failed to log in:", error.message);
+      Alert.alert("Failed to log in", error.message);
+    }
+  };
   return (
     <View style={styles.container}>
       <View style={styles.topright}>
@@ -42,13 +56,17 @@ export default function Login({ navigation }) {
           <View style={styles.inputbox}>
             <TextInput
               style={styles.input}
-              onChangeText={onChangeNumber}
-              value={number}
+              placeholder="Phone Number"
+              onChangeText={setPhoneNumber}
+              value={phoneNumber}
+              keyboardType="phone-pad"
             />
             <TextInput
               style={styles.input}
-              onChangeText={onChangeText}
-              value={text}
+              placeholder="Password"
+              onChangeText={setPassword}
+              value={password}
+              secureTextEntry={true}
             />
           </View>
           <View style={styles.miscbox}>
@@ -57,7 +75,7 @@ export default function Login({ navigation }) {
           </View>
 
           <View style={styles.loginbtn}>
-            <Pressable onPress={() => navigation.navigate("Tabs")}>
+            <Pressable onPress={handleLogin}>
               <Text style={styles.loginbtnmsg}>Log In</Text>
             </Pressable>
           </View>

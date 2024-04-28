@@ -1,97 +1,47 @@
 import React, { useState } from "react";
 import {
   StyleSheet,
-  Image,
   Text,
   TextInput,
   Pressable,
   View,
+  Alert,
 } from "react-native";
 import axios from "axios";
 
 const VerifyOtp = () => {
   const [otp, setOtp] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [mobile, setMobile] = useState("");
 
   const handleVerify = async () => {
     try {
-      const response = await axios.post("https://server.aslahah.com/api/auth/register", {
-        name: otp,
-        email: email,
-        password: password,
-        mobileNumber: mobile,
-      });
-      console.log("User registered successfully:", response.data);
-      // You can handle navigation or any other action upon successful registration here
+      const response = await axios.post(
+        "https://server.aslahah.com/api/auth/verify",
+        {
+          otp: otp,
+        }
+      );
+      console.log("OTP verified successfully:", response.data);
+      navigation.navigate("Tabs");
+      // You can handle navigation or any other action upon successful OTP verification here
     } catch (error) {
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.error(
-          "Failed to register user. Server responded with:",
-          error.response.data
-        );
-        console.error("Status code:", error.response.status);
-        Alert.alert(
-          "Failed to register user",
-          error.response.data.message || "Unknown error occurred"
-        );
-      } else if (error.request) {
-        // The request was made but no response was received
-        console.error(
-          "Failed to register user. No response received from server."
-        );
-        Alert.alert(
-          "Failed to register user",
-          "No response received from server"
-        );
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.error("Failed to register user. Error:", error.message);
-        Alert.alert("Failed to register user", error.message);
-      }
+      console.error("Failed to verify OTP:", error.message);
+      Alert.alert("Failed to verify OTP", error.message);
     }
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.topright}>
-        <View style={styles.toprightwrapper}>
-          <Text style={styles.toprightmsg}>Repairing at</Text>
-          <Text style={styles.toprightmsg}>your doorstep</Text>
-        </View>
-        <Image
-          source={require("../assets/static/20240221_000353_0005.png")}
-          style={styles.img}
-        />
-      </View>
-      <View style={styles.wrapper}>
-        <View style={styles.greeting}>
-          <Text style={styles.greetingmsg}>Register to</Text>
-          <Text style={styles.greetingmsg}>AS-LAHAH</Text>
-        </View>
-
-        <View style={styles.loginForm}>
-          <Text style={styles.detailinfo}>Please enter details</Text>
-          <View style={styles.inputbox}>
-            <TextInput
-              placeholder="Otp"
-              value={otp}
-              onChangeText={(text) => setOtp(text)}
-              style={styles.input}
-            />
-            
-          </View>
-
-          <View style={styles.loginbtn}>
-            <Pressable onPress={handleVerify}>
-              <Text style={styles.loginbtnmsg}>Verify</Text>
-            </Pressable>
-          </View>
-        </View>
-      </View>
+      <Text style={styles.title}>Enter OTP</Text>
+      <TextInput
+        placeholder="OTP"
+        value={otp}
+        onChangeText={(text) => setOtp(text)}
+        style={styles.input}
+        keyboardType="numeric"
+      />
+      <Pressable style={styles.button} onPress={handleVerify}>
+        <Text style={styles.buttonText}>Verify</Text>
+      </Pressable>
     </View>
   );
 };
@@ -100,88 +50,31 @@ export default VerifyOtp;
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    height: "100%",
+    flex: 1,
     justifyContent: "center",
-    alignItems: "center", // Add alignItems for centering child elements horizontally
-    backgroundColor: "#00e9f1",
+    alignItems: "center",
   },
-  // toprightwrapper:{
-  //   display: 'flex',
-  //   flexDirection :'column',
-  //   alignContent : 'flex-end'
-  // },
-  topright: {
-    position: "absolute",
-    top: 50,
-    right: -10,
-    display: "flex",
-    flexDirection: "row",
-    fontWeight: "bold",
-    gap: 5,
-  },
-  toprightmsg: {
-    fontWeight: "bold",
-  },
-  img: {
-    height: "90%",
-    width: "20%",
-  },
-  wrapper: {
-    width: "80%",
-  },
-  greeting: {
-    marginBottom: 20,
-  },
-  greetingmsg: {
-    fontSize: 60,
-    // fontWeight: "bold",
-    color: "#333341", // Use 'color' instead of 'fontcolor'
-    margin: -8,
-  },
-
-  loginForm: {},
-  detailinfo: {
-    fontSize: 20,
-    color: "#333341",
+  title: {
+    fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
   },
   input: {
-    borderBottomWidth: 3,
-    borderBottomColor: "#333341",
+    borderWidth: 1,
+    borderColor: "#333",
+    padding: 10,
     marginBottom: 20,
-    fontSize: 15,
-    color: "#333341",
+    width: "80%",
+    fontSize: 18,
   },
-  miscbox: {
-    marginTop: 10,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 20,
+  button: {
+    backgroundColor: "#333",
+    padding: 10,
+    borderRadius: 5,
   },
-  miscboxmsg: {
-    fontSize: 15,
+  buttonText: {
+    color: "#fff",
+    fontSize: 18,
     fontWeight: "bold",
-  },
-  loginbtn: {
-    width: "100%",
-    backgroundColor: "#333341",
-    verticalAlign: "center",
-    marginBottom: 20,
-  },
-  loginbtnmsg: {
-    width: "100%",
-    color: "antiquewhite",
-    textAlign: "center",
-    fontSize: 15,
-    fontWeight: "bold",
-    margin: 10,
-  },
-  signupbtn: {
-    position: "absolute",
-    bottom: 40,
-    textAlign: "center",
   },
 });
