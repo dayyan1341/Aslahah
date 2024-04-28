@@ -6,15 +6,43 @@ import {
   Pressable,
   View,
 } from "react-native";
-import CheckBox from "@react-native-community/checkbox";
 import React from "react";
-import BlinkerText from "../components/BilnkerText";
+import { useState } from "react";
 
 export default function Login({ navigation }) {
-  const [text, onChangeText] = React.useState("Password");
-  const [number, onChangeNumber] = React.useState("Phone Number");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState("");
 
-  
+  // const signIn = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await signInWithEmailAndPassword(auth, email, password);
+  //     console.log(response);
+  //     navigation.navigate("Tabs");
+  //   } catch (error) {
+  //     console.log(error);
+  //     alert('SignIn failed '+ error.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  const signUp = async () => {
+    setLoading(true);
+    try {
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const onPressFunction = () => console.log("pressed");
   return (
@@ -31,10 +59,9 @@ export default function Login({ navigation }) {
       </View>
       <View style={styles.wrapper}>
         <View style={styles.greeting}>
-          {/* <BlinkerText styles={{fontSize:3}}>Hi !</BlinkerText> */}
           <Text style={styles.greetingmsg}>Hi !</Text>
           <Text style={styles.greetingmsg}>Welcome to</Text>
-          <Text style={styles.greetingmsg}>AS-LAHAH</Text>
+          <Text style={styles.greetingmsg}>DermVision</Text>
         </View>
 
         <View style={styles.loginForm}>
@@ -42,34 +69,29 @@ export default function Login({ navigation }) {
           <View style={styles.inputbox}>
             <TextInput
               style={styles.input}
-              onChangeText={onChangeNumber}
-              value={number}
+              placeholder="Email"
+              value={email}
+              onChangeText={(text) => setEmail(text)}
             />
             <TextInput
               style={styles.input}
-              onChangeText={onChangeText}
-              value={text}
+              placeholder="Password"
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+              secureTextEntry={true}
             />
           </View>
           <View style={styles.miscbox}>
-            <BlinkerText style={styles.miscboxmsg}>Remember Me</BlinkerText>
-            <Text style={styles.miscboxmsg}>Forgot Password?</Text>
+            {/* <Text style={styles.miscboxmsg}>Remember Me</Text> */}
+            {/* <Text style={styles.miscboxmsg}>Forgot Password?</Text> */}
           </View>
 
           <View style={styles.loginbtn}>
-            <Pressable onPress={() => navigation.navigate("Tabs")}>
-              <Text style={styles.loginbtnmsg}>Log In</Text>
+            <Pressable onPress={onPressFunction}>
+              <Text style={styles.loginbtnmsg}>Sign Up</Text>
             </Pressable>
           </View>
         </View>
-      </View>
-      <View style={styles.signupbtn}>
-        <Pressable onPress={() => navigation.navigate("SignUp")}>
-          <Text>
-            Don't have an account ?{" "}
-            <Text style={{ fontSize: 15, fontWeight: "bold" }}>Sign Up</Text>
-          </Text>
-        </Pressable>
       </View>
     </View>
   );
