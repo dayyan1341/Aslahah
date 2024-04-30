@@ -13,6 +13,7 @@ import React, { useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import axios from "axios";
+import formatTime from "../utils/formatTime";
 
 export default function ServiceForm({ route, navigation }) {
   const ins = useSafeAreaInsets();
@@ -24,7 +25,19 @@ export default function ServiceForm({ route, navigation }) {
   const [istimePickerVisible, settimePickerVisibility] = useState(false);
   const { service } = route.params;
 
-  const reqLogin = async () => {
+  
+
+  const reqLogin = async () => {    
+    
+    console.log(
+      service,
+      address,
+      contact,
+      date.toLocaleDateString(),
+      formatTime(time)
+      // preferredTime
+    );
+    
     try {
       const response = await axios.post(
         "https://server.aslahah.com/api/booking/create",
@@ -32,12 +45,18 @@ export default function ServiceForm({ route, navigation }) {
           serviceType: service,
           address: address,
           contactNumber: contact,
-          preferredDate: date.toLocaleDateString(),
-          preferredTime: time.toLocaleTimeString(),
+          preferredDate : date.toLocaleDateString(),
+          preferredTime: formatTime(time),
+        },
+        {
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MmUzNTViZWExM2Q0MTEzZjBmNTI5OCIsIm1vYmlsZU51bWJlciI6IjYzOTY0MTY1NTciLCJlbWFpbCI6ImF6aGFua2FtaWwwQGdtYWlsLmNvbSIsImlhdCI6MTcxNDQ3Mjc1OCwiZXhwIjoxNzE5NjU2NzU4fQ.J6ofgZBCrVi7S6y3TaGCRQdxjvYgkh_5dTw5TPRpdjI",
+          },
         }
       );
       console.log("Booking created successfully:", response.data);
-      navigation.navigate("Tabs");
+      // navigation.navigate("Tabs");
     } catch (error) {
       console.error("Failed to book in:", error);
       Alert.alert("Failed to book in", error.message);
@@ -102,6 +121,8 @@ export default function ServiceForm({ route, navigation }) {
               style={[styles.inputarea]}
               multiline={true}
               numberOfLines={4}
+              onChangeText={setAddress}
+              value={address}
             />
             <Pressable style={styles.linkbtn}>
               <Text>Send location on Whatsapp</Text>
@@ -199,7 +220,7 @@ const styles = StyleSheet.create({
   },
   input: {
     // width: "100%",
-    paddingHorizontal:5,
+    paddingHorizontal: 5,
     backgroundColor: "#00e9f1",
     display: "flex",
     flexDirection: "row",
@@ -208,7 +229,7 @@ const styles = StyleSheet.create({
   },
   inputarea: {
     width: "80%",
-    backgroundColor:'red'
+    backgroundColor: "red",
   },
   iconimg: {
     width: 40,
