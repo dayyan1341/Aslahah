@@ -1,26 +1,29 @@
-import { Image, Pressable, StyleSheet, Text, View,ScrollView } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View,ScrollView , TextInput} from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function Profile({navigation}) {
+export default function UpdateProfile({navigation}) {
 
   const [name, setname] = useState([]);
   const [email, setemail] = useState([]);
   const [phone, setphone] = useState([]);
-  const [username, setusername] = useState([]);
-  const [gender, setgender] = useState([]);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getProf();
+    // getProf();
   }, []);
 
 
-  async function getProf(){
+  async function UpdateProf(){
     try {
-      const response = await axios.get(
+      const response = await axios.post(
         "https://server.aslahah.com/api/auth/profile",
-        
+        {
+            name: name,
+            email: email,
+            mobileNumber: phone,
+        },
         {
           headers: {
             Authorization:
@@ -41,15 +44,9 @@ export default function Profile({navigation}) {
   return (
     <View style={styles.wrapper}>
       <View style={styles.bellandback}>
-        <Pressable>
+        <Pressable onPress={() => navigation.pop()}>
           <Image
             source={require("../assets/static/20240228_031624_0025.png")}
-            style={styles.btnimg}
-          />
-        </Pressable>
-        <Pressable>
-          <Image
-            source={require("../assets/static/20240228_031624_0024.png")}
             style={styles.btnimg}
           />
         </Pressable>
@@ -57,7 +54,7 @@ export default function Profile({navigation}) {
       <ScrollView>
 
       <View style={styles.profbox}>
-        <Text style={styles.headings}>Profile</Text>
+        <Text style={styles.headings}>Update Profile</Text>
         <Image
           source={require("../assets/static/20240221_000353_0007.png")}
           style={styles.profpic}
@@ -65,21 +62,34 @@ export default function Profile({navigation}) {
         <Text>{name}</Text>
       </View>
       <View style={styles.box}>
-        <Text style={styles.headings}>Personal Information</Text>
         <View style={styles.infobox}>
           <Text style={styles.infohead}>Name</Text>
-          <Text style={styles.info}>{name}</Text>
+          <TextInput
+              style={styles.input}
+              placeholder="Phone Number"
+              onChangeText={setname}
+              value={name}
+              keyboardType="phone-pad"
+            />
           <Text style={styles.infohead}>E-Mail</Text>
-          <Text style={styles.info}>{email}</Text>
+          <TextInput
+              style={styles.input}
+              placeholder="email"
+              onChangeText={setemail}
+              value={email}
+              keyboardType="phone-pad"
+            />
           <Text style={styles.infohead}>Phone</Text>
-          <Text style={styles.info}>{phone}</Text>
+          <TextInput
+              style={styles.input}
+              placeholder="Phone Number"
+              onChangeText={setphone}
+              value={phone}
+              keyboardType="phone-pad"
+            />
         </View>
-        <Pressable onPress={()=> {navigation.navigate("updateprof")}} style={styles.rightbox}>
-          <Text style={styles.editprofbtn}>Edit Profile</Text>
-          <Image
-            source={require("../assets/static/20240228_031624_0026.png")}
-            style={styles.followpic}
-          />
+        <Pressable  style={styles.rightbox}>
+          <Text style={styles.submitbtn}>Submit</Text>
         </Pressable>
         <Text style={styles.headings}>Security</Text>
         <View style={styles.security}>
@@ -139,11 +149,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#221410",
   },
-  bellandback: {
-    marginTop: 40,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
+  input: {
+    borderWidth: 3,
+    borderRadius:5,
+    padding:5,
+    borderBottomColor: "#333341",
+    marginBottom: 20,
+    fontSize: 15,
+    color: "#333341",
   },
   btnimg: {
     height: 60,
@@ -209,17 +222,18 @@ const styles = StyleSheet.create({
     width: 120,
     borderRadius: 38,
   },
-  editprofbtn: {
-    fontWeight: "bold",
-    color: "#221410",
+  submitbtn: {
+    color: "white",
+    textAlign: "center",
+    fontSize: 15,
+    padding: 10,
+    backgroundColor: "limegreen",
+    width: 90,
+    borderRadius: 38,
   },
   infobox: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    flexWrap: "wrap",
     padding: 20,
-    gap: 10,
+    gap: 5,
   },
   info: {
     width: "45%",

@@ -11,7 +11,7 @@ import PrevOrders from "../screens/PrevOrders";
 import CurrOrders from "../screens/CurrOrders"
 import Coupons from "../screens/Coupons";
 import VerifyOtp from "../screens/VerifyOtp";
-
+import UpdateProfile from "../screens/UpdateProfile";
 const Stack = createNativeStackNavigator();
 
 export default function PrimaryNavigator() {
@@ -29,6 +29,7 @@ export default function PrimaryNavigator() {
         <Stack.Screen name="PrevOrders" component={PrevOrders} />
         <Stack.Screen name="CurrOrders" component={CurrOrders} />
         <Stack.Screen name="Coupons" component={Coupons} />
+        <Stack.Screen name="updateprof" component={UpdateProfile} />
       </Stack.Navigator>
     </NavigationContainer>
   )
