@@ -74,7 +74,9 @@ export default function Profile({navigation}) {
           <Text style={styles.infohead}>Phone</Text>
           <Text style={styles.info}>{phone}</Text>
         </View>
-        <Pressable onPress={()=> {navigation.navigate("updateprof")}} style={styles.rightbox}>
+        <Pressable onPress={()=> {navigation.navigate("updateprof",{
+          name, email,phone
+        })}} style={styles.rightbox}>
           <Text style={styles.editprofbtn}>Edit Profile</Text>
           <Image
             source={require("../assets/static/20240228_031624_0026.png")}
