@@ -5,8 +5,11 @@ import {
   TextInput,
   Pressable,
   View,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
+import * as SecureStore from 'expo-secure-store';
+
 import BlinkerText from "../components/BilnkerText";
 import axios from "axios";
 
@@ -29,7 +32,15 @@ export default function Login({ navigation }) {
           password: password,
         }
       );
-      console.log("User logged in successfully:", response.data);
+      console.log("User logged in successfully:", response.data.user);
+
+      await SecureStore.setItemAsync('authToken', response.data.user.token);
+      console.log('Token stored securely:', response.data.user.token);
+  
+      await SecureStore.setItemAsync('isLoggedIn', 'true');
+      console.log('User is logged in.');
+
+
       navigation.navigate("Tabs");
     } catch (error) {
       console.error("Failed to log in:", error.message);

@@ -27,7 +27,7 @@ export default function ServiceForm({ route, navigation }) {
 
   
 
-  const reqLogin = async () => {    
+  const handleBooking = async () => {    
     
     console.log(
       service,
@@ -202,7 +202,7 @@ export default function ServiceForm({ route, navigation }) {
           </>
         </View>
       </View>
-      <Pressable style={styles.rightbox} onPress={reqLogin}>
+      <Pressable style={styles.rightbox} onPress={handleBooking}>
         <Text style={styles.contactbtn}>Confirm Booking</Text>
       </Pressable>
     </View>
@@ -228,8 +228,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   inputarea: {
-    width: "80%",
-    backgroundColor: "red",
+    width: 250,
   },
   iconimg: {
     width: 40,
