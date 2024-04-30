@@ -21,6 +21,7 @@ export default function PrimaryNavigator() {
   const [loading, setLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(true);
 
+  
 
   return (
     <NavigationContainer>
