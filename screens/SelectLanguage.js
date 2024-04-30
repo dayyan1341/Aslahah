@@ -19,7 +19,7 @@ export default function SelectLanguage({ navigation }) {
       <Pressable
         android_ripple={{ color: "#eee", radius: 80 }}
         style={styles.btn}
-        onPress={() => navigation.navigate("Login")}
+        onPress={() => navigation.navigate("Tabs")}
       >
         <Text style={styles.btnText}>Device (auto detect)</Text>
       </Pressable>

@@ -6,18 +6,43 @@ import {
   Image,
   Button,
   Pressable,
+  Alert,
 } from "react-native";
 // import React from "react";
 import React, { useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import axios from "axios";
 
-export default function ServiceForm({ navigation }) {
+export default function ServiceForm({ route, navigation }) {
   const ins = useSafeAreaInsets();
-  const [time , setTime] = useState();
-  const [date , setDate] = useState();
+  const [address, setAddress] = useState("");
+  const [contact, setContact] = useState();
+  const [time, setTime] = useState();
+  const [date, setDate] = useState();
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [istimePickerVisible, settimePickerVisibility] = useState(false);
+  const { service } = route.params;
+
+  const reqLogin = async () => {
+    try {
+      const response = await axios.post(
+        "https://server.aslahah.com/api/booking/create",
+        {
+          serviceType: service,
+          address: address,
+          contactNumber: contact,
+          preferredDate: date.toLocaleDateString(),
+          preferredTime: time.toLocaleTimeString(),
+        }
+      );
+      console.log("Booking created successfully:", response.data);
+      navigation.navigate("Tabs");
+    } catch (error) {
+      console.error("Failed to book in:", error);
+      Alert.alert("Failed to book in", error.message);
+    }
+  };
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -28,8 +53,8 @@ export default function ServiceForm({ navigation }) {
   };
 
   const handleConfirmdate = (date) => {
-    console.warn("A date has been picked: ", date);
-    setDate(date)
+    console.warn(date);
+    setDate(date);
     hideDatePicker();
   };
 
@@ -43,7 +68,7 @@ export default function ServiceForm({ navigation }) {
 
   const handleConfirmtime = (time) => {
     console.warn("A time has been picked: ", time);
-    setTime(time)
+    setTime(time);
     hidetimePicker();
   };
 
@@ -62,7 +87,7 @@ export default function ServiceForm({ navigation }) {
             source={require("../assets/static/20240228_031624_0030.png")}
             style={styles.iconimg}
           />
-          <TextInput style={styles.inputarea} />
+          <TextInput style={styles.inputarea} value={service} readOnly />
         </View>
       </View>
       <View>
@@ -73,7 +98,11 @@ export default function ServiceForm({ navigation }) {
             style={styles.iconimg}
           />
           <View style={styles.addressinput}>
-            <TextInput style={[styles.inputarea, { height: 50 }]} />
+            <TextInput
+              style={[styles.inputarea]}
+              multiline={true}
+              numberOfLines={4}
+            />
             <Pressable style={styles.linkbtn}>
               <Text>Send location on Whatsapp</Text>
               <Image
@@ -85,13 +114,18 @@ export default function ServiceForm({ navigation }) {
         </View>
       </View>
       <View>
-        <Text style={styles.headings}>Contact Number</Text>
+        <Text style={styles.headings}>Contact Number (Whatsapp)</Text>
         <View style={styles.input}>
           <Image
             source={require("../assets/static/20240228_031624_0032.png")}
             style={styles.iconimg}
           />
-          <TextInput style={styles.inputarea} />
+          <TextInput
+            style={styles.inputarea}
+            onChangeText={setContact}
+            value={contact}
+            keyboardType="phone-pad"
+          />
         </View>
       </View>
       <View>
@@ -105,7 +139,9 @@ export default function ServiceForm({ navigation }) {
                   source={require("../assets/static/20240228_031624_0035.png")}
                   style={styles.iconimg}
                 />
-                {time && <Text>{time}</Text>}
+                <Text>
+                  {date ? date.toLocaleDateString() : "No date selected"}
+                </Text>
                 <Image
                   source={require("../assets/static/20240228_031624_0033.png")}
                   style={styles.iconimg}
@@ -127,7 +163,9 @@ export default function ServiceForm({ navigation }) {
                   source={require("../assets/static/20240228_031624_0035.png")}
                   style={styles.iconimg}
                 />
-                <Text>Select Time</Text>
+                <Text>
+                  {time ? time.toLocaleTimeString() : "No Time selected"}
+                </Text>
                 <Image
                   source={require("../assets/static/20240228_031624_0033.png")}
                   style={styles.iconimg}
@@ -143,7 +181,7 @@ export default function ServiceForm({ navigation }) {
           </>
         </View>
       </View>
-      <Pressable style={styles.rightbox}>
+      <Pressable style={styles.rightbox} onPress={reqLogin}>
         <Text style={styles.contactbtn}>Confirm Booking</Text>
       </Pressable>
     </View>
@@ -160,7 +198,8 @@ const styles = StyleSheet.create({
     marginLeft: -30,
   },
   input: {
-    width: "100%",
+    // width: "100%",
+    paddingHorizontal:5,
     backgroundColor: "#00e9f1",
     display: "flex",
     flexDirection: "row",
@@ -168,7 +207,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   inputarea: {
-    width: "100%",
+    width: "80%",
+    backgroundColor:'red'
   },
   iconimg: {
     width: 40,
@@ -201,16 +241,16 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingBottom: 50,
   },
-  dateandtimeselector:{
+  dateandtimeselector: {
     width: "100%",
     marginTop: 5,
     marginBottom: 5,
-    backgroundColor:'white',
-    display:'flex',
-    flexDirection:'row',
-    justifyContent:'space-between',
-    alignItems:'center',
-    borderRadius:20,
+    backgroundColor: "white",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderRadius: 20,
   },
   rightbox: {
     display: "flex",

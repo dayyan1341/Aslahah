@@ -14,7 +14,7 @@ function ServiceCard(props) {
 
   return (
     <Pressable
-      onPress={() => navigation.navigate("Description")}
+      onPress={() => navigation.navigate("Description",{service:props.name})}
       style={styles.ServiceCard}
     >
       <View style={styles.ServiceCardHead}>

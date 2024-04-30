@@ -3,8 +3,9 @@ import React from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Review from "../components/Review";
 
-export default function ServiceDesc({ navigation }) {
+export default function ServiceDesc({ route, navigation }) {
   const ins = useSafeAreaInsets();
+  const {service} = route.params
   return (
     <View
       style={[
@@ -26,7 +27,7 @@ export default function ServiceDesc({ navigation }) {
       </View>
       <View style={styles.wrapper}>
         <View style={styles.box}>
-          <Text style={styles.headings}>AC Repairing Services</Text>
+          <Text style={styles.headings}>{service}</Text>
           <Text style={styles.description}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, optio
             quis. Reprehenderit fugit ducimus porro fuga, fugiat autem alias,
@@ -82,7 +83,7 @@ export default function ServiceDesc({ navigation }) {
         </Pressable> */}
         <Pressable
           style={styles.rightbox}
-          onPress={() => navigation.navigate("Form")}
+          onPress={() => navigation.navigate("Form",route.params)}
         >
           <Text style={styles.contactbtn}>Book Now</Text>
         </Pressable>

@@ -13,8 +13,14 @@ import axios from "axios";
 export default function Login({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
+  const [fieldEmpty, setFieldEmpty] = useState();
 
-  const handleLogin = async () => {
+  const handleLogin = () => {
+    if (phoneNumber && password) reqLogin();
+    else setFieldEmpty(true)
+  };
+
+  const reqLogin = async () => {
     try {
       const response = await axios.post(
         "https://server.aslahah.com/api/auth/login",
@@ -25,7 +31,6 @@ export default function Login({ navigation }) {
       );
       console.log("User logged in successfully:", response.data);
       navigation.navigate("Tabs");
-      // You can handle navigation or any other action upon successful login here
     } catch (error) {
       console.error("Failed to log in:", error.message);
       Alert.alert("Failed to log in", error.message);
@@ -75,7 +80,7 @@ export default function Login({ navigation }) {
           </View>
 
           <View style={styles.loginbtn}>
-            <Pressable onPress={handleLogin}>
+            <Pressable onPress={handleLogin} android_ripple>
               <Text style={styles.loginbtnmsg}>Log In</Text>
             </Pressable>
           </View>
