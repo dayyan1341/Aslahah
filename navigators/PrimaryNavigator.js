@@ -12,6 +12,7 @@ import CurrOrders from "../screens/CurrOrders"
 import Coupons from "../screens/Coupons";
 import VerifyOtp from "../screens/VerifyOtp";
 import UpdateProfile from "../screens/UpdateProfile";
+import { useState } from "react";
 const Stack = createNativeStackNavigator();
 
 export default function PrimaryNavigator() {
@@ -19,6 +20,7 @@ export default function PrimaryNavigator() {
   const [loading, setLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(true);
 
+  
 
   return (
     <NavigationContainer>
