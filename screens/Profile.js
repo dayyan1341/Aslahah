@@ -10,18 +10,17 @@ import {
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import getAuthToken from "../utils/getAuthToken";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function Profile({ navigation }) {
   const [name, setname] = useState([]);
   const [email, setemail] = useState([]);
   const [phone, setphone] = useState([]);
-  const [username, setusername] = useState([]);
-  const [gender, setgender] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  useFocusEffect(() => {
     getProf();
-  }, []);
+  });
 
   async function getProf() {
     try {
@@ -36,19 +35,18 @@ export default function Profile({ navigation }) {
             },
           }
         );
-        console.log("Booking created successfully:", response.data);
+        console.log("User Details:", response.data);
         setname(response.data.user.name);
         setemail(response.data.user.email);
         setphone(response.data.user.mobileNumber);
-        
       } else {
         console.error("User not Logged in");
         Alert.alert("User not Logged in");
         navigation.navigate(Login);
       }
     } catch (error) {
-      console.error("Failed to book in:", error);
-      Alert.alert("Failed to book in", error.message);
+      console.error("Something went wrong while fetching profile", error);
+      Alert.alert("Something went wrong while fetching profile", error.message);
     }
   }
   return (
@@ -68,76 +66,89 @@ export default function Profile({ navigation }) {
         </Pressable>
       </View>
       <ScrollView>
-
-      <View style={styles.profbox}>
-        <Text style={styles.headings}>Profile</Text>
-        <Image
-          source={require("../assets/static/20240221_000353_0007.png")}
-          style={styles.profpic}
-        />
-        <Text>{name}</Text>
-      </View>
-      <View style={styles.box}>
-        <Text style={styles.headings}>Personal Information</Text>
-        <View style={styles.infobox}>
-          <Text style={styles.infohead}>Name</Text>
-          <Text style={styles.info}>{name}</Text>
-          <Text style={styles.infohead}>E-Mail</Text>
-          <Text style={styles.info}>{email}</Text>
-          <Text style={styles.infohead}>Phone</Text>
-          <Text style={styles.info}>{phone}</Text>
-        </View>
-        <Pressable onPress={()=> {navigation.navigate("updateprof",{
-          name, email,phone
-        })}} style={styles.rightbox}>
-          <Text style={styles.editprofbtn}>Edit Profile</Text>
+        <View style={styles.profbox}>
+          <Text style={styles.headings}>Profile</Text>
           <Image
-            source={require("../assets/static/20240228_031624_0026.png")}
-            style={styles.followpic}
+            source={require("../assets/static/20240221_000353_0007.png")}
+            style={styles.profpic}
           />
-        </Pressable>
-        <Text style={styles.headings}>Security</Text>
-        <View style={styles.security}>
-          <Pressable style={styles.linkbox}>
-            <Text>Change Password</Text>
+          <Text>{name}</Text>
+        </View>
+        <View style={styles.box}>
+          <Text style={styles.headings}>Personal Information</Text>
+          <View style={styles.infobox}>
+            <Text style={styles.infohead}>Name</Text>
+            <Text style={styles.info}>{name}</Text>
+            <Text style={styles.infohead}>E-Mail</Text>
+            <Text style={styles.info}>{email}</Text>
+            <Text style={styles.infohead}>Phone</Text>
+            <Text style={styles.info}>{phone}</Text>
+          </View>
+          <Pressable
+            onPress={() => {
+              navigation.navigate("updateprof", {
+                name,
+                email,
+                phone,
+              });
+            }}
+            style={styles.rightbox}
+          >
+            <Text style={styles.editprofbtn}>Edit Profile</Text>
             <Image
               source={require("../assets/static/20240228_031624_0026.png")}
               style={styles.followpic}
             />
           </Pressable>
+          <Text style={styles.headings}>Security</Text>
+          <View style={styles.security}>
+            <Pressable
+              onPress={() => {
+                navigation.navigate("updatepass", {
+                  name,
+                });
+              }}
+              style={styles.linkbox}
+            >
+              <Text>Change Password</Text>
+              <Image
+                source={require("../assets/static/20240228_031624_0026.png")}
+                style={styles.followpic}
+              />
+            </Pressable>
+            <Pressable style={styles.linkbox}>
+              <Text>Change mobile number</Text>
+              <Image
+                source={require("../assets/static/20240228_031624_0026.png")}
+                style={styles.followpic}
+              />
+            </Pressable>
+          </View>
           <Pressable style={styles.linkbox}>
-            <Text>Change mobile number</Text>
+            <Text style={styles.headings}>About Us</Text>
             <Image
-              source={require("../assets/static/20240228_031624_0026.png")}
+              source={require("../assets/static/20240228_031624_0028.png")}
               style={styles.followpic}
             />
           </Pressable>
+          <Pressable style={styles.linkbox}>
+            <Text style={styles.headings}>FAQs</Text>
+            <Image
+              source={require("../assets/static/20240228_031624_0027.png")}
+              style={styles.followpic}
+            />
+          </Pressable>
+          <Pressable style={styles.linkbox}>
+            <Text style={styles.signoutbtn}>Sign Out</Text>
+          </Pressable>
+          <Pressable style={styles.rightbox}>
+            <Text style={styles.contactbtn}>Contact Us</Text>
+            <Image
+              source={require("../assets/static/20240228_031624_0029.png")}
+              style={styles.followpiccontact}
+            />
+          </Pressable>
         </View>
-        <Pressable style={styles.linkbox}>
-          <Text style={styles.headings}>About Us</Text>
-          <Image
-            source={require("../assets/static/20240228_031624_0028.png")}
-            style={styles.followpic}
-          />
-        </Pressable>
-        <Pressable style={styles.linkbox}>
-          <Text style={styles.headings}>FAQs</Text>
-          <Image
-            source={require("../assets/static/20240228_031624_0027.png")}
-            style={styles.followpic}
-          />
-        </Pressable>
-        <Pressable style={styles.linkbox}>
-          <Text style={styles.signoutbtn}>Sign Out</Text>
-        </Pressable>
-        <Pressable style={styles.rightbox}>
-          <Text style={styles.contactbtn}>Contact Us</Text>
-          <Image
-            source={require("../assets/static/20240228_031624_0029.png")}
-            style={styles.followpiccontact}
-          />
-        </Pressable>
-      </View>
       </ScrollView>
     </View>
   );
