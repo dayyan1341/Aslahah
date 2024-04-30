@@ -15,6 +15,11 @@ import UpdateProfile from "../screens/UpdateProfile";
 const Stack = createNativeStackNavigator();
 
 export default function PrimaryNavigator() {
+
+  const [loading, setLoading] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(true);
+
+
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown:false}}>

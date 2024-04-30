@@ -1,9 +1,17 @@
-import { Image, Pressable, StyleSheet, Text, View,ScrollView } from "react-native";
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Alert,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import getAuthToken from "../utils/getAuthToken";
 
-export default function Profile({navigation}) {
-
+export default function Profile({ navigation }) {
   const [name, setname] = useState([]);
   const [email, setemail] = useState([]);
   const [phone, setphone] = useState([]);
@@ -15,24 +23,29 @@ export default function Profile({navigation}) {
     getProf();
   }, []);
 
-
-  async function getProf(){
+  async function getProf() {
     try {
-      const response = await axios.get(
-        "https://server.aslahah.com/api/auth/profile",
+      const token = await getAuthToken();
+      if (token) {
+        const response = await axios.get(
+          "https://server.aslahah.com/api/auth/profile",
+
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log("Booking created successfully:", response.data);
+        setname(response.data.user.name);
+        setemail(response.data.user.email);
+        setphone(response.data.user.mobileNumber);
         
-        {
-          headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MmUzNTViZWExM2Q0MTEzZjBmNTI5OCIsIm1vYmlsZU51bWJlciI6IjYzOTY0MTY1NTciLCJlbWFpbCI6ImF6aGFua2FtaWwwQGdtYWlsLmNvbSIsImlhdCI6MTcxNDQ3Mjc1OCwiZXhwIjoxNzE5NjU2NzU4fQ.J6ofgZBCrVi7S6y3TaGCRQdxjvYgkh_5dTw5TPRpdjI",
-          },
-        }
-      );
-      console.log("Booking created successfully:", response.data);
-      setname(response.data.user.name);
-      setemail(response.data.user.email);
-      setphone(response.data.user.mobileNumber);
-      // navigation.navigate("Tabs");
+      } else {
+        console.error("User not Logged in");
+        Alert.alert("User not Logged in");
+        navigation.navigate(Login);
+      }
     } catch (error) {
       console.error("Failed to book in:", error);
       Alert.alert("Failed to book in", error.message);

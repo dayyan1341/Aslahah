@@ -9,7 +9,7 @@ const PrevOrders = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch orders when component mounts
+    
     fetchOrders();
   }, []);
 
