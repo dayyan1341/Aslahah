@@ -1,14 +1,23 @@
-import { Pressable, StyleSheet, Text, View, Image } from "react-native";
-import React from "react";
+import React, { useContext } from 'react';
+import { View, Text, Image, Pressable, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../context/AuthContext'; 
+export default function SelectLanguage() {
+  const navigation = useNavigation();
+  const { setLocale } = useAuth(); 
 
-export default function SelectLanguage({ navigation }) {
+  const handleLocaleSelection = (locale) => {
+    setLocale(locale);
+    navigation.navigate('Login'); 
+  };
+
   return (
     <View style={styles.container}>
       <View>
-      <Image
-            source={require("../assets/static/logo1.png")}
-            style={styles.logo}
-          />
+        <Image
+          source={require("../assets/static/logo1.png")}
+          style={styles.logo}
+        />
       </View>
       <View style={styles.box}>
         <Text style={{ fontSize: 25, fontWeight: "bold", opacity: 1 }}>
@@ -19,27 +28,28 @@ export default function SelectLanguage({ navigation }) {
       <Pressable
         android_ripple={{ color: "#eee", radius: 80 }}
         style={styles.btn}
-        onPress={() => navigation.navigate("Tabs")}
+        onPress={() => handleLocaleSelection('auto')} // Set locale to auto detect
       >
         <Text style={styles.btnText}>Device (auto detect)</Text>
       </Pressable>
       <Pressable
         android_ripple={{ color: "#eee", radius: 60 }}
         style={styles.btn}
-        onPress={() => navigation.navigate("Login")}
+        onPress={() => handleLocaleSelection('en')} // Set locale to English
       >
         <Text style={styles.btnText}>English</Text>
       </Pressable>
       <Pressable
         android_ripple={{ color: "#eee", radius: 60 }}
         style={styles.btn}
-        onPress={() => navigation.navigate("Login")}
+        onPress={() => handleLocaleSelection('ar')} // Set locale to Arabic
       >
         <Text style={styles.btnText}>Arabic</Text>
       </Pressable>
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
