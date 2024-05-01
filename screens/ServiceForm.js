@@ -13,7 +13,7 @@ import React, { useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import axios from "axios";
-import formatTime from "../utils/formatTime";
+import formatTime from "../context/formatTime";
 
 export default function ServiceForm({ route, navigation }) {
   const ins = useSafeAreaInsets();
@@ -25,10 +25,7 @@ export default function ServiceForm({ route, navigation }) {
   const [istimePickerVisible, settimePickerVisibility] = useState(false);
   const { service } = route.params;
 
-  
-
-  const handleBooking = async () => {    
-    
+  const handleBooking = async () => {
     console.log(
       service,
       address,
@@ -37,7 +34,7 @@ export default function ServiceForm({ route, navigation }) {
       formatTime(time)
       // preferredTime
     );
-    
+
     try {
       const response = await axios.post(
         "https://server.aslahah.com/api/booking/create",
@@ -45,7 +42,7 @@ export default function ServiceForm({ route, navigation }) {
           serviceType: service,
           address: address,
           contactNumber: contact,
-          preferredDate : date.toLocaleDateString(),
+          preferredDate: date.toLocaleDateString(),
           preferredTime: formatTime(time),
         },
         {
@@ -56,7 +53,8 @@ export default function ServiceForm({ route, navigation }) {
         }
       );
       console.log("Booking created successfully:", response.data);
-      // navigation.navigate("Tabs");
+      Alert.alert("Booking created successfully We will reach you shortly");
+      navigation.navigate("Tabs");
     } catch (error) {
       console.error("Failed to book in:", error);
       Alert.alert("Failed to book in", error.message);

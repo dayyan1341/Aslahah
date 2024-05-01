@@ -7,20 +7,23 @@ import {
   View,
   Alert,
 } from "react-native";
-import React, { useState } from "react";
-import * as SecureStore from 'expo-secure-store';
+import React, { useContext, useState } from "react";
+import * as SecureStore from "expo-secure-store";
 
 import BlinkerText from "../components/BilnkerText";
 import axios from "axios";
+import { useAuth } from "../context/AuthContext";
 
 export default function Login({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [fieldEmpty, setFieldEmpty] = useState();
 
+  const { signIn } = useAuth();
+
   const handleLogin = () => {
     if (phoneNumber && password) reqLogin();
-    else setFieldEmpty(true)
+    else setFieldEmpty(true);
   };
 
   const reqLogin = async () => {
@@ -33,15 +36,9 @@ export default function Login({ navigation }) {
         }
       );
       console.log("User logged in successfully:", response.data.user);
+      signIn(response.data.user.token);
 
-      await SecureStore.setItemAsync('authToken', response.data.user.token);
-      console.log('Token stored securely:', response.data.user.token);
-  
-      await SecureStore.setItemAsync('isLoggedIn', 'true');
-      console.log('User is logged in.');
-
-
-      navigation.navigate("Tabs");
+      // navigation.navigate("Tabs");
     } catch (error) {
       console.error("Failed to log in:", error.message);
       Alert.alert("Failed to log in", error.message);

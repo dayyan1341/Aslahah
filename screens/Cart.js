@@ -11,6 +11,11 @@ import CartItem from "../components/CartItem";
 import React from "react";
 
 export default function Cart({ navigation }) {
+
+  const imageMap = {
+    ac : require("../assets/static/ac_repairing.png")
+  }
+
   const arr = [
     { name: "AC Repairing", img: require("../assets/static/ac_repairing.png") },
     {

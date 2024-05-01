@@ -17,58 +17,34 @@ export default function UpdateProfile({ navigation, route }) {
 
   const [loading, setLoading] = useState(true);
 
-//   useEffect(() => {
-//     getProf();
-//   }, []);
-
-//   async function getProf() {
-//     try {
-//       const response = await axios.get(
-//         "https://server.aslahah.com/api/auth/profile",
-
-//         {
-//           headers: {
-//             Authorization:
-//               "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MmUzNTViZWExM2Q0MTEzZjBmNTI5OCIsIm1vYmlsZU51bWJlciI6IjYzOTY0MTY1NTciLCJlbWFpbCI6ImF6aGFua2FtaWwwQGdtYWlsLmNvbSIsImlhdCI6MTcxNDQ3Mjc1OCwiZXhwIjoxNzE5NjU2NzU4fQ.J6ofgZBCrVi7S6y3TaGCRQdxjvYgkh_5dTw5TPRpdjI",
-//           },
-//         }
-//       );
-//       console.log("Booking created successfully:", response.data);
-//       setname(response.data.user.name);
-//       setemail(response.data.user.email);
-//       setphone(response.data.user.mobileNumber);
-//       // navigation.navigate("Tabs");
-//     } catch (error) {
-//       console.error("Failed to book in:", error);
-//       Alert.alert("Failed to book in", error.message);
-//     }
-//   }
-
   async function UpdateProf() {
     try {
-      const response = await axios.post(
-        "https://server.aslahah.com/api/auth/profile",
-        {
-          name: name,
-          email: email,
-          mobileNumber: phone,
-        },
-        {
-          headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MmUzNTViZWExM2Q0MTEzZjBmNTI5OCIsIm1vYmlsZU51bWJlciI6IjYzOTY0MTY1NTciLCJlbWFpbCI6ImF6aGFua2FtaWwwQGdtYWlsLmNvbSIsImlhdCI6MTcxNDQ3Mjc1OCwiZXhwIjoxNzE5NjU2NzU4fQ.J6ofgZBCrVi7S6y3TaGCRQdxjvYgkh_5dTw5TPRpdjI",
+      const token = await getAuthToken();
+      if (token){
+        const response = await axios.put(
+          "https://server.aslahah.com/api/auth/profile",
+          {
+            name: name,
+            email: email,
+            mobileNumber: phone,
           },
-        }
-      );
-
-      console.log("Booking created successfully:", response.data);
-    //   setname(response.data.user.name);
-    //   setemail(response.data.user.email);
-    //   setphone(response.data.user.mobileNumber);
-      // navigation.navigate("Tabs");
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+  
+        console.log("Profile updated successfully:", response.data);
+        navigation.navigate("Profile")
+      }else {
+        console.error("User not Logged in");
+        Alert.alert("User not Logged in");
+        navigation.navigate("Login");
+      }
     } catch (error) {
-      console.error("Failed to book in:", error);
-      Alert.alert("Failed to book in", error.message);
+      console.error("Failed to update:", error);
+      Alert.alert("Failed to update", error.message);
     }
   }
   return (
