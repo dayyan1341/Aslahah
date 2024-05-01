@@ -3,13 +3,13 @@ import React from "react";
 import Search from "../components/Search";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-export default function Header() {
+export default function Header(props) {
   const pad = useSafeAreaInsets()
   return (
     <View style={[styles.topbox,{paddingTop:pad.top+5}]}>
       <View style={styles.flexbox}>
         <View>
-          <Text style={styles.usergreeting}>Hi, User</Text>
+          <Text style={styles.usergreeting}>Hi, {props.name}</Text>
           <Text>Let's find your</Text>
           <Text>desired services</Text>
         </View>

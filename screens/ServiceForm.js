@@ -53,7 +53,7 @@ export default function ServiceForm({ route, navigation }) {
         }
       );
       console.log("Booking created successfully:", response.data);
-      Alert.alert("Booking created successfully We will reach you shortly");
+      Alert.alert("Booking created successfully","We will reach you shortly");
       navigation.navigate("Tabs");
     } catch (error) {
       console.error("Failed to book in:", error);

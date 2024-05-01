@@ -12,11 +12,43 @@ import ServicesShowcase from "../components/ServicesShowcase";
 import ReviewCard from "../components/ReviewCard";
 import Header from "../components/Header";
 import BlinkerText from "../components/BilnkerText";
+import { useAuth } from "../context/AuthContext";
+import axios from "axios";
 
-function Home() {
+function Home({navigation}) {
+  const { signOut, getToken } = useAuth();
+  const [name, setname] = React.useState();
+
+
+  React.useEffect(() => {
+    getProf();
+  }, []);
+
+  async function getProf() {
+    try {
+      const token = getToken();
+
+      const response = await axios.get(
+        "https://server.aslahah.com/api/auth/profile",
+
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("User Details:", response.data);
+      setname(response.data.user.name);
+      
+    } catch (error) {
+      console.error("Something went wrong while fetching profile", error);
+      Alert.alert("Something went wrong while fetching profile");
+    }
+  }
+
   return (
     <ScrollView>
-        <Header />
+        <Header name={name} />
         <Banner />
         <ServicesShowcase />
         <View style={styles.reviewbox}>

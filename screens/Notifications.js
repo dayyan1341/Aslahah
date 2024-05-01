@@ -13,7 +13,7 @@ export default function Notifications({navigation}) {
         </Pressable>
       </View>
     <View style={styles.wrapper}>
-      <Text>You don't have any coupons right now !</Text>
+      <Text>No new notification</Text>
     </View>
     </>
   )

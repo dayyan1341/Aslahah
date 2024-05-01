@@ -13,10 +13,10 @@ export default function CartItem(props) {
         <Text style={styles.itemname}>{props.name}</Text>
       </View>
       <View style={styles.delete}>
-        <Image
+        {/* <Image
           source={require("../assets/static/delete.png")}
           style={styles.delimg}
-        />
+        /> */}
       </View>
     </View>
   );
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10,
-    backgroundColor: "#343341",
+    // backgroundColor: "#343341",
     padding: 3,
     paddingLeft: 8,
   },

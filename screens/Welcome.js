@@ -13,9 +13,9 @@ import {
 } from "react-native";
 import BlinkerText from "../components/BilnkerText";
 
+
 export default function Welcome({ navigation }) {
   const { height, width } = useWindowDimensions();
-
   return (
     <View style={styles.container}>
       <Image
@@ -27,8 +27,12 @@ export default function Welcome({ navigation }) {
         style={styles.bulb}
       />
       <View style={[styles.bottom, { width: width * 0.9 }]}>
-        <BlinkerText wazan={700} style={styles.heroText}>Book Your technician</BlinkerText>
-        <BlinkerText wazan={700} style={styles.heroText}>shortly at doorstep</BlinkerText>
+        <BlinkerText wazan={700} style={styles.heroText}>
+          Book Your technician
+        </BlinkerText>
+        <BlinkerText wazan={700} style={styles.heroText}>
+          shortly at doorstep
+        </BlinkerText>
         <View style={styles.separator} />
 
         <Pressable
@@ -36,7 +40,7 @@ export default function Welcome({ navigation }) {
           style={styles.btn}
           onPress={() => navigation.navigate("SelectLanguage")}
         >
-          <BlinkerText  style={styles.btnText}>Get Started</BlinkerText>
+          <BlinkerText style={styles.btnText}>Get Started</BlinkerText>
           <Image
             source={require("../assets/static/btn_arrow.png")}
             style={{ height: 38, width: 38, alignSelf: "center" }}
@@ -84,7 +88,7 @@ const styles = StyleSheet.create({
   },
   heroText: {
     fontSize: 38,
-    color:'#343341',
+    color: "#343341",
     // fontWeight:'bold',
     // marginBottom:5,
     marginHorizontal: 10,
@@ -103,13 +107,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 45,
     padding: 5,
-    paddingHorizontal : 10 ,
+    paddingHorizontal: 10,
     gap: 3,
     borderRadius: 50,
     backgroundColor: "white",
     flexDirection: "row",
-    justifyContent: 'space-between',
-    verticalAlign:'middle'
+    justifyContent: "space-between",
+    verticalAlign: "middle",
   },
   btnText: {
     color: "#343341",

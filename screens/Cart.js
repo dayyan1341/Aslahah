@@ -8,54 +8,65 @@ import {
   FlatList,
 } from "react-native";
 import CartItem from "../components/CartItem";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import axios from "axios";
 
 export default function Cart({ navigation }) {
+  const [orders, setOrders] = useState([]);
+  // const [loading, setLoading] = useState(true);
+
+  const { getToken } = useAuth();
+
 
   const imageMap = {
-    ac : require("../assets/static/ac_repairing.png"),
-    lift : require("../assets/static/lift_repairing.png"),
-    carpenter : require("../assets/static/carpentry.png"),
-    painter : require("../assets/static/painter.png"),
-    wall : require("../assets/static/wall_works.png"),
-    plumbing : require("../assets/static/plumbing.png"),
+    "AC Repairing": require("../assets/static/ac_repairing.png"),
+    "Lift Reapiring": require("../assets/static/lift_repairing.png"),
+    "Carpentry": require("../assets/static/carpentry.png"),
+    "Painter": require("../assets/static/painter.png"),
+    "Wall Works": require("../assets/static/wall_works.png"),
+    "Plumbing": require("../assets/static/plumbing.png"),
+  };
 
-  }
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      fetchOrders();
+    });
 
+    return unsubscribe;
+  }, []);
 
+  const fetchOrders = async () => {
+    try {
+      const token = getToken();
 
+      const response = await axios.get(
+        "https://server.aslahah.com/api/booking/current",
 
-  const arr = [
-    { name: "AC Repairing", img: imageMap.ac },
-    {
-      name: "Lift Repairing",
-      img: imageMap.lift,
-    },
-    {
-      name: "Lift Repairing",
-      img: imageMap.lift,
-    },
-    {
-      name: "Lift Repairing",
-      img: imageMap.lift,
-    },
-    {
-      name: "Lift Repairing",
-      img: imageMap.lift,
-    },
-    {
-      name: "Lift Repairing",
-      img: imageMap.lift,
-    },
-    {
-      name: "Lift Repairing",
-      img: imageMap.lift,
-    },
-    {
-      name: "Lift Repairing",
-      img: imageMap.lift,
-    },
-  ];
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Orders:", response.data);
+      setOrders(response.data.data);
+      // setLoading(false);
+    } catch (error) {
+      // setLoading(false);
+      console.error("Something went wrong while fetching Orders", error);
+      Alert.alert("Something went wrong while fetching Orders");
+    }
+  };
+
+  
+  const ListEmptyComponent = () => (
+    <View style={styles.buzz}>
+      <Text>Nothing to show here</Text>
+      <Text>Request some services!!</Text>
+    </View>
+  );
+
 
   return (
     <View style={styles.wrapper}>
@@ -78,7 +89,12 @@ export default function Cart({ navigation }) {
 
       <View style={styles.bookingWrapper}>
         <Pressable style={styles.bookingBtn}>
-          <Text style={styles.bookingBtnText} onPress={() => navigation.navigate("Coupons")}>Coupons</Text>
+          <Text
+            style={styles.bookingBtnText}
+            onPress={() => navigation.navigate("Coupons")}
+          >
+            Coupons
+          </Text>
         </Pressable>
         <Pressable style={styles.bookingBtn}>
           <Text style={styles.bookingBtnText}>Quotations</Text>
@@ -88,9 +104,11 @@ export default function Cart({ navigation }) {
       <View style={[styles.box, styles.white]}>
         <Text style={styles.headings}>My Cart</Text>
         <FlatList
-          data={arr}
+         data={orders}
+         keyExtractor={(item) => item._id.toString()}
+         ListEmptyComponent={ListEmptyComponent}
           renderItem={({ item }) => (
-            <CartItem name={item.name} img={item.img} />
+            <CartItem name={item.serviceType} img={imageMap[item.serviceType]} />
           )}
           ItemSeparatorComponent={<View style={{ marginVertical: 10 }} />}
         />

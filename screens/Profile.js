@@ -52,12 +52,12 @@ export default function Profile({ navigation }) {
     <View style={styles.wrapper}>
       <View style={styles.bellandback}>
         <Pressable>
-          <Image
+          {/* <Image
             source={require("../assets/static/20240228_031624_0025.png")}
             style={styles.btnimg}
-          />
+          /> */}
         </Pressable>
-        <Pressable>
+        <Pressable onPress={()=>navigation.navigate("Notifications")}>
           <Image
             source={require("../assets/static/20240228_031624_0024.png")}
             style={styles.btnimg}

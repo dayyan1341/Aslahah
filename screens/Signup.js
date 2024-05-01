@@ -17,17 +17,17 @@ const Signup = ({navigation}) => {
 
   const handleSignup = async () => {
     try {
-      // const response = await axios.post("https://server.aslahah.com/api/auth/register", {
-      //   name: name,
-      //   email: email,
-      //   password: password,
-      //   mobileNumber: mobile,
-      // });
-      // console.log("User registered successfully:", response.data);
-      // if(response.data.user){
-      //   navigation.navigate("Verify",{email,password})
-      // }
+      const response = await axios.post("https://server.aslahah.com/api/auth/register", {
+        name: name,
+        email: email,
+        password: password,
+        mobileNumber: mobile,
+      });
+      console.log("User registered successfully:", response.data);
+      if(response.data.user){
         navigation.navigate("Verify",{email,password})
+      }
+        navigation.navigate("Login")
 
     } catch (error) {
       if (error.response) {

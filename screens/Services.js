@@ -61,14 +61,14 @@ function Services() {
           name="Painter"
           cardImage={require("../assets/static/painter.png")}
         />
-        <ServiceCard
+        {/* <ServiceCard
           name="All Services"
           cardImage={require("../assets/static/all_services.png")}
-        />
-        <ServiceCard
+        /> */}
+        {/* <ServiceCard
           name="Become a technician"
           cardImage={require("../assets/static/all_services.png")}
-        />
+        /> */}
       </View>
     </View>
   );

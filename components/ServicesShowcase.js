@@ -42,7 +42,7 @@ export default function ServicesShowcase() {
         </View>
         <Text style={styles.service}>Painting</Text>
       </View>
-      <View style={styles.servicebox}>
+      {/* <View style={styles.servicebox}>
         <View style={styles.serviceimg}>
           <Image
             source={require("../assets/static/20240221_000353_0014.png")}
@@ -50,8 +50,8 @@ export default function ServicesShowcase() {
           />
         </View>
         <Text style={styles.service}>Painting</Text>
-      </View>
-      <View style={styles.servicebox}>
+      </View> */}
+      {/* <View style={styles.servicebox}>
         <View style={styles.serviceimg}>
           <Image
             source={require("../assets/static/20240221_000353_0014.png")}
@@ -59,7 +59,7 @@ export default function ServicesShowcase() {
           />
         </View>
         <Text style={styles.service}>Painting</Text>
-      </View>
+      </View> */}
     </View>
     </ScrollView>
   );
