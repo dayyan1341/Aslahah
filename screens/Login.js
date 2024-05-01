@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import React, { useContext, useState } from "react";
 import * as SecureStore from "expo-secure-store";
-
+import i18n from "../context/i18n";
 import BlinkerText from "../components/BilnkerText";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
@@ -18,8 +18,10 @@ export default function Login({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [fieldEmpty, setFieldEmpty] = useState();
+  const { signIn, locale } = useAuth(); // Access signIn function and locale from AuthContext
 
-  const { signIn } = useAuth();
+
+  // const { signIn } = useAuth();
 
   const handleLogin = () => {
     if (phoneNumber && password) reqLogin();
@@ -59,9 +61,8 @@ export default function Login({ navigation }) {
       <View style={styles.wrapper}>
         <View style={styles.greeting}>
           {/* <BlinkerText styles={{fontSize:3}}>Hi !</BlinkerText> */}
-          <Text style={styles.greetingmsg}>Hi !</Text>
-          <Text style={styles.greetingmsg}>Welcome to</Text>
-          <Text style={styles.greetingmsg}>AS-LAHAH</Text>
+          <Text style={styles.greetingmsg}>{i18n[locale].login1}</Text>
+          <Text style={styles.greetingmsg}>{i18n[locale].login2}</Text>
         </View>
 
         <View style={styles.loginForm}>
@@ -111,14 +112,10 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     justifyContent: "center",
-    alignItems: "center", // Add alignItems for centering child elements horizontally
+    alignItems: "center", 
     backgroundColor: "#00e9f1",
   },
-  // toprightwrapper:{
-  //   display: 'flex',
-  //   flexDirection :'column',
-  //   alignContent : 'flex-end'
-  // },
+
   topright: {
     position: "absolute",
     top: 50,
