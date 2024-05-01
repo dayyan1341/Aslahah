@@ -17,17 +17,18 @@ const Signup = ({navigation}) => {
 
   const handleSignup = async () => {
     try {
-      const response = await axios.post("https://server.aslahah.com/api/auth/register", {
-        name: name,
-        email: email,
-        password: password,
-        mobileNumber: mobile,
-      });
-      console.log("User registered successfully:", response.data);
-      if(response.user){
-        navigation.navigate("Verify")
-      }
-      // You can handle navigation or any other action upon successful registration here
+      // const response = await axios.post("https://server.aslahah.com/api/auth/register", {
+      //   name: name,
+      //   email: email,
+      //   password: password,
+      //   mobileNumber: mobile,
+      // });
+      // console.log("User registered successfully:", response.data);
+      // if(response.data.user){
+      //   navigation.navigate("Verify",{email,password})
+      // }
+        navigation.navigate("Verify",{email,password})
+
     } catch (error) {
       if (error.response) {
         // The request was made and the server responded with a status code

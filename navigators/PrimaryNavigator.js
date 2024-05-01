@@ -13,6 +13,7 @@ import Coupons from "../screens/Coupons";
 import VerifyOtp from "../screens/VerifyOtp";
 import UpdateProfile from "../screens/UpdateProfile";
 import { useAuth } from "../context/AuthContext";
+import UpdatePassword from "../screens/UpdatePassword";
 
 
 const Stack = createNativeStackNavigator();
@@ -32,6 +33,7 @@ export default function PrimaryNavigator() {
             <Stack.Screen name="CurrOrders" component={CurrOrders} />
             <Stack.Screen name="Coupons" component={Coupons} />
             <Stack.Screen name="updateprof" component={UpdateProfile} />
+            <Stack.Screen name="UpdatePass" component={UpdatePassword} />
           </>
         ) : (
           <>

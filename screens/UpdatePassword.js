@@ -6,42 +6,41 @@ import {
   View,
   ScrollView,
   TextInput,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import axios from "axios";
-import getAuthToken from "../utils/getAuthToken";
+import { useAuth } from "../context/AuthContext";
 
 export default function UpdatePassword({ navigation, route }) {
-  const [pass, setpass] = useState();
-  const [confpass, setconfpass] = useState();
-  const [loading, setLoading] = useState(true);
+  const [oldPass, setOldpass] = useState("");
+  const [pass, setPass] = useState("");
+  const { getToken } = useAuth();
 
   async function UpdatePassword() {
     try {
-      const token = await getAuthToken();
-      if (pass == confpass) {
-        if (token) {
-          const response = await axios.post(
-            "https://server.aslahah.com/api/auth/password",
-            {
-              password: pass,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          console.log("Password updated successfully:", response.data);
-        } else {
-          console.error("Session Expired");
+      const token = getToken();
+      console.log(oldPass);
+      console.log(pass);
+
+      const response = await axios.put(
+        "https://server.aslahah.com/api/auth/password",
+        {
+          oldPassword: oldPass,
+          newPassword: pass
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      }else{
-        Alert.alert("Passwords don't match");
-      }
+      );
+      console.log("Password updated successfully:", response.data);
+      Alert.alert('',"Passwords updated Successfully");
+      navigation.navigate("Profile")
     } catch (error) {
       console.error("Failed to update password", error);
-      Alert.alert("Failed to update password", error.message);
+      Alert.alert("Failed to update password", 'Something went wrong \nDouble check your password');
     }
   }
   return (
@@ -64,19 +63,23 @@ export default function UpdatePassword({ navigation, route }) {
           <Text>{route.params.name}</Text>
         </View>
         <View style={styles.box}>
+
           <View style={styles.infobox}>
+            <Text>Current Password</Text>
             <TextInput
               style={styles.input}
               placeholder="New Password"
-              onChangeText={setpass}
-              value={pass}
+              onChangeText={setOldpass}
+              value={oldPass}
             />
+            <Text>New Password</Text>
             <TextInput
               style={styles.input}
               placeholder="Confirm Password"
-              onChangeText={setconfpass}
-              value={confpass}
+              onChangeText={setPass}
+              value={pass}
             />
+          <Text>New Password must contain at least one uppercase letter, one lowercase letter, one number and one special character</Text>
           </View>
           <Pressable onPress={UpdatePassword} style={styles.rightbox}>
             <Text style={styles.submitbtn}>Change Password</Text>

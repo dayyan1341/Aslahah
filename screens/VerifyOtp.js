@@ -8,21 +8,47 @@ import {
   Alert,
 } from "react-native";
 import axios from "axios";
+import { useAuth } from "../context/AuthContext";
 
-const VerifyOtp = () => {
+const VerifyOtp = ({navigation,route}) => {
   const [otp, setOtp] = useState("");
+  const {email,password} = route.params
+  
+  const { signIn } = useAuth();
+
+  const reqLogin = async () => {
+    try {
+      const response = await axios.post(
+        "https://server.aslahah.com/api/auth/login",
+        {
+          id: email,
+          password: password,
+        }
+      );
+      console.log("User logged in successfully:", response.data.user);
+      signIn(response.data.user.token);
+
+      // navigation.navigate("Tabs");
+    } catch (error) {
+      console.error("Failed to log in:", error.message);
+      Alert.alert("Failed to log in", error.message);
+      navigation.navigate("Login")
+    }
+  };
+
 
   const handleVerify = async () => {
     try {
+     
       const response = await axios.post(
         "https://server.aslahah.com/api/auth/verify",
         {
+          email :email,
           otp: otp,
         }
       );
       console.log("OTP verified successfully:", response.data);
-      navigation.navigate("Tabs");
-      // You can handle navigation or any other action upon successful OTP verification here
+      reqLogin()
     } catch (error) {
       console.error("Failed to verify OTP:", error.message);
       Alert.alert("Failed to verify OTP", error.message);

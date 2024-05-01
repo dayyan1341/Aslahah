@@ -13,38 +13,47 @@ import React from "react";
 export default function Cart({ navigation }) {
 
   const imageMap = {
-    ac : require("../assets/static/ac_repairing.png")
+    ac : require("../assets/static/ac_repairing.png"),
+    lift : require("../assets/static/lift_repairing.png"),
+    carpenter : require("../assets/static/carpentry.png"),
+    painter : require("../assets/static/painter.png"),
+    wall : require("../assets/static/wall_works.png"),
+    plumbing : require("../assets/static/plumbing.png"),
+
   }
 
+
+
+
   const arr = [
-    { name: "AC Repairing", img: require("../assets/static/ac_repairing.png") },
+    { name: "AC Repairing", img: imageMap.ac },
     {
       name: "Lift Repairing",
-      img: require("../assets/static/lift_repairing.png"),
+      img: imageMap.lift,
     },
     {
       name: "Lift Repairing",
-      img: require("../assets/static/lift_repairing.png"),
+      img: imageMap.lift,
     },
     {
       name: "Lift Repairing",
-      img: require("../assets/static/lift_repairing.png"),
+      img: imageMap.lift,
     },
     {
       name: "Lift Repairing",
-      img: require("../assets/static/lift_repairing.png"),
+      img: imageMap.lift,
     },
     {
       name: "Lift Repairing",
-      img: require("../assets/static/lift_repairing.png"),
+      img: imageMap.lift,
     },
     {
       name: "Lift Repairing",
-      img: require("../assets/static/lift_repairing.png"),
+      img: imageMap.lift,
     },
     {
       name: "Lift Repairing",
-      img: require("../assets/static/lift_repairing.png"),
+      img: imageMap.lift,
     },
   ];
 
@@ -97,18 +106,18 @@ export default function Cart({ navigation }) {
           <Text style={styles.headings}>3 Services in cart</Text>
           <View style={styles.infobox}>
             <Text style={styles.infohead}>Charges 1 </Text>
-            <Text style={styles.info}>$104</Text>
+            <Text style={styles.info}>NA</Text>
             <Text style={styles.infohead}>Charges 2</Text>
-            <Text style={styles.info}>$156</Text>
+            <Text style={styles.info}>NA</Text>
             <Text style={styles.infohead}>Charges 3</Text>
-            <Text style={styles.info}>$114</Text>
+            <Text style={styles.info}>NA</Text>
             <View style={styles.separator} />
             <Text style={styles.infohead}>Total</Text>
-            <Text style={styles.info}>$374</Text>
+            <Text style={styles.info}>NA</Text>
           </View>
-          <Pressable style={[styles.bookingBtn, styles.center]}>
+          {/* <Pressable style={[styles.bookingBtn, styles.center]}>
             <Text style={styles.bookingBtnText}>Book Now</Text>
-          </Pressable>
+          </Pressable> */}
         </View>
         {/* </ScrollView> */}
       </View>

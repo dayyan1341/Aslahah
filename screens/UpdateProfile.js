@@ -6,68 +6,78 @@ import {
   View,
   ScrollView,
   TextInput,
+  Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import getAuthToken from "../utils/getAuthToken";
+import { useAuth } from "../context/AuthContext";
 
 export default function UpdateProfile({ navigation, route }) {
-  const [name, setname] = useState(route.params.name);
-  const [email, setemail] = useState(route.params.email);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
-  const [loading, setLoading] = useState(true);
+  const prevName = route.params.name;
+  const prevEmail = route.params.email;
+
+
+  useEffect(()=>{
+    setName(prevName);
+    setEmail(prevEmail);
+  },[])
+
+  const { getToken } = useAuth();
 
   async function UpdateProf() {
+    console.log(name);
+    console.log(email);
+    const data = {};
+    if(name == prevName && email == prevEmail){
+      Alert.alert('',"Change Something")
+      return
+    }
+    if (name !== prevName) data.name = name;
+    if (email !== prevEmail) data.email = email;
+    console.log(data);
     try {
-        const token = await getAuthToken();
-     if(token){ 
-        const response = await axios.post(
-        "https://server.aslahah.com/api/auth/profile",
-        {
-            name: name,
-            email: email,
-        },
+      const token = getToken();
+
+      const response = await axios.put(
+        "https://server.aslahah.com/api/auth/profile", data ,
         {
           headers: {
-            Authorization:
-            `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
       console.log("Updated successfully:", response.data);
-    }else {
-        console.error("Session Expired");
-    }
+      Alert.alert("Profile Updated!",`Name : ${response.data.user.name}\nEmail : ${response.data.user.email}`);
+      navigation.navigate("Profile");
     } catch (error) {
       console.error("Failed to Update profile", error);
-      Alert.alert("Failed to Update profile", error.message);
+      Alert.alert("Failed to Update profile");
     }
   }
-  async function UpdatePassword() {
-    try {
-        const token = await getAuthToken();
-     if(token){ 
-        const response = await axios.post(
-        "https://server.aslahah.com/api/auth/password",
-        {
-          password: pass,
-        },
-        {
-          headers: {
-            Authorization:
-            `Bearer ${token}`,
-          },
-        }
-      );
-      console.log("Password updated successfully:", response.data);
-    }else {
-        console.error("Session Expired");
-    }
-    } catch (error) {
-      console.error("Failed to update password", error);
-      Alert.alert("Failed to update password", error.message);
-    }
-  }
+  // async function UpdatePassword() {
+  //   try {
+  //     const token = getToken();
+
+  //     const response = await axios.post(
+  //       "https://server.aslahah.com/api/auth/password",
+  //       {
+  //         password: pass,
+  //       },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+  //     console.log("Password updated successfully:", response.data);
+  //   } catch (error) {
+  //     console.error("Failed to update password", error);
+  //     Alert.alert("Failed to update password", error.message);
+  //   }
+  // }
   return (
     <View style={styles.wrapper}>
       <View style={styles.bellandback}>
@@ -93,14 +103,14 @@ export default function UpdateProfile({ navigation, route }) {
             <TextInput
               style={styles.input}
               placeholder="Phone Number"
-              onChangeText={setname}
+              onChangeText={setName}
               value={name}
             />
             <Text style={styles.infohead}>E-Mail</Text>
             <TextInput
               style={styles.input}
               placeholder="email"
-              onChangeText={setemail}
+              onChangeText={setEmail}
               value={email}
             />
           </View>
@@ -259,8 +269,8 @@ const styles = StyleSheet.create({
   infohead: {
     width: "45%",
   },
-  blurbox:{
-    zIndex:10,
-    opacity:0.2,
+  blurbox: {
+    zIndex: 10,
+    opacity: 0.2,
   },
 });

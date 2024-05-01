@@ -10,8 +10,6 @@ import {
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
-import getAuthToken from "../utils/getAuthToken";
-import { useFocusEffect } from "@react-navigation/native";
 
 export default function Profile({ navigation }) {
   const [name, setname] = useState([]);
@@ -45,14 +43,9 @@ export default function Profile({ navigation }) {
         setname(response.data.user.name);
         setemail(response.data.user.email);
         setphone(response.data.user.mobileNumber);
-      } else {
-        console.error("User not Logged in");
-        Alert.alert("User not Logged in");
-        navigation.navigate(Login);
-      }
     } catch (error) {
       console.error("Something went wrong while fetching profile", error);
-      Alert.alert("Something went wrong while fetching profile", error.message);
+      Alert.alert("Something went wrong while fetching profile");
     }
   }
   return (
@@ -110,7 +103,7 @@ export default function Profile({ navigation }) {
           <View style={styles.security}>
             <Pressable
               onPress={() => {
-                navigation.navigate("updatepass", {
+                navigation.navigate("UpdatePass", {
                   name,
                 });
               }}
@@ -144,7 +137,7 @@ export default function Profile({ navigation }) {
               style={styles.followpic}
             />
           </Pressable>
-          <Pressable style={styles.linkbox}>
+          <Pressable style={styles.linkbox} onPress={signOut}>
             <Text style={styles.signoutbtn}>Sign Out</Text>
           </Pressable>
           <Pressable style={styles.rightbox}>
