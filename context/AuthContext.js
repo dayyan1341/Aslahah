@@ -1,15 +1,18 @@
 // AuthContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
+import { getLocales } from 'expo-localization';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [authToken, setAuthToken] = useState(null);
+  const [locale, setLocale] = useState(getLocales()[0].languageCode);
 
   useEffect(() => {
     checkStoredToken();
+    setLocale(getLocales()[0].languageCode);
   }, []);
 
   const checkStoredToken = async () => {
@@ -51,7 +54,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, signIn, signOut, getToken }}>
+    <AuthContext.Provider value={{ isLoggedIn, signIn, signOut, getToken ,locale, setLocale}}>
       {children}
     </AuthContext.Provider>
   );
