@@ -10,6 +10,8 @@ import {
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
+import getAuthToken from "../utils/getAuthToken";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function Profile({ navigation }) {
   const [name, setname] = useState([]);
@@ -33,19 +35,24 @@ export default function Profile({ navigation }) {
       const response = await axios.get(
         "https://server.aslahah.com/api/auth/profile",
 
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log("User details found:", response.data);
-      setname(response.data.user.name);
-      setemail(response.data.user.email);
-      setphone(response.data.user.mobileNumber);
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log("User Details:", response.data);
+        setname(response.data.user.name);
+        setemail(response.data.user.email);
+        setphone(response.data.user.mobileNumber);
+      } else {
+        console.error("User not Logged in");
+        Alert.alert("User not Logged in");
+        navigation.navigate(Login);
+      }
     } catch (error) {
-      console.error("Failed to book in:", error);
-      Alert.alert("Failed to book in");
+      console.error("Something went wrong while fetching profile", error);
+      Alert.alert("Something went wrong while fetching profile", error.message);
     }
   }
   return (
@@ -101,7 +108,14 @@ export default function Profile({ navigation }) {
           </Pressable>
           <Text style={styles.headings}>Security</Text>
           <View style={styles.security}>
-            <Pressable style={styles.linkbox}>
+            <Pressable
+              onPress={() => {
+                navigation.navigate("updatepass", {
+                  name,
+                });
+              }}
+              style={styles.linkbox}
+            >
               <Text>Change Password</Text>
               <Image
                 source={require("../assets/static/20240228_031624_0026.png")}
@@ -130,10 +144,10 @@ export default function Profile({ navigation }) {
               style={styles.followpic}
             />
           </Pressable>
-          <Pressable style={styles.linkbox} onPress={signOut}>
+          <Pressable style={styles.linkbox}>
             <Text style={styles.signoutbtn}>Sign Out</Text>
           </Pressable>
-          <Pressable style={styles.rightbox} onPress={getProf}>
+          <Pressable style={styles.rightbox}>
             <Text style={styles.contactbtn}>Contact Us</Text>
             <Image
               source={require("../assets/static/20240228_031624_0029.png")}

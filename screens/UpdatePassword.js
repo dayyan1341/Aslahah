@@ -11,58 +11,34 @@ import React, { useState } from "react";
 import axios from "axios";
 import getAuthToken from "../utils/getAuthToken";
 
-export default function UpdateProfile({ navigation, route }) {
-  const [name, setname] = useState(route.params.name);
-  const [email, setemail] = useState(route.params.email);
-
+export default function UpdatePassword({ navigation, route }) {
+  const [pass, setpass] = useState();
+  const [confpass, setconfpass] = useState();
   const [loading, setLoading] = useState(true);
 
-  async function UpdateProf() {
-    try {
-        const token = await getAuthToken();
-     if(token){ 
-        const response = await axios.post(
-        "https://server.aslahah.com/api/auth/profile",
-        {
-            name: name,
-            email: email,
-        },
-        {
-          headers: {
-            Authorization:
-            `Bearer ${token}`,
-          },
-        }
-      );
-      console.log("Updated successfully:", response.data);
-    }else {
-        console.error("Session Expired");
-    }
-    } catch (error) {
-      console.error("Failed to Update profile", error);
-      Alert.alert("Failed to Update profile", error.message);
-    }
-  }
   async function UpdatePassword() {
     try {
-        const token = await getAuthToken();
-     if(token){ 
-        const response = await axios.post(
-        "https://server.aslahah.com/api/auth/password",
-        {
-          password: pass,
-        },
-        {
-          headers: {
-            Authorization:
-            `Bearer ${token}`,
-          },
+      const token = await getAuthToken();
+      if (pass == confpass) {
+        if (token) {
+          const response = await axios.post(
+            "https://server.aslahah.com/api/auth/password",
+            {
+              password: pass,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          console.log("Password updated successfully:", response.data);
+        } else {
+          console.error("Session Expired");
         }
-      );
-      console.log("Password updated successfully:", response.data);
-    }else {
-        console.error("Session Expired");
-    }
+      }else{
+        Alert.alert("Passwords don't match");
+      }
     } catch (error) {
       console.error("Failed to update password", error);
       Alert.alert("Failed to update password", error.message);
@@ -85,38 +61,29 @@ export default function UpdateProfile({ navigation, route }) {
             source={require("../assets/static/20240221_000353_0007.png")}
             style={styles.profpic}
           />
-          <Text>{name}</Text>
+          <Text>{route.params.name}</Text>
         </View>
         <View style={styles.box}>
           <View style={styles.infobox}>
-            <Text style={styles.infohead}>Name</Text>
             <TextInput
               style={styles.input}
-              placeholder="Phone Number"
-              onChangeText={setname}
-              value={name}
+              placeholder="New Password"
+              onChangeText={setpass}
+              value={pass}
             />
-            <Text style={styles.infohead}>E-Mail</Text>
             <TextInput
               style={styles.input}
-              placeholder="email"
-              onChangeText={setemail}
-              value={email}
+              placeholder="Confirm Password"
+              onChangeText={setconfpass}
+              value={confpass}
             />
           </View>
-          <Pressable onPress={UpdateProf} style={styles.rightbox}>
-            <Text style={styles.submitbtn}>Submit</Text>
+          <Pressable onPress={UpdatePassword} style={styles.rightbox}>
+            <Text style={styles.submitbtn}>Change Password</Text>
           </Pressable>
           <View style={styles.blurbox}>
             <Text style={styles.headings}>Security</Text>
             <View style={styles.security}>
-              <Pressable style={styles.linkbox}>
-                <Text>Change Password</Text>
-                <Image
-                  source={require("../assets/static/20240228_031624_0026.png")}
-                  style={styles.followpic}
-                />
-              </Pressable>
               <Pressable style={styles.linkbox}>
                 <Text>Change mobile number</Text>
                 <Image
@@ -246,7 +213,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     padding: 10,
     backgroundColor: "limegreen",
-    width: 90,
+    width: 150,
     borderRadius: 38,
   },
   infobox: {
@@ -259,8 +226,8 @@ const styles = StyleSheet.create({
   infohead: {
     width: "45%",
   },
-  blurbox:{
-    zIndex:10,
-    opacity:0.2,
+  blurbox: {
+    zIndex: 10,
+    opacity: 0.2,
   },
 });
