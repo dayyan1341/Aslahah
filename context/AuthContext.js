@@ -12,23 +12,14 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     checkStoredToken();
-  
-    // Set up a listener to monitor changes in preferred locales
-    const intervalId = setInterval(() => {
-      const newLocale = getLocales()[0].languageCode;
-      if (newLocale !== locale) {
-        setLocale(newLocale);
-      }
-    }, 1000);
-  
-    // Clean up the listener when the component unmounts
-    return () => clearInterval(intervalId);
+    
+    if(locale !=  'ar') setLocale('en')
+    console.log(locale)
   }, []); // Remove locale from the dependency array
   
-  const handleLocalesChange = () => {
-    // Update locale when preferred locales change
-    setLocale(getLocales()[0].languageCode);
-  };
+  // const handleLocalesChange = () => {
+  //   setLocale(getLocales()[0].languageCode);
+  // };
   
   const checkStoredToken = async () => {
     try {

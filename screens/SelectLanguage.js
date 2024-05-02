@@ -28,21 +28,21 @@ export default function SelectLanguage() {
       <Pressable
         android_ripple={{ color: "#eee", radius: 80 }}
         style={styles.btn}
-        onPress={() => handleLocaleSelection('auto')} // Set locale to auto detect
+        onPress={() => navigation.navigate('Login') } 
       >
         <Text style={styles.btnText}>Device (auto detect)</Text>
       </Pressable>
       <Pressable
         android_ripple={{ color: "#eee", radius: 60 }}
         style={styles.btn}
-        onPress={() => handleLocaleSelection('en')} // Set locale to English
+        onPress={() => handleLocaleSelection('en')} 
       >
         <Text style={styles.btnText}>English</Text>
       </Pressable>
       <Pressable
         android_ripple={{ color: "#eee", radius: 60 }}
         style={styles.btn}
-        onPress={() => handleLocaleSelection('ar')} // Set locale to Arabic
+        onPress={() => handleLocaleSelection('ar')}
       >
         <Text style={styles.btnText}>Arabic</Text>
       </Pressable>

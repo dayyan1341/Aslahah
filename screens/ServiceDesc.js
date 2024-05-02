@@ -36,6 +36,15 @@ export default function ServiceDesc({ route, navigation }) {
             voluptates, aliquam hic mollitia repudiandae rem natus perspiciatis
             id quam.
           </Text>
+          <Text style={styles.headings}>Our Expertise</Text>
+          <Text style={styles.description}>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, optio
+            quis. Reprehenderit fugit ducimus porro fuga, fugiat autem alias,
+            assumenda ex ut impedit facere placeat provident a animi ipsam
+            eveniet maiores esse nihil non at vitae. Itaque, ad ullam,
+            voluptates, aliquam hic mollitia repudiandae rem natus perspiciatis
+            id quam.
+          </Text>
         </View>
         {/* <View style={styles.box}>
           <Text style={styles.headings}>Our Expertise:</Text>

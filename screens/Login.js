@@ -18,7 +18,7 @@ export default function Login({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [fieldEmpty, setFieldEmpty] = useState();
-  const { signIn, locale } = useAuth(); // Access signIn function and locale from AuthContext
+  const { signIn, locale } = useAuth(); 
 
 
   // const { signIn } = useAuth();

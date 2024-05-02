@@ -1,57 +1,62 @@
-import { StyleSheet, Text, View, Image,ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  Pressable,
+} from "react-native";
 import React from "react";
+import { useNavigation } from "@react-navigation/native";
 
 export default function ServicesShowcase() {
+  const navigation = useNavigation();
   return (
-    <ScrollView horizontal={true} > 
-
-    <View style={styles.servicesShowcase}>
-      <View style={styles.servicebox}>
-        <View style={styles.serviceimg}>
-          <Image
-            source={require("../assets/static/20240221_000353_0011.png")}
-            style={styles.img}
-          />
+    <ScrollView horizontal={true}>
+      <View style={styles.servicesShowcase}>
+        <View style={styles.servicebox}>
+          <Pressable
+            onPress={() => {
+              navigation.navigate("Description", { service: "Ac Repairment" });
+            }}
+          >
+            <View style={styles.serviceimg}>
+              <Image
+                source={require("../assets/static/20240221_000353_0011.png")}
+                style={styles.img}
+              />
+            </View>
+          </Pressable>
+          <Text style={styles.service}>AC Repairment</Text>
         </View>
-        <Text style={styles.service}>AC Repairment</Text>
-      </View>
-      <View style={styles.servicebox}>
-        <View style={styles.serviceimg}>
-          <Image
-            source={require("../assets/static/20240221_000353_0012.png")}
-            style={styles.img}
-          />
+        <View style={styles.servicebox}>
+          <View style={styles.serviceimg}>
+            <Image
+              source={require("../assets/static/20240221_000353_0012.png")}
+              style={styles.img}
+            />
+          </View>
+          <Text style={styles.service}>Carpentry</Text>
         </View>
-        <Text style={styles.service}>Carpentry</Text>
-      </View>
-      <View style={styles.servicebox}>
-        <View style={styles.serviceimg}>
-          <Image
-            source={require("../assets/static/20240221_000353_0013.png")}
-            style={styles.img}
-          />
+        <View style={styles.servicebox}>
+          <View style={styles.serviceimg}>
+            <Image
+              source={require("../assets/static/20240221_000353_0013.png")}
+              style={styles.img}
+            />
+          </View>
+          <Text style={styles.service}>Plumbing</Text>
         </View>
-        <Text style={styles.service}>Plumbing</Text>
-      </View>
-      <View style={styles.servicebox}>
-        <View style={styles.serviceimg}>
-          <Image
-            source={require("../assets/static/20240221_000353_0014.png")}
-            style={styles.img}
-          />
+        <View style={styles.servicebox}>
+          <View style={styles.serviceimg}>
+            <Image
+              source={require("../assets/static/20240221_000353_0014.png")}
+              style={styles.img}
+            />
+          </View>
+          <Text style={styles.service}>Painting</Text>
         </View>
-        <Text style={styles.service}>Painting</Text>
-      </View>
-      {/* <View style={styles.servicebox}>
-        <View style={styles.serviceimg}>
-          <Image
-            source={require("../assets/static/20240221_000353_0014.png")}
-            style={styles.img}
-          />
-        </View>
-        <Text style={styles.service}>Painting</Text>
-      </View> */}
-      {/* <View style={styles.servicebox}>
+        {/* <View style={styles.servicebox}>
         <View style={styles.serviceimg}>
           <Image
             source={require("../assets/static/20240221_000353_0014.png")}
@@ -60,7 +65,16 @@ export default function ServicesShowcase() {
         </View>
         <Text style={styles.service}>Painting</Text>
       </View> */}
-    </View>
+        {/* <View style={styles.servicebox}>
+        <View style={styles.serviceimg}>
+          <Image
+            source={require("../assets/static/20240221_000353_0014.png")}
+            style={styles.img}
+          />
+        </View>
+        <Text style={styles.service}>Painting</Text>
+      </View> */}
+      </View>
     </ScrollView>
   );
 }
