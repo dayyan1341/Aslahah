@@ -61,36 +61,36 @@ export default function Login({ navigation }) {
       <View style={styles.wrapper}>
         <View style={styles.greeting}>
           {/* <BlinkerText styles={{fontSize:3}}>Hi !</BlinkerText> */}
-          <Text style={styles.greetingmsg}>{i18n[locale].login1}</Text>
-          <Text style={styles.greetingmsg}>{i18n[locale].login2}</Text>
+          <Text style={styles.greetingmsg}>{i18n[locale].hi}</Text>
+          <Text style={styles.greetingmsg}>{i18n[locale].welcomeToAslahah}</Text>
         </View>
 
         <View style={styles.loginForm}>
-          <Text style={styles.detailinfo}>Please enter details</Text>
+          <Text style={styles.detailinfo}>{i18n[locale].pleaseEnterDetails}</Text>
           <View style={styles.inputbox}>
             <TextInput
               style={styles.input}
-              placeholder="Phone Number"
+              placeholder={i18n[locale].phoneNumber}
               onChangeText={setPhoneNumber}
               value={phoneNumber}
               keyboardType="phone-pad"
             />
             <TextInput
               style={styles.input}
-              placeholder="Password"
+              placeholder={i18n[locale].password}
               onChangeText={setPassword}
               value={password}
               secureTextEntry={true}
             />
           </View>
           <View style={styles.miscbox}>
-            <BlinkerText style={styles.miscboxmsg}>Remember Me</BlinkerText>
-            <Text style={styles.miscboxmsg}>Forgot Password?</Text>
+            <BlinkerText style={styles.miscboxmsg}>{i18n[locale].rememberMe}</BlinkerText>
+            <Text style={styles.miscboxmsg}>{i18n[locale].forgotPassword}</Text>
           </View>
 
           <View style={styles.loginbtn}>
             <Pressable onPress={handleLogin} android_ripple>
-              <Text style={styles.loginbtnmsg}>Log In</Text>
+              <Text style={styles.loginbtnmsg}>{i18n[locale].loginButton}</Text>
             </Pressable>
           </View>
         </View>
@@ -98,8 +98,8 @@ export default function Login({ navigation }) {
       <View style={styles.signupbtn}>
         <Pressable onPress={() => navigation.navigate("SignUp")}>
           <Text>
-            Don't have an account ?{" "}
-            <Text style={{ fontSize: 15, fontWeight: "bold" }}>Sign Up</Text>
+          {i18n[locale].dontHaveAccount}
+            <Text style={{ fontSize: 15, fontWeight: "bold" }}>{i18n[locale].signUp}</Text>
           </Text>
         </Pressable>
       </View>
