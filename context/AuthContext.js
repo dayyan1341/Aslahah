@@ -15,6 +15,8 @@ export const AuthProvider = ({ children }) => {
     
     if(locale !=  'ar') setLocale('en')
     console.log(locale)
+    console.log("token : "+authToken)
+
   }, []); // Remove locale from the dependency array
   
   // const handleLocalesChange = () => {

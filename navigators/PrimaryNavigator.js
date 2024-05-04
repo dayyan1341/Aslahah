@@ -7,14 +7,13 @@ import SelectLanguage from "../screens/SelectLanguage";
 import BottomTabNavigator from "../navigators/BottomTabNavigator";
 import ServiceForm from "../screens/ServiceForm";
 import ServiceDesc from "../screens/ServiceDesc";
-import PrevOrders from "../screens/PrevOrders";
-import CurrOrders from "../screens/CurrOrders";
 import Coupons from "../screens/Coupons";
 import VerifyOtp from "../screens/VerifyOtp";
 import UpdateProfile from "../screens/UpdateProfile";
 import { useAuth } from "../context/AuthContext";
 import UpdatePassword from "../screens/UpdatePassword";
 import Notifications from "../screens/Notifications";
+import ForgotPass from "../screens/ForgotPass"
 
 
 const Stack = createNativeStackNavigator();
@@ -29,9 +28,7 @@ export default function PrimaryNavigator() {
           <>
             <Stack.Screen name="Tabs" component={BottomTabNavigator} />
             <Stack.Screen name="Description" component={ServiceDesc} />
-            <Stack.Screen name="Form" component={ServiceForm} />
-            <Stack.Screen name="PrevOrders" component={PrevOrders} />
-            <Stack.Screen name="CurrOrders" component={CurrOrders} />
+            <Stack.Screen name="Form" component={ServiceForm} />           
             <Stack.Screen name="Coupons" component={Coupons} />
             <Stack.Screen name="updateprof" component={UpdateProfile} />
             <Stack.Screen name="UpdatePass" component={UpdatePassword} />
@@ -42,6 +39,7 @@ export default function PrimaryNavigator() {
             <Stack.Screen name="Welcome" component={Welcome} />
             <Stack.Screen name="SelectLanguage" component={SelectLanguage} />
             <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Forgot" component={ForgotPass} />
             <Stack.Screen name="SignUp" component={SignUp} />
             <Stack.Screen name="Verify" component={VerifyOtp} />
           </>

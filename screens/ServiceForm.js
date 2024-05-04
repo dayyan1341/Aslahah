@@ -14,6 +14,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import axios from "axios";
 import formatTime from "../context/formatTime";
+import { useAuth } from "../context/AuthContext";
 
 export default function ServiceForm({ route, navigation }) {
   const ins = useSafeAreaInsets();
@@ -24,6 +25,8 @@ export default function ServiceForm({ route, navigation }) {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [istimePickerVisible, settimePickerVisibility] = useState(false);
   const { service } = route.params;
+  const {getToken} = useAuth()
+
 
   const handleBooking = async () => {
     console.log(
@@ -36,6 +39,7 @@ export default function ServiceForm({ route, navigation }) {
     );
 
     try {
+      const token = getToken()
       const response = await axios.post(
         "https://server.aslahah.com/api/booking/create",
         {
@@ -47,8 +51,7 @@ export default function ServiceForm({ route, navigation }) {
         },
         {
           headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MmUzNTViZWExM2Q0MTEzZjBmNTI5OCIsIm1vYmlsZU51bWJlciI6IjYzOTY0MTY1NTciLCJlbWFpbCI6ImF6aGFua2FtaWwwQGdtYWlsLmNvbSIsImlhdCI6MTcxNDQ3Mjc1OCwiZXhwIjoxNzE5NjU2NzU4fQ.J6ofgZBCrVi7S6y3TaGCRQdxjvYgkh_5dTw5TPRpdjI",
+            Authorization: `Bearer ${token}`,
           },
         }
       );

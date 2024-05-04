@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import { StatusBar } from "expo-status-bar";
 import PrimaryNavigator from "./navigators/PrimaryNavigator";
 import { SafeAreaProvider } from "react-native-safe-area-context";

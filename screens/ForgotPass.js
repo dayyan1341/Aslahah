@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   StyleSheet,
   Image,
@@ -5,45 +6,59 @@ import {
   TextInput,
   Pressable,
   View,
-  Alert,
 } from "react-native";
-import React, { useContext, useState } from "react";
-import * as SecureStore from "expo-secure-store";
-import i18n from "../context/i18n";
-import BlinkerText from "../components/BilnkerText";
 import axios from "axios";
-import { useAuth } from "../context/AuthContext";
 
-export default function Login({ navigation }) {
-  const [phoneNumber, setPhoneNumber] = useState("");
+const Signup = ({navigation}) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [fieldEmpty, setFieldEmpty] = useState();
-  const { signIn, locale } = useAuth(); 
+  const [mobile, setMobile] = useState("");
 
-
-  const handleLogin = () => {
-    if (phoneNumber && password) reqLogin();
-    else setFieldEmpty(true);
-  };
-
-  const reqLogin = async () => {
+  const handleSignup = async () => {
     try {
-      const response = await axios.post(
-        "https://server.aslahah.com/api/auth/login",
-        {
-          id: phoneNumber,
-          password: password,
-        }
-      );
-      console.log("User logged in successfully:", response.data.user);
-      signIn(response.data.user.token);
+      const response = await axios.post("https://server.aslahah.com/api/auth/register", {
+        name: name,
+        email: email,
+        password: password,
+        mobileNumber: mobile,
+      });
+      console.log("User registered successfully:", response.data);
+      if(response.data.user){
+        navigation.navigate("Verify",{email,password})
+      }
+        navigation.navigate("Login")
 
-      // navigation.navigate("Tabs");
     } catch (error) {
-      console.error("Failed to log in:", error.message);
-      Alert.alert("Failed to log in", error.message);
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error(
+          "Failed to register user. Server responded with:",
+          error.response.data
+        );
+        console.error("Status code:", error.response.status);
+        Alert.alert(
+          "Failed to register user",
+          error.response.data.message || "Unknown error occurred"
+        );
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error(
+          "Failed to register user. No response received from server."
+        );
+        Alert.alert(
+          "Failed to register user",
+          "No response received from server"
+        );
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error("Failed to register user. Error:", error.message);
+        Alert.alert("Failed to register user", error.message);
+      }
     }
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.topright}>
@@ -58,64 +73,61 @@ export default function Login({ navigation }) {
       </View>
       <View style={styles.wrapper}>
         <View style={styles.greeting}>
-          {/* <BlinkerText styles={{fontSize:3}}>Hi !</BlinkerText> */}
-          <Text style={styles.greetingmsg}>{i18n[locale].login1}</Text>
-          <Text style={styles.greetingmsg}>{i18n[locale].login2}</Text>
+          <Text style={styles.greetingmsg}>Register to</Text>
+          <Text style={styles.greetingmsg}>AS-LAHAH</Text>
         </View>
 
         <View style={styles.loginForm}>
           <Text style={styles.detailinfo}>Please enter details</Text>
           <View style={styles.inputbox}>
             <TextInput
+              placeholder="Email"
+              value={email}
+              onChangeText={(text) => setEmail(text)}
               style={styles.input}
-              placeholder="Phone Number"
-              onChangeText={setPhoneNumber}
-              value={phoneNumber}
-              keyboardType="phone-pad"
             />
-            <TextInput
-              style={styles.input}
+            {/* <TextInput
               placeholder="Password"
-              onChangeText={setPassword}
               value={password}
+              onChangeText={(text) => setPassword(text)}
               secureTextEntry={true}
+              style={styles.input}
+            /> */}
+            <TextInput
+              placeholder="Otp"
+              value={mobile}
+              onChangeText={(text) => setMobile(text)}
+              keyboardType="phone-pad"
+              style={styles.input}
             />
-          </View>
-          <View style={styles.miscbox}>
-            <BlinkerText style={styles.miscboxmsg}>Remember Me</BlinkerText>
-            <Pressable onPress={()=>{navigation.navigate("Forgot")}}>
-            <Text style={styles.miscboxmsg}>Forgot Password?</Text>
-            </Pressable>
           </View>
 
           <View style={styles.loginbtn}>
-            <Pressable onPress={handleLogin} android_ripple>
-              <Text style={styles.loginbtnmsg}>Log In</Text>
+            <Pressable onPress={handleSignup}>
+              <Text style={styles.loginbtnmsg}>Send Otp</Text>
             </Pressable>
           </View>
         </View>
       </View>
-      <View style={styles.signupbtn}>
-        <Pressable onPress={() => navigation.navigate("SignUp")}>
-          <Text>
-            Don't have an account ?{" "}
-            <Text style={{ fontSize: 15, fontWeight: "bold" }}>Sign Up</Text>
-          </Text>
-        </Pressable>
-      </View>
     </View>
   );
-}
+};
+
+export default Signup;
 
 const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
     justifyContent: "center",
-    alignItems: "center", 
+    alignItems: "center", // Add alignItems for centering child elements horizontally
     backgroundColor: "#00e9f1",
   },
-
+  // toprightwrapper:{
+  //   display: 'flex',
+  //   flexDirection :'column',
+  //   alignContent : 'flex-end'
+  // },
   topright: {
     position: "absolute",
     top: 50,

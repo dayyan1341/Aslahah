@@ -5,6 +5,7 @@ import Services from "../screens/Services";
 import Cart from "../screens/Cart";
 import Profile from "../screens/Profile";
 import { Image,StyleSheet, View } from "react-native";
+import SidebarNavigator from "./SidebarNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -66,7 +67,7 @@ export default function BottomTabNavigator() {
             ),
           }}
           name="Cart"
-          component={Cart}
+          component={SidebarNavigator}
         />
         <Tab.Screen
           options={{
