@@ -10,13 +10,14 @@ import {
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
+import i18n from "../context/i18n";
 
 export default function Profile({ navigation }) {
   const [name, setname] = useState([]);
   const [email, setemail] = useState([]);
   const [phone, setphone] = useState([]);
 
-  const { signOut, getToken } = useAuth();
+  const { signOut, getToken,locale } = useAuth();
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -33,16 +34,16 @@ export default function Profile({ navigation }) {
       const response = await axios.get(
         "https://server.aslahah.com/api/auth/profile",
 
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        console.log("User Details:", response.data);
-        setname(response.data.user.name);
-        setemail(response.data.user.email);
-        setphone(response.data.user.mobileNumber);
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("User Details:", response.data);
+      setname(response.data.user.name);
+      setemail(response.data.user.email);
+      setphone(response.data.user.mobileNumber);
     } catch (error) {
       console.error("Something went wrong while fetching profile", error);
       Alert.alert("Something went wrong while fetching profile");
@@ -53,11 +54,11 @@ export default function Profile({ navigation }) {
       <View style={styles.bellandback}>
         <Pressable>
           {/* <Image
-            source={require("../assets/static/20240228_031624_0025.png")}
+            source={require("../assets/static/back_left.png")}
             style={styles.btnimg}
           /> */}
         </Pressable>
-        <Pressable onPress={()=>navigation.navigate("Notifications")}>
+        <Pressable onPress={() => navigation.navigate("Notifications")}>
           <Image
             source={require("../assets/static/20240228_031624_0024.png")}
             style={styles.btnimg}
@@ -66,7 +67,7 @@ export default function Profile({ navigation }) {
       </View>
       <ScrollView>
         <View style={styles.profbox}>
-          <Text style={styles.headings}>Profile</Text>
+          <Text style={styles.headings}>{i18n[locale].profile}</Text>
           <Image
             source={require("../assets/static/20240221_000353_0007.png")}
             style={styles.profpic}
@@ -74,13 +75,13 @@ export default function Profile({ navigation }) {
           <Text>{name}</Text>
         </View>
         <View style={styles.box}>
-          <Text style={styles.headings}>Personal Information</Text>
+          <Text style={styles.headings}>{i18n[locale].personalInformation}</Text>
           <View style={styles.infobox}>
-            <Text style={styles.infohead}>Name</Text>
+            <Text style={styles.infohead}>{i18n[locale].name}</Text>
             <Text style={styles.info}>{name}</Text>
-            <Text style={styles.infohead}>E-Mail</Text>
+            <Text style={styles.infohead}>{i18n[locale].email}</Text>
             <Text style={styles.info}>{email}</Text>
-            <Text style={styles.infohead}>Phone</Text>
+            <Text style={styles.infohead}>{i18n[locale].phone}</Text>
             <Text style={styles.info}>{phone}</Text>
           </View>
           <Pressable
@@ -93,13 +94,13 @@ export default function Profile({ navigation }) {
             }}
             style={styles.rightbox}
           >
-            <Text style={styles.editprofbtn}>Edit Profile</Text>
+            <Text style={styles.editprofbtn}>{i18n[locale].editProfile}</Text>
             <Image
               source={require("../assets/static/20240228_031624_0026.png")}
               style={styles.followpic}
             />
           </Pressable>
-          <Text style={styles.headings}>Security</Text>
+          <Text style={styles.headings}>{i18n[locale].security}</Text>
           <View style={styles.security}>
             <Pressable
               onPress={() => {
@@ -109,39 +110,39 @@ export default function Profile({ navigation }) {
               }}
               style={styles.linkbox}
             >
-              <Text>Change Password</Text>
+              <Text>{i18n[locale].changePassword}</Text>
               <Image
                 source={require("../assets/static/20240228_031624_0026.png")}
                 style={styles.followpic}
               />
             </Pressable>
-            <Pressable style={styles.linkbox}>
-              <Text>Change mobile number</Text>
+            {/* <Pressable style={styles.linkbox}>
+              <Text>{i18n[locale].changeMobileNumber}</Text>
               <Image
                 source={require("../assets/static/20240228_031624_0026.png")}
                 style={styles.followpic}
               />
-            </Pressable>
+            </Pressable> */}
           </View>
           <Pressable style={styles.linkbox}>
-            <Text style={styles.headings}>About Us</Text>
+            <Text style={styles.headings}>{i18n[locale].aboutUs}</Text>
             <Image
               source={require("../assets/static/20240228_031624_0028.png")}
               style={styles.followpic}
             />
           </Pressable>
           <Pressable style={styles.linkbox}>
-            <Text style={styles.headings}>FAQs</Text>
+            <Text style={styles.headings}>{i18n[locale].faqs}</Text>
             <Image
               source={require("../assets/static/20240228_031624_0027.png")}
               style={styles.followpic}
             />
           </Pressable>
           <Pressable style={styles.linkbox} onPress={signOut}>
-            <Text style={styles.signoutbtn}>Sign Out</Text>
+            <Text style={styles.signoutbtn}>{i18n[locale].signOut}</Text>
           </Pressable>
           <Pressable style={styles.rightbox}>
-            <Text style={styles.contactbtn}>Contact Us</Text>
+            <Text style={styles.contactbtn}>{i18n[locale].contactUs}</Text>
             <Image
               source={require("../assets/static/20240228_031624_0029.png")}
               style={styles.followpiccontact}

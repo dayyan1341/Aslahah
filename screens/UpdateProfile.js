@@ -11,29 +11,31 @@ import {
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
+import i18n from "../context/i18n";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function UpdateProfile({ navigation, route }) {
+  const ins = useSafeAreaInsets();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
   const prevName = route.params.name;
   const prevEmail = route.params.email;
 
-
-  useEffect(()=>{
+  useEffect(() => {
     setName(prevName);
     setEmail(prevEmail);
-  },[])
+  }, []);
 
-  const { getToken } = useAuth();
+  const { getToken,locale } = useAuth();
 
   async function UpdateProf() {
     console.log(name);
     console.log(email);
     const data = {};
-    if(name == prevName && email == prevEmail){
-      Alert.alert('',"Change Something")
-      return
+    if (name == prevName && email == prevEmail) {
+      Alert.alert("", "Change Something");
+      return;
     }
     if (name !== prevName) data.name = name;
     if (email !== prevEmail) data.email = email;
@@ -42,7 +44,8 @@ export default function UpdateProfile({ navigation, route }) {
       const token = getToken();
 
       const response = await axios.put(
-        "https://server.aslahah.com/api/auth/profile", data ,
+        "https://server.aslahah.com/api/auth/profile",
+        data,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -50,40 +53,23 @@ export default function UpdateProfile({ navigation, route }) {
         }
       );
       console.log("Updated successfully:", response.data);
-      Alert.alert("Profile Updated!",`Name : ${response.data.user.name}\nEmail : ${response.data.user.email}`);
+      Alert.alert(
+        "Profile Updated!",
+        `Name : ${response.data.user.name}\nEmail : ${response.data.user.email}`
+      );
       navigation.navigate("Profile");
     } catch (error) {
       console.error("Failed to Update profile", error);
       Alert.alert("Failed to Update profile");
     }
   }
-  // async function UpdatePassword() {
-  //   try {
-  //     const token = getToken();
 
-  //     const response = await axios.post(
-  //       "https://server.aslahah.com/api/auth/password",
-  //       {
-  //         password: pass,
-  //       },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     );
-  //     console.log("Password updated successfully:", response.data);
-  //   } catch (error) {
-  //     console.error("Failed to update password", error);
-  //     Alert.alert("Failed to update password", error.message);
-  //   }
-  // }
   return (
-    <View style={styles.wrapper}>
+    <View style={[styles.wrapper,{paddingTop:ins.top}]}>
       <View style={styles.bellandback}>
         <Pressable onPress={() => navigation.pop()}>
           <Image
-            source={require("../assets/static/20240228_031624_0025.png")}
+            source={require("../assets/static/back_left.png")}
             style={styles.btnimg}
           />
         </Pressable>
@@ -118,47 +104,51 @@ export default function UpdateProfile({ navigation, route }) {
             <Text style={styles.submitbtn}>Submit</Text>
           </Pressable>
           <View style={styles.blurbox}>
-            <Text style={styles.headings}>Security</Text>
-            <View style={styles.security}>
-              <Pressable style={styles.linkbox}>
-                <Text>Change Password</Text>
-                <Image
-                  source={require("../assets/static/20240228_031624_0026.png")}
-                  style={styles.followpic}
-                />
-              </Pressable>
-              <Pressable style={styles.linkbox}>
-                <Text>Change mobile number</Text>
-                <Image
-                  source={require("../assets/static/20240228_031624_0026.png")}
-                  style={styles.followpic}
-                />
-              </Pressable>
-            </View>
-            <Pressable style={styles.linkbox}>
-              <Text style={styles.headings}>About Us</Text>
+          <Text style={styles.headings}>{i18n[locale].security}</Text>
+          <View style={styles.security}>
+            <Pressable
+              onPress={() => {
+                navigation.navigate("UpdatePass", {
+                  name,
+                });
+              }}
+              style={styles.linkbox}
+            >
+              <Text>{i18n[locale].changePassword}</Text>
               <Image
-                source={require("../assets/static/20240228_031624_0028.png")}
+                source={require("../assets/static/20240228_031624_0026.png")}
                 style={styles.followpic}
               />
             </Pressable>
             <Pressable style={styles.linkbox}>
-              <Text style={styles.headings}>FAQs</Text>
+              <Text>{i18n[locale].changeMobileNumber}</Text>
               <Image
-                source={require("../assets/static/20240228_031624_0027.png")}
+                source={require("../assets/static/20240228_031624_0026.png")}
                 style={styles.followpic}
               />
             </Pressable>
-            <Pressable style={styles.linkbox}>
-              <Text style={styles.signoutbtn}>Sign Out</Text>
-            </Pressable>
-            <Pressable style={styles.rightbox}>
-              <Text style={styles.contactbtn}>Contact Us</Text>
-              <Image
-                source={require("../assets/static/20240228_031624_0029.png")}
-                style={styles.followpiccontact}
-              />
-            </Pressable>
+          </View>
+          <Pressable style={styles.linkbox}>
+            <Text style={styles.headings}>{i18n[locale].aboutUs}</Text>
+            <Image
+              source={require("../assets/static/20240228_031624_0028.png")}
+              style={styles.followpic}
+            />
+          </Pressable>
+          <Pressable style={styles.linkbox}>
+            <Text style={styles.headings}>{i18n[locale].faqs}</Text>
+            <Image
+              source={require("../assets/static/20240228_031624_0027.png")}
+              style={styles.followpic}
+            />
+          </Pressable>
+          <Pressable style={styles.rightbox}>
+            <Text style={styles.contactbtn}>{i18n[locale].contactUs}</Text>
+            <Image
+              source={require("../assets/static/20240228_031624_0029.png")}
+              style={styles.followpiccontact}
+            />
+          </Pressable>
           </View>
         </View>
       </ScrollView>

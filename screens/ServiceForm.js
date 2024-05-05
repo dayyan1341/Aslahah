@@ -25,8 +25,7 @@ export default function ServiceForm({ route, navigation }) {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [istimePickerVisible, settimePickerVisibility] = useState(false);
   const { service } = route.params;
-  const {getToken} = useAuth()
-
+  const { getToken } = useAuth();
 
   const handleBooking = async () => {
     console.log(
@@ -39,7 +38,7 @@ export default function ServiceForm({ route, navigation }) {
     );
 
     try {
-      const token = getToken()
+      const token = getToken();
       const response = await axios.post(
         "https://server.aslahah.com/api/booking/create",
         {
@@ -56,7 +55,7 @@ export default function ServiceForm({ route, navigation }) {
         }
       );
       console.log("Booking created successfully:", response.data);
-      Alert.alert("Booking created successfully","We will reach you shortly");
+      Alert.alert("Booking created successfully", "We will reach you shortly");
       navigation.navigate("Tabs");
     } catch (error) {
       console.error("Failed to book in:", error);
@@ -96,7 +95,7 @@ export default function ServiceForm({ route, navigation }) {
     <View style={[styles.container, { paddingTop: ins.top }]}>
       <Pressable onPress={() => navigation.pop()}>
         <Image
-          source={require("../assets/static/20240228_031623_0015.png")}
+          source={require("../assets/static/black_back.png")}
           style={[styles.iconimg, styles.backbtn]}
         />
       </Pressable>

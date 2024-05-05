@@ -11,8 +11,10 @@ import {
 import React, { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function UpdatePassword({ navigation, route }) {
+  const ins = useSafeAreaInsets();
   const [oldPass, setOldpass] = useState("");
   const [pass, setPass] = useState("");
   const { getToken } = useAuth();
@@ -27,7 +29,7 @@ export default function UpdatePassword({ navigation, route }) {
         "https://server.aslahah.com/api/auth/password",
         {
           oldPassword: oldPass,
-          newPassword: pass
+          newPassword: pass,
         },
         {
           headers: {
@@ -36,19 +38,22 @@ export default function UpdatePassword({ navigation, route }) {
         }
       );
       console.log("Password updated successfully:", response.data);
-      Alert.alert('',"Passwords updated Successfully");
-      navigation.navigate("Profile")
+      Alert.alert("", "Passwords updated Successfully");
+      navigation.navigate("Profile");
     } catch (error) {
       console.error("Failed to update password", error);
-      Alert.alert("Failed to update password", 'Something went wrong \nDouble check your password');
+      Alert.alert(
+        "Failed to update password",
+        "Something went wrong \nDouble check your password"
+      );
     }
   }
   return (
-    <View style={styles.wrapper}>
+    <View style={[styles.wrapper,{paddingTop:ins.top}]}>
       <View style={styles.bellandback}>
         <Pressable onPress={() => navigation.pop()}>
           <Image
-            source={require("../assets/static/20240228_031624_0025.png")}
+            source={require("../assets/static/back_left.png")}
             style={styles.btnimg}
           />
         </Pressable>
@@ -63,7 +68,6 @@ export default function UpdatePassword({ navigation, route }) {
           <Text>{route.params.name}</Text>
         </View>
         <View style={styles.box}>
-
           <View style={styles.infobox}>
             <Text>Current Password</Text>
             <TextInput
@@ -79,7 +83,10 @@ export default function UpdatePassword({ navigation, route }) {
               onChangeText={setPass}
               value={pass}
             />
-          <Text>New Password must contain at least one uppercase letter, one lowercase letter, one number and one special character</Text>
+            <Text>
+              New Password must contain at least one uppercase letter, one
+              lowercase letter, one number and one special character
+            </Text>
           </View>
           <Pressable onPress={UpdatePassword} style={styles.rightbox}>
             <Text style={styles.submitbtn}>Change Password</Text>

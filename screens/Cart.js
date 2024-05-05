@@ -14,18 +14,19 @@ import axios from "axios";
 
 export default function Cart({ navigation }) {
   const [orders, setOrders] = useState([]);
+  const [status, setStatus] = useState([]);
+
   // const [loading, setLoading] = useState(true);
 
   const { getToken } = useAuth();
 
-
   const imageMap = {
     "AC Repairing": require("../assets/static/ac_repairing.png"),
     "Lift Reapiring": require("../assets/static/lift_repairing.png"),
-    "Carpentry": require("../assets/static/carpentry.png"),
-    "Painter": require("../assets/static/painter.png"),
+    Carpentry: require("../assets/static/carpentry.png"),
+    Painter: require("../assets/static/painter.png"),
     "Wall Works": require("../assets/static/wall_works.png"),
-    "Plumbing": require("../assets/static/plumbing.png"),
+    Plumbing: require("../assets/static/plumbing.png"),
   };
 
   useEffect(() => {
@@ -51,6 +52,7 @@ export default function Cart({ navigation }) {
       );
       console.log("Orders:", response.data);
       setOrders(response.data.data);
+      fetchStatus(response.data.data[0]["_id"]);
       // setLoading(false);
     } catch (error) {
       // setLoading(false);
@@ -59,7 +61,31 @@ export default function Cart({ navigation }) {
     }
   };
 
-  
+  const fetchStatus = async (id) => {
+    try {
+      const token = getToken();
+      console.log(id);
+      const response = await axios.get(
+        `https://server.aslahah.com/api/booking/${id}`,
+
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("this order:", response.data);
+      setStatus(response.data.booking.bookingStatus)
+      console.log(status)
+
+      // setLoading(false);
+    } catch (error) {
+      // setLoading(false);
+      console.error("Something went wrong while fetching Orders", error);
+      Alert.alert("Something went wrong while fetching Orders");
+    }
+  };
+
   const ListEmptyComponent = () => (
     <View style={styles.buzz}>
       <Text>Nothing to show here</Text>
@@ -67,28 +93,20 @@ export default function Cart({ navigation }) {
     </View>
   );
 
-
   return (
     <View style={styles.wrapper}>
-      <View style={styles.bookingWrapper}>
-        <Pressable style={styles.bookingBtn}>
-          <Text
-            style={styles.bookingBtnText}
-            onPress={() => navigation.navigate("CurrOrders")}
-          >
-            Current Orders
-          </Text>
-        </Pressable>
-        <Pressable
-          style={styles.bookingBtn}
-          onPress={() => navigation.navigate("PrevOrders")}
-        >
-          <Text style={styles.bookingBtnText}>Previous Orders</Text>
+      <View style={styles.bellandback}>
+        <Pressable onPress={() => navigation.openDrawer()}>
+          <Image
+            source={require("../assets/static/drawer.png")}
+            style={styles.btnimg}
+          />
         </Pressable>
       </View>
 
       <View style={styles.bookingWrapper}>
-        <Pressable style={styles.bookingBtn}>
+        <Text style={styles.headings}>My Cart</Text>
+        {/* <Pressable style={styles.bookingBtn}>
           <Text
             style={styles.bookingBtnText}
             onPress={() => navigation.navigate("Coupons")}
@@ -98,29 +116,53 @@ export default function Cart({ navigation }) {
         </Pressable>
         <Pressable style={styles.bookingBtn}>
           <Text style={styles.bookingBtnText}>Quotations</Text>
-        </Pressable>
+        </Pressable> */}
       </View>
 
       <View style={[styles.box, styles.white]}>
-        <Text style={styles.headings}>My Cart</Text>
+        {/* <Text>My Bookings</Text>
+
+        <Text>Booking Recieved</Text>
+        <Text>Techinician visit</Text>
+        <Text>Booking Recieved</Text>
+        <Text>Booking Recieved</Text> */}
+
         <FlatList
-         data={orders}
-         keyExtractor={(item) => item._id.toString()}
-         ListEmptyComponent={ListEmptyComponent}
+          data={status}
+          ItemSeparatorComponent={<View style={{ marginVertical: 10 }}/>}
           renderItem={({ item }) => (
-            <CartItem name={item.serviceType} img={imageMap[item.serviceType]} />
+            <View style={{position: "relative",
+            backgroundColor: "#00e9f1",
+            // width: screen.width * 0.9,
+            height: 70,
+            alignItems: "center",
+            justifyContent: "center",
+            borderBottomLeftRadius: 50,
+            borderTopLeftRadius: 50,
+            borderTopRightRadius: 10,
+            borderBottomRightRadius: 50,}}>
+              <Text style={{fontWeight:'bold'}}>{orders[0].serviceType}</Text>
+              <Text style={{fontWeight:'bold'}}>{item.status}</Text>
+              <Text>{item.updatedAt}</Text>
+            </View>
+          )}
+        />
+
+        {/* <FlatList
+          data={orders}
+          keyExtractor={(item) => item._id.toString()}
+          ListEmptyComponent={ListEmptyComponent}
+          renderItem={({ item }) => (
+            <CartItem
+              name={item.serviceType}
+              img={imageMap[item.serviceType]}
+              status={item.bookingStatus}
+            />
           )}
           ItemSeparatorComponent={<View style={{ marginVertical: 10 }} />}
-        />
-        {/* <ScrollView> */}
-        {/* <View style={styles.itembox}>
-            <CartItem />
-            <CartItem />
-            <CartItem />
-            <CartItem />
-          </View> */}
+        /> */}
 
-        <View style={[styles.summaryBox, styles.primary, styles.end]}>
+        {/* <View style={[styles.summaryBox, styles.primary, styles.end]}>
           <Text style={styles.headings}>3 Services in cart</Text>
           <View style={styles.infobox}>
             <Text style={styles.infohead}>Charges 1 </Text>
@@ -133,11 +175,10 @@ export default function Cart({ navigation }) {
             <Text style={styles.infohead}>Total</Text>
             <Text style={styles.info}>NA</Text>
           </View>
-          {/* <Pressable style={[styles.bookingBtn, styles.center]}>
+          <Pressable style={[styles.bookingBtn, styles.center]}>
             <Text style={styles.bookingBtnText}>Book Now</Text>
-          </Pressable> */}
-        </View>
-        {/* </ScrollView> */}
+          </Pressable>
+        </View> */}
       </View>
     </View>
   );
@@ -151,13 +192,21 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "space-between",
   },
-  bookingWrapper: {
-    marginTop: 10,
+  bellandback: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-evenly",
-    gap: 10,
-    flexWrap: "wrap",
+    justifyContent: "space-between",
+  },
+  btnimg: {
+    height: 60,
+    width: 60,
+  },
+  bookingWrapper: {
+    // display: "flex",
+    // flexDirection: "row",
+    // justifyContent: "space-evenly",
+    // gap: 10,
+    // flexWrap: "wrap",
   },
   bookingBtn: {
     width: 150,
@@ -172,9 +221,9 @@ const styles = StyleSheet.create({
     borderRadius: 38,
   },
   headings: {
-    fontSize: 18,
+    fontSize: 28,
     fontWeight: "bold",
-    color: "#221410",
+    color: "#343341",
     alignSelf: "center",
   },
   center: {
@@ -190,7 +239,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     borderBottomStartRadius: 0,
     borderBottomEndRadius: 0,
-    height: "80%",
+    height: "90%",
   },
   summaryBox: {
     padding: 20,

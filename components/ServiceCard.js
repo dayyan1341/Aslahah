@@ -5,6 +5,7 @@ import {
   Image,
   ImageBackground,
   Pressable,
+  Dimensions,
 } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -14,7 +15,7 @@ function ServiceCard(props) {
 
   return (
     <Pressable
-      onPress={() => navigation.navigate("Description",{service:props.name})}
+      onPress={() => navigation.navigate("Description",{service:props.name,desc:props.details,exp:props.expertise})}
       style={styles.ServiceCard}
     >
       <View style={styles.ServiceCardHead}>
@@ -37,13 +38,16 @@ function ServiceCard(props) {
 
 export default ServiceCard
 
+const device = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   ServiceCard: {
     paddingTop: 10,
-    width: "45%",
+    width:device.width/2-20,
     backgroundColor: "#00e9f1",
     borderRadius: 20,
     overflow: "hidden",
+    marginBottom:20,
   },
   ServiceCardHead: {
     display: "flex",
@@ -52,12 +56,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   arrow: {
-    width: 30,
-    height: 30,
+    width: 40,
+    height: 40,
   },
   cardimg: {
     width: "100%",
-    height: 100,
+    height: 130,
     aspectRatio: 1,
     alignSelf: "center",
   },

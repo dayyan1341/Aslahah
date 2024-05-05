@@ -14,11 +14,11 @@ import Header from "../components/Header";
 import BlinkerText from "../components/BilnkerText";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
+import i18n from "../context/i18n";
 
-function Home({navigation}) {
-  const { signOut, getToken } = useAuth();
+function Home({ navigation }) {
+  const { locale, getToken } = useAuth();
   const [name, setname] = React.useState();
-
 
   React.useEffect(() => {
     getProf();
@@ -39,7 +39,6 @@ function Home({navigation}) {
       );
       console.log("User Details:", response.data);
       setname(response.data.user.name);
-      
     } catch (error) {
       console.error("Something went wrong while fetching profile", error);
       Alert.alert("Something went wrong while fetching profile");
@@ -47,38 +46,57 @@ function Home({navigation}) {
   }
 
   return (
-    <ScrollView>
-        <Header name={name} />
-        <Banner />
-        <ServicesShowcase />
-        <View style={styles.reviewbox}>
-          <View style={styles.reviewboxhead}>
-            <Text style={styles.reviewboxtext}>What our clients say</Text>
-            <Image
-              source={require("../assets/static/20240221_000353_0016.png")}
-              style={styles.tripledot}
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <Header name={name} />
+      <Banner />
+      <ServicesShowcase />
+      <View style={styles.reviewbox}>
+        <View style={styles.reviewboxhead}>
+          <Text style={styles.reviewboxtext}>
+            {i18n[locale].whatOurClientsSay}
+          </Text>
+          <Image
+            source={require("../assets/static/20240221_000353_0016.png")}
+            style={styles.tripledot}
+          />
+        </View>
+        <ScrollView
+          style={styles.scroll}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          fadingEdgeLength={10}
+        >
+          <View style={styles.cardholder}>
+            <ReviewCard
+              text={
+                "Incredible service! Quick response time and fixed my leaking faucet in no time. Highly recommend this app for all your plumbing needs!"
+              }
+              reviwer={"Zidaan"}
+            />
+            <ReviewCard
+              text={
+                "Outstanding experience! From booking to completion, everything went smoothly. The plumber was skilled and friendly, making the whole process stress-free. Highly recommend!"
+              }
+              reviwer={"Furkaan"}
+            />
+            <ReviewCard
+              text={
+                "Fantastic carpentry service! The carpenter was skilled and attentive to detail. Built me a beautiful custom wardrobe exactly to my specifications. Will definitelyuseagain!"
+              }
+              reviwer={"Zidaan"}
             />
           </View>
-          <ScrollView
-            style={styles.scroll}
-            horizontal={true}
-            fadingEdgeLength={10}
-          >
-            <View style={styles.cardholder}>
-              <ReviewCard />
-              <ReviewCard />
-              <ReviewCard />
-              <ReviewCard />
-            </View>
-          </ScrollView>
-        </View>
-        <Pressable
-          android_ripple={{ color: "#eee", radius: 60 }}
-          style={styles.btn}
-          onPress={() => navigation.navigate("SelectLanguage")}
-        >
-          <BlinkerText style={styles.btnText}>Become a technician</BlinkerText>
-        </Pressable>
+        </ScrollView>
+      </View>
+      <Pressable
+        android_ripple={{ color: "#eee", radius: 60 }}
+        style={styles.btn}
+        onPress={() => navigation.navigate("SelectLanguage")}
+      >
+        <BlinkerText style={styles.btnText}>
+          {i18n[locale].becomeTechnician}
+        </BlinkerText>
+      </Pressable>
     </ScrollView>
   );
 }
@@ -108,7 +126,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
   },
-  scroll: { margin: -20,  },
+  scroll: { margin: -20 },
   cardholder: {
     display: "flex",
     flex: 0.5,

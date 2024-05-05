@@ -1,16 +1,61 @@
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import {
+  DrawerContentScrollView,
+  DrawerItem,
+  DrawerItemList,
+  createDrawerNavigator,
+} from "@react-navigation/drawer";
 import PrevOrders from "../screens/PrevOrders";
 import CurrOrders from "../screens/CurrOrders";
-import Cart from '../screens/Cart';
+import Cart from "../screens/Cart";
+import { Image, Pressable, StyleSheet, View } from "react-native";
+
+function CustomDrawerContent(props) {
+  return (
+    <DrawerContentScrollView {...props}>
+     <View style={styles.bellandback}>
+        <Pressable onPress={() => props.navigation.closeDrawer()}>
+          <Image
+            source={require("../assets/static/black_back.png")}
+            style={styles.btnimg}
+          />
+        </Pressable>
+      </View>
+      <DrawerItemList {...props} />
+    </DrawerContentScrollView>
+  );
+}
 
 const Drawer = createDrawerNavigator();
 
 export default function SidebarNavigator() {
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+      screenOptions={{
+        drawerStyle: {
+          backgroundColor: "#00e9f1",
+          width: 240,
+        },
+        headerShown: false,
+      }}
+    >
       <Drawer.Screen name="Cart" component={Cart} />
       <Drawer.Screen name="CurrOrders" component={CurrOrders} />
       <Drawer.Screen name="PrevOrders" component={PrevOrders} />
     </Drawer.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  bellandback: {
+    marginTop: -20,
+    marginBottom:20,
+    // display: "flex",
+    // flexDirection: "row",
+    // justifyContent: "space-between",
+  },
+  btnimg: {
+    height: 60,
+    width: 60,
+  },
+})

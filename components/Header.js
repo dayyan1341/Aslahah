@@ -2,16 +2,18 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 import Search from "../components/Search";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import i18n from "../context/i18n";
+import { useAuth } from "../context/AuthContext";
 
 export default function Header(props) {
   const pad = useSafeAreaInsets()
+  const {locale} = useAuth()
   return (
     <View style={[styles.topbox,{paddingTop:pad.top+5}]}>
       <View style={styles.flexbox}>
         <View>
           <Text style={styles.usergreeting}>Hi, {props.name}</Text>
-          <Text>Let's find your</Text>
-          <Text>desired services</Text>
+          <Text>{i18n[locale].letsFindServices}</Text>
         </View>
         <Image
           source={require("../assets/static/20240221_000353_0007.png")}
@@ -19,7 +21,7 @@ export default function Header(props) {
         />
       </View>
       <View style={styles.searchbar}>
-        <Search />
+        <Search place={i18n[locale].searchForServices}  />
       </View>
     </View>
   );

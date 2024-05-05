@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React from "react";
 
-export default function ReviewCard() {
+export default function ReviewCard(props) {
   const { height, width } = useWindowDimensions();
 
   return (
@@ -26,11 +26,7 @@ export default function ReviewCard() {
           style={styles.img}
         />
         <Text style={styles.review}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque eius
-          sunt rerum veniam distinctio. Beatae mollitia fugit voluptatem minima
-          suscipit enim aspernatur quae, id repellat! Distinctio consequatur
-          ipsum officia. Quam sit natus eligendi suscipit a ipsum corporis nulla
-          iure?
+          {props.text}
         </Text>
         {/* </View> */}
       </ImageBackground>
@@ -40,7 +36,7 @@ export default function ReviewCard() {
             source={require("../assets/static/profile.png")}
             style={styles.profpic}
           />
-          <Text style={styles.name}>Ayane</Text>
+          <Text style={styles.name}>{props.reviwer}</Text>
         </View>
 
         <View style={styles.reviewer}>

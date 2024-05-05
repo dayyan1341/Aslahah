@@ -15,7 +15,7 @@ export default function SelectLanguage() {
     <View style={styles.container}>
       <View>
         <Image
-          source={require("../assets/static/logo1.png")}
+          source={require("../assets/static/logo.png")}
           style={styles.logo}
         />
       </View>

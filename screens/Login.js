@@ -48,8 +48,8 @@ export default function Login({ navigation }) {
     <View style={styles.container}>
       <View style={styles.topright}>
         <View style={styles.toprightwrapper}>
-          <Text style={styles.toprightmsg}>Repairing at</Text>
-          <Text style={styles.toprightmsg}>your doorstep</Text>
+          <Text style={styles.toprightmsg}>{i18n[locale].firstSentence}</Text>
+          <Text style={styles.toprightmsg}>{i18n[locale].secondSentence}</Text>
         </View>
         <Image
           source={require("../assets/static/20240221_000353_0005.png")}
@@ -82,12 +82,10 @@ export default function Login({ navigation }) {
             />
           </View>
           <View style={styles.miscbox}>
-            <BlinkerText style={styles.miscboxmsg}>Remember Me</BlinkerText>
-            <Pressable onPress={()=>{navigation.navigate("Forgot")}}>
-            <Text style={styles.miscboxmsg}>Forgot Password?</Text>
-            </Pressable>
             <BlinkerText style={styles.miscboxmsg}>{i18n[locale].rememberMe}</BlinkerText>
+            <Pressable onPress={()=>{navigation.navigate("Forgot")}}>
             <Text style={styles.miscboxmsg}>{i18n[locale].forgotPassword}</Text>
+            </Pressable>
           </View>
 
           <View style={styles.loginbtn}>

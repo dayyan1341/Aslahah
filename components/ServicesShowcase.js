@@ -8,11 +8,14 @@ import {
 } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
+import i18n from "../context/i18n";
+import { useAuth } from "../context/AuthContext";
 
 export default function ServicesShowcase() {
   const navigation = useNavigation();
+  const { locale } = useAuth();
   return (
-    <ScrollView horizontal={true}>
+    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
       <View style={styles.servicesShowcase}>
         <View style={styles.servicebox}>
           <Pressable
@@ -27,7 +30,7 @@ export default function ServicesShowcase() {
               />
             </View>
           </Pressable>
-          <Text style={styles.service}>AC Repairment</Text>
+          <Text style={styles.service}>{i18n[locale].acRepairing}</Text>
         </View>
         <View style={styles.servicebox}>
           <View style={styles.serviceimg}>
@@ -36,7 +39,7 @@ export default function ServicesShowcase() {
               style={styles.img}
             />
           </View>
-          <Text style={styles.service}>Carpentry</Text>
+          <Text style={styles.service}>{i18n[locale].carpentry}</Text>
         </View>
         <View style={styles.servicebox}>
           <View style={styles.serviceimg}>
@@ -45,7 +48,7 @@ export default function ServicesShowcase() {
               style={styles.img}
             />
           </View>
-          <Text style={styles.service}>Plumbing</Text>
+          <Text style={styles.service}>{i18n[locale].plumbing}</Text>
         </View>
         <View style={styles.servicebox}>
           <View style={styles.serviceimg}>
@@ -54,26 +57,26 @@ export default function ServicesShowcase() {
               style={styles.img}
             />
           </View>
-          <Text style={styles.service}>Painting</Text>
+          <Text style={styles.service}>{i18n[locale].painter}</Text>
         </View>
-        {/* <View style={styles.servicebox}>
-        <View style={styles.serviceimg}>
-          <Image
-            source={require("../assets/static/20240221_000353_0014.png")}
-            style={styles.img}
-          />
+        <View style={styles.servicebox}>
+          <View style={styles.serviceimg}>
+            <Image
+              source={require("../assets/static/20240221_000353_0014.png")}
+              style={styles.img}
+            />
+          </View>
+          <Text style={styles.service}>{i18n[locale].liftRepairing}</Text>
         </View>
-        <Text style={styles.service}>Painting</Text>
-      </View> */}
-        {/* <View style={styles.servicebox}>
-        <View style={styles.serviceimg}>
-          <Image
-            source={require("../assets/static/20240221_000353_0014.png")}
-            style={styles.img}
-          />
+        <View style={styles.servicebox}>
+          <View style={styles.serviceimg}>
+            <Image
+              source={require("../assets/static/20240221_000353_0014.png")}
+              style={styles.img}
+            />
+          </View>
+          <Text style={styles.service}>{i18n[locale].wallWorks}</Text>
         </View>
-        <Text style={styles.service}>Painting</Text>
-      </View> */}
       </View>
     </ScrollView>
   );

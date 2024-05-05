@@ -6,10 +6,13 @@ import Cart from "../screens/Cart";
 import Profile from "../screens/Profile";
 import { Image,StyleSheet, View } from "react-native";
 import SidebarNavigator from "./SidebarNavigator";
+import i18n from "../context/i18n";
+import { useAuth } from "../context/AuthContext";
 
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {
+  const {locale} = useAuth()
   return (
     // <View style={styles.box}>
       // <View style={styles.innerbox}></View>
@@ -31,7 +34,7 @@ export default function BottomTabNavigator() {
       >
         <Tab.Screen
           options={{
-            tabBarLabel: "Home",
+            tabBarLabel: i18n[locale].home,
             
             tabBarIcon: () => (
               <Image
@@ -45,7 +48,7 @@ export default function BottomTabNavigator() {
         />
         <Tab.Screen
           options={{
-            tabBarLabel: "Services",
+            tabBarLabel: i18n[locale].services,
             tabBarIcon: () => (
               <Image
                 source={require("../assets/static/services.png")}
@@ -58,7 +61,7 @@ export default function BottomTabNavigator() {
         />
         <Tab.Screen
           options={{
-            tabBarLabel: "Cart",
+            tabBarLabel: i18n[locale].cart,
             tabBarIcon: () => (
               <Image
                 source={require("../assets/static/cart.png")}
@@ -66,12 +69,12 @@ export default function BottomTabNavigator() {
               />
             ),
           }}
-          name="Cart"
+          name="Sidebar"
           component={SidebarNavigator}
         />
         <Tab.Screen
           options={{
-            tabBarLabel: "Profile",
+            tabBarLabel: i18n[locale].profile,
             tabBarIcon: () => (
               <Image
                 source={require("../assets/static/profile_dark.png")}

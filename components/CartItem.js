@@ -1,44 +1,63 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, Dimensions, Pressable } from "react-native";
 import React from "react";
-import { map } from "../assets/repair_images";
+import i18n from "../context/i18n";
+import { useAuth } from "../context/AuthContext";
+import { useNavigation } from "@react-navigation/native";
+
+const localeMap = {
+  "AC Repairing": "acRepairing",
+  "Lift Reapiring": "liftRepairing",
+  Carpentry: "carpentry",
+  Painter: "painter",
+  "Wall Works": "wallWorks",
+  Plumbing: "plumbing",
+};
 
 export default function CartItem(props) {
-  // console.log(map.ac)
+  const { locale } = useAuth();
+  const navigation = useNavigation()
+  const text = localeMap[props.name];
+  const isCompleted = props.status.length >= 4;
+  console.log(isCompleted)
+
   return (
-    <View style={styles.item}>
+    <Pressable style={styles.item} onPress={()=>navigation.navigate("Status")}>
       <View style={styles.itemimg}>
         <Image source={props.img} style={styles.img} />
       </View>
       <View style={styles.itemnamebox}>
-        <Text style={styles.itemname}>{props.name}</Text>
+        <Text style={styles.itemname}>{i18n[locale][text]}</Text>
       </View>
       <View style={styles.delete}>
-        {/* <Image
-          source={require("../assets/static/delete.png")}
+        <Image
+          source={isCompleted?require("../assets/static/tick.png"):require("../assets/static/loading.png")}
           style={styles.delimg}
-        /> */}
+        />
       </View>
-    </View>
+    </Pressable>
   );
 }
 
+const screen = Dimensions.get("window");
+
 const styles = StyleSheet.create({
   item: {
+    position: "relative",
     backgroundColor: "#00e9f1",
-    width: "90%",
-    height: 40,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
-    alignSelf: "center",
+    width: screen.width * 0.9,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
     borderBottomLeftRadius: 50,
     borderTopLeftRadius: 50,
     borderTopRightRadius: 10,
     borderBottomRightRadius: 50,
+    // backgroundColor:'red'
   },
   itemimg: {
-    height: 40,
+    position: "absolute",
+    left: 0,
+    height: 50,
     overflow: "visible",
   },
   img: {
@@ -46,17 +65,15 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 50,
     backgroundColor: "#343341",
     width: 50,
-    height: 40,
+    height: 50,
   },
   itemnamebox: {
-    height: "100%",
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
+    textAlign: "center",
+    
+
   },
   itemname: {
-    width: 150,
-    fontSize: 15,
+    fontSize: 18,
     color: "#343341",
   },
   delete: {
@@ -67,9 +84,11 @@ const styles = StyleSheet.create({
     // backgroundColor: "#343341",
     padding: 3,
     paddingLeft: 8,
+    position: "absolute",
+    right: 0,
   },
   delimg: {
-    width: 17,
-    height: 17,
+    width: 40,
+    height: 40,
   },
 });

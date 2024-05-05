@@ -5,22 +5,17 @@ import Review from "../components/Review";
 
 export default function ServiceDesc({ route, navigation }) {
   const ins = useSafeAreaInsets();
-  const {service} = route.params
+  const { service,desc,exp } = route.params;
   return (
-    <View
-      style={[
-        styles.container,
-        { paddingTop: ins.top },
-      ]}
-    >
+    <View style={[styles.container, { paddingTop: ins.top }]}>
       <View style={styles.x}>
-          <Image
-            source={require("../assets/static/20240228_031623_0014.png")}
-            style={styles.bannerimg}
-          />
+        <Image
+          source={require("../assets/static/20240228_031623_0014.png")}
+          style={styles.bannerimg}
+        />
         <Pressable onPress={() => navigation.pop()}>
           <Image
-            source={require("../assets/static/20240228_031623_0015.png")}
+            source={require("../assets/static/black_back.png")}
             style={styles.backbtn}
           />
         </Pressable>
@@ -29,21 +24,11 @@ export default function ServiceDesc({ route, navigation }) {
         <View style={styles.box}>
           <Text style={styles.headings}>{service}</Text>
           <Text style={styles.description}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, optio
-            quis. Reprehenderit fugit ducimus porro fuga, fugiat autem alias,
-            assumenda ex ut impedit facere placeat provident a animi ipsam
-            eveniet maiores esse nihil non at vitae. Itaque, ad ullam,
-            voluptates, aliquam hic mollitia repudiandae rem natus perspiciatis
-            id quam.
+            {desc}
           </Text>
-          <Text style={styles.headings}>Our Expertise</Text>
+          <Text style={[styles.headings,{marginTop:10}]}>Our Expertise</Text>
           <Text style={styles.description}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, optio
-            quis. Reprehenderit fugit ducimus porro fuga, fugiat autem alias,
-            assumenda ex ut impedit facere placeat provident a animi ipsam
-            eveniet maiores esse nihil non at vitae. Itaque, ad ullam,
-            voluptates, aliquam hic mollitia repudiandae rem natus perspiciatis
-            id quam.
+           {exp}
           </Text>
         </View>
         {/* <View style={styles.box}>
@@ -83,7 +68,7 @@ export default function ServiceDesc({ route, navigation }) {
               />
             </View>
           </View> */}
-          {/* <Review /> */}
+        {/* <Review /> */}
         {/* </View> */}
         {/* <Pressable>
           <View style={styles.rightbox}>
@@ -92,7 +77,7 @@ export default function ServiceDesc({ route, navigation }) {
         </Pressable> */}
         <Pressable
           style={styles.rightbox}
-          onPress={() => navigation.navigate("Form",route.params)}
+          onPress={() => navigation.navigate("Form", route.params)}
         >
           <Text style={styles.contactbtn}>Book Now</Text>
         </Pressable>
@@ -102,12 +87,12 @@ export default function ServiceDesc({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container:{
-    flex:1
-  },  
-  
-  x:{
-    position:'relative',
+  container: {
+    flex: 1,
+  },
+
+  x: {
+    position: "relative",
   },
   backbtn: {
     width: 40,
@@ -119,14 +104,14 @@ const styles = StyleSheet.create({
   },
 
   wrapper: {
-    display:'flex',
+    display: "flex",
     width: "90%",
-    height:'auto',
-    
+    height: "auto",
+
     alignSelf: "center",
-    justifyContent : "space-between",
-    maxHeight:'100%',
-    flexGrow:1,
+    justifyContent: "space-between",
+    maxHeight: "100%",
+    flexGrow: 1,
   },
   bannerimg: {
     width: "100%",
@@ -166,9 +151,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom:10,
+    marginBottom: 10,
     // width:'80%'
-
   },
   contactbtn: {
     marginTop: 20,
@@ -178,7 +162,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     padding: 10,
     backgroundColor: "black",
-    width: '80%',
+    width: "80%",
     borderRadius: 30,
   },
 });

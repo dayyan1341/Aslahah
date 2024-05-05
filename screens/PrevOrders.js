@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
+import CartItem from "../components/CartItem";
 
 const PrevOrders = ({ navigation }) => {
   const [orders, setOrders] = useState([]);
@@ -46,6 +47,15 @@ const PrevOrders = ({ navigation }) => {
     }
   };
 
+  const imageMap = {
+    "AC Repairing": require("../assets/static/ac_repairing.png"),
+    "Lift Reapiring": require("../assets/static/lift_repairing.png"),
+    Carpentry: require("../assets/static/carpentry.png"),
+    Painter: require("../assets/static/painter.png"),
+    "Wall Works": require("../assets/static/wall_works.png"),
+    Plumbing: require("../assets/static/plumbing.png"),
+  };
+
   const ListEmptyComponent = () => (
     <View style={styles.buzz}>
       <Text>Nothing to show here</Text>
@@ -55,10 +65,10 @@ const PrevOrders = ({ navigation }) => {
 
   return (
     <View style={styles.wrapper}>
-      <View style={styles.bellandback}>
-        <Pressable onPress={() => navigation.pop()}>
+     <View style={styles.bellandback}>
+        <Pressable onPress={() => navigation.openDrawer()}>
           <Image
-            source={require("../assets/static/20240228_031624_0025.png")}
+            source={require("../assets/static/drawer.png")}
             style={styles.btnimg}
           />
         </Pressable>
@@ -72,24 +82,13 @@ const PrevOrders = ({ navigation }) => {
             data={orders}
             keyExtractor={(item) => item._id.toString()}
             ListEmptyComponent={ListEmptyComponent}
+            ItemSeparatorComponent={<View style={{ marginVertical: 10 }} />}
             renderItem={({ item }) => (
-              <>
-                <View style={styles.item}>
-                  <View style={styles.itemimg}>
-                    <Image
-                      source={require("../assets/static/plumbing.png")}
-                      style={styles.img}
-                    />
-                  </View>
-                  <View style={styles.itemnamebox}>
-                    <Text style={styles.itemname}>{item.serviceType}</Text>
-                  </View>
-                  <View></View>
-                </View>
-                {/* <View style={styles.item}>
-                  <Text>Hello</Text>
-                </View> */}
-              </>
+              <CartItem
+              name={item.serviceType}
+              img={imageMap[item.serviceType]}
+              status={item.bookingStatus}
+            />
             )}
           />
         </View>

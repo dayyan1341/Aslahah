@@ -1,19 +1,26 @@
-import { StyleSheet, TextInput, View, Image } from "react-native";
+import { StyleSheet, TextInput, View, Image, Pressable } from "react-native";
 import React from "react";
+import { useAuth } from "../context/AuthContext";
+import { useNavigation } from "@react-navigation/native";
 
-export default function Search() {
-  const [text, onChangeText] = React.useState("Search for services here");
+export default function Search(props) {
+  const [text, onChangeText] = React.useState('');
+  const navigation = useNavigation()
+
   return (
     <View style={styles.searchbar}>
       <TextInput
         style={styles.input}
         onChangeText={onChangeText}
         value={text}
+        placeholder={props.place}
       />
+      <Pressable onPress={()=> navigation.navigate("Search",{searchParam:text,place:props.place})}>
       <Image
         source={require("../assets/static/20240221_000353_0008.png")}
         style={styles.searchimg}
       />
+      </Pressable>
     </View>
   );
 }
@@ -28,6 +35,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     borderRadius: 40,
+    borderColor:'#343341',
+    borderWidth:1,
   },
   input: {
     marginLeft: 10,
@@ -35,6 +44,6 @@ const styles = StyleSheet.create({
   },
   searchimg: {
     width: 60,
-    aspectRatio: 1,
+    height:60,
   },
 });
