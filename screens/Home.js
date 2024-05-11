@@ -40,8 +40,8 @@ function Home({ navigation }) {
       console.log("User Details:", response.data);
       setname(response.data.user.name);
     } catch (error) {
-      console.error("Something went wrong while fetching profile", error);
-      Alert.alert("Something went wrong while fetching profile");
+      console.error("Something went wrong while fetching profile", error.response.data.message );
+      Alert.alert("Something went wrong while fetching profile",error.response.data.message || "Unknown error occurred");
     }
   }
 
@@ -88,7 +88,7 @@ function Home({ navigation }) {
           </View>
         </ScrollView>
       </View>
-      <Pressable
+      {/* <Pressable
         android_ripple={{ color: "#eee", radius: 60 }}
         style={styles.btn}
         onPress={() => navigation.navigate("SelectLanguage")}
@@ -96,7 +96,7 @@ function Home({ navigation }) {
         <BlinkerText style={styles.btnText}>
           {i18n[locale].becomeTechnician}
         </BlinkerText>
-      </Pressable>
+      </Pressable> */}
     </ScrollView>
   );
 }

@@ -60,7 +60,7 @@ export default function UpdateProfile({ navigation, route }) {
       navigation.navigate("Profile");
     } catch (error) {
       console.error("Failed to Update profile", error);
-      Alert.alert("Failed to Update profile");
+      Alert.alert("Failed to Update profile",error.response.data.message || "Unknown error occurred");
     }
   }
 

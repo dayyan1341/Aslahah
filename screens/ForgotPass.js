@@ -6,55 +6,93 @@ import {
   TextInput,
   Pressable,
   View,
+  Alert,
 } from "react-native";
 import axios from "axios";
 
-const Signup = ({navigation}) => {
-  const [name, setName] = useState("");
+const ForgotPass = ({ navigation }) => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [mobile, setMobile] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
+  const [pass, setPass] = useState("");
+  const [otp, setOtp] = useState();
 
-  const handleSignup = async () => {
+  const handleForgotPassword = async () => {
+    if (!email) {
+      Alert.alert("Enter email", "Please enter your registered email");
+      return;
+    }
     try {
-      const response = await axios.post("https://server.aslahah.com/api/auth/register", {
-        name: name,
-        email: email,
-        password: password,
-        mobileNumber: mobile,
-      });
-      console.log("User registered successfully:", response.data);
-      if(response.data.user){
-        navigation.navigate("Verify",{email,password})
-      }
-        navigation.navigate("Login")
-
+      const response = await axios.post(
+        "https://server.aslahah.com/api/auth/forgot-password",
+        {
+          email: email,
+        }
+      );
+      console.log("Otp sent:", response.data);
+      setOtpSent(true);
     } catch (error) {
       if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
         console.error(
-          "Failed to register user. Server responded with:",
+          "Failed to send otp. Server responded with:",
           error.response.data
         );
         console.error("Status code:", error.response.status);
         Alert.alert(
-          "Failed to register user",
+          "Failed to send otp",
           error.response.data.message || "Unknown error occurred"
         );
       } else if (error.request) {
-        // The request was made but no response was received
-        console.error(
-          "Failed to register user. No response received from server."
-        );
+        console.error("Failed to send otp. No response received from server.");
+        Alert.alert("Failed to send otp", "No response received from server");
+      } else {
+        console.error("Failed to send otp. Error:", error.message);
+        Alert.alert("Failed to send otp", error.message);
+      }
+    }
+  };
+
+  const handleVerifyOtp = async () => {
+    if (!otp) {
+      Alert.alert("Otp Missing", "Please enter the sent Otp");
+      return;
+    }
+    try {
+      const response = await axios.post(
+        "https://server.aslahah.com/api/auth/reset-password",
+        {
+          email: email,
+          otp: otp,
+          password: pass,
+        }
+      );
+      console.log("Password reset:", response.data);
+
+      if (response.data.message == "Password reset successfully") {
         Alert.alert(
-          "Failed to register user",
-          "No response received from server"
+          "Password reset succesfull",
+          "Please login with your new password"
         );
       } else {
-        // Something happened in setting up the request that triggered an Error
-        console.error("Failed to register user. Error:", error.message);
-        Alert.alert("Failed to register user", error.message);
+        Alert.alert("Please try again", "Something went wrong");
+      }
+      navigation.navigate("Login");
+    } catch (error) {
+      if (error.response) {
+        console.error(
+          "Failed to send otp. Server responded with:",
+          error.response.data
+        );
+        console.error("Status code:", error.response.status);
+        Alert.alert(
+          "Failed to send otp",
+          error.response.data.message || "Unknown error occurred"
+        );
+      } else if (error.request) {
+        console.error("Failed to send otp. No response received from server.");
+        Alert.alert("Failed to send otp", "No response received from server");
+      } else {
+        console.error("Failed to send otp. Error:", error.message);
+        Alert.alert("Failed to send otp", error.message);
       }
     }
   };
@@ -73,39 +111,48 @@ const Signup = ({navigation}) => {
       </View>
       <View style={styles.wrapper}>
         <View style={styles.greeting}>
-          <Text style={styles.greetingmsg}>Register to</Text>
-          <Text style={styles.greetingmsg}>AS-LAHAH</Text>
+          <Text style={styles.greetingmsg}>Forgot Your Pass</Text>
+          <Text style={styles.greetingmsg}>Don't Worry</Text>
         </View>
 
         <View style={styles.loginForm}>
-          <Text style={styles.detailinfo}>Please enter details</Text>
+          <Text style={styles.detailinfo}>Please enter Email</Text>
           <View style={styles.inputbox}>
             <TextInput
               placeholder="Email"
               value={email}
               onChangeText={(text) => setEmail(text)}
               style={styles.input}
+              readOnly={otpSent}
             />
-            {/* <TextInput
-              placeholder="Password"
-              value={password}
-              onChangeText={(text) => setPassword(text)}
-              secureTextEntry={true}
-              style={styles.input}
-            /> */}
-            <TextInput
-              placeholder="Otp"
-              value={mobile}
-              onChangeText={(text) => setMobile(text)}
-              keyboardType="phone-pad"
-              style={styles.input}
-            />
+            {otpSent && (
+              <>
+                <TextInput
+                  placeholder="Otp"
+                  value={otp}
+                  onChangeText={setOtp}
+                  style={styles.input}
+                />
+                <TextInput
+                  placeholder="New Password"
+                  value={pass}
+                  onChangeText={setPass}
+                  style={styles.input}
+                />
+              </>
+            )}
           </View>
 
           <View style={styles.loginbtn}>
-            <Pressable onPress={handleSignup}>
-              <Text style={styles.loginbtnmsg}>Send Otp</Text>
-            </Pressable>
+            {otpSent ? (
+              <Pressable onPress={handleVerifyOtp}>
+                <Text style={styles.loginbtnmsg}>Verify Otp</Text>
+              </Pressable>
+            ) : (
+              <Pressable onPress={handleForgotPassword}>
+                <Text style={styles.loginbtnmsg}>Send Otp</Text>
+              </Pressable>
+            )}
           </View>
         </View>
       </View>
@@ -113,7 +160,7 @@ const Signup = ({navigation}) => {
   );
 };
 
-export default Signup;
+export default ForgotPass;
 
 const styles = StyleSheet.create({
   container: {
@@ -151,10 +198,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   greetingmsg: {
-    fontSize: 60,
+    fontSize: 40,
     // fontWeight: "bold",
     color: "#333341", // Use 'color' instead of 'fontcolor'
-    margin: -8,
   },
 
   loginForm: {},

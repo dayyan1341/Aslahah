@@ -33,3 +33,10 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+# Builds
+android/
+
+# Packager caches
+package-lock.*
+*.lock

@@ -19,8 +19,13 @@ export default function Login({ navigation }) {
   const [password, setPassword] = useState("");
   const [fieldEmpty, setFieldEmpty] = useState();
   const { signIn, locale } = useAuth(); 
+ 
 
-
+  const handlePhoneText = (num) =>{
+    setFieldEmpty(false)
+    setPhoneNumber(num)
+  }
+ 
   const handleLogin = () => {
     if (phoneNumber && password) reqLogin();
     else setFieldEmpty(true);
@@ -38,10 +43,32 @@ export default function Login({ navigation }) {
       console.log("User logged in successfully:", response.data.user);
       signIn(response.data.user.token);
 
-      // navigation.navigate("Tabs");
     } catch (error) {
-      console.error("Failed to log in:", error.message);
-      Alert.alert("Failed to log in", error.message);
+      if (error.response.data.message === "User not verified"){
+        navigation.navigate("Verify",{email:phoneNumber,password})
+      }
+      else if (error.response) {
+        console.error(
+          "Failed to login user. Server responded with:",
+          error.response.data
+        );
+        console.error("Status code:", error.response.status);
+        Alert.alert(
+          "Failed to login user",
+          error.response.data.message || "Unknown error occurred"
+        );
+      } else if (error.request) {
+        console.error(
+          "Failed to Login user. No response received from server."
+        );
+        Alert.alert(
+          "Failed to Login user",
+          "No response received from server"
+        );
+      } else {
+        console.error("Failed to login user. Error:", error.message);
+        Alert.alert("Failed to login user", error.message);
+      }
     }
   };
   return (
@@ -68,11 +95,12 @@ export default function Login({ navigation }) {
           <View style={styles.inputbox}>
             <TextInput
               style={styles.input}
-              placeholder={i18n[locale].phoneNumber}
-              onChangeText={setPhoneNumber}
+              placeholder={i18n[locale].email}
+              onChangeText={handlePhoneText}
               value={phoneNumber}
-              keyboardType="phone-pad"
+              keyboardType="email-address"
             />
+            {fieldEmpty && <Text style={styles.error}>Please enter a phone number</Text>}
             <TextInput
               style={styles.input}
               placeholder={i18n[locale].password}
@@ -144,7 +172,12 @@ const styles = StyleSheet.create({
     color: "#333341", // Use 'color' instead of 'fontcolor'
     margin: -8,
   },
+  error:{
+    marginTop:-20,
+    marginBottom:20,
+    color:'red',
 
+  },  
   loginForm: {},
   detailinfo: {
     fontSize: 20,

@@ -6,33 +6,63 @@ import {
   TextInput,
   Pressable,
   View,
+  Alert,
 } from "react-native";
 import axios from "axios";
+import i18n from "../context/i18n";
+import { useAuth } from "../context/AuthContext";
 
-const Signup = ({navigation}) => {
+const Signup = ({ navigation }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mobile, setMobile] = useState("");
+  const { locale } = useAuth();
 
-  const handleSignup = async () => {
+
+  const handleSignup = () => {
+    if (name && email && mobile && password) reqSignup();
+    else Alert.alert("Field Empty","Please enter in all the details");
+  };
+
+
+  const reqSignup = async () => {
+    // Password validation criteria
+    const uppercaseRegex = /[A-Z]/;
+    const lowercaseRegex = /[a-z]/;
+    const numberRegex = /[0-9]/;
+    const specialCharRegex = /[$&+,:;=?@#|'<>.^*()%!-]/;
+
+    if (
+      !uppercaseRegex.test(password) ||
+      !lowercaseRegex.test(password) ||
+      !numberRegex.test(password) ||
+      !specialCharRegex.test(password)
+    ) {
+      Alert.alert(
+        "Weak Password",
+        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character."
+      );
+      return;
+    }
     try {
-      const response = await axios.post("https://server.aslahah.com/api/auth/register", {
-        name: name,
-        email: email,
-        password: password,
-        mobileNumber: mobile,
-      });
+      const response = await axios.post(
+        "https://server.aslahah.com/api/auth/register",
+        {
+          name: name,
+          email: email,
+          password: password,
+          mobileNumber: mobile,
+        }
+      );
       console.log("User registered successfully:", response.data);
-      if(response.data.user){
-        navigation.navigate("Verify",{email,password})
+      if (response.data.user) {
+        navigation.navigate("Verify", { email, password });
+      }else {
+        Alert.alert("Something Bad Happened","Please try again later")
       }
-        navigation.navigate("Login")
-
     } catch (error) {
       if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
         console.error(
           "Failed to register user. Server responded with:",
           error.response.data
@@ -43,7 +73,6 @@ const Signup = ({navigation}) => {
           error.response.data.message || "Unknown error occurred"
         );
       } else if (error.request) {
-        // The request was made but no response was received
         console.error(
           "Failed to register user. No response received from server."
         );
@@ -52,7 +81,6 @@ const Signup = ({navigation}) => {
           "No response received from server"
         );
       } else {
-        // Something happened in setting up the request that triggered an Error
         console.error("Failed to register user. Error:", error.message);
         Alert.alert("Failed to register user", error.message);
       }
@@ -63,8 +91,8 @@ const Signup = ({navigation}) => {
     <View style={styles.container}>
       <View style={styles.topright}>
         <View style={styles.toprightwrapper}>
-          <Text style={styles.toprightmsg}>Repairing at</Text>
-          <Text style={styles.toprightmsg}>your doorstep</Text>
+          <Text style={styles.toprightmsg}>{i18n[locale].firstSentence}</Text>
+          <Text style={styles.toprightmsg}>{i18n[locale].secondSentence}</Text>
         </View>
         <Image
           source={require("../assets/static/20240221_000353_0005.png")}
@@ -80,18 +108,23 @@ const Signup = ({navigation}) => {
         <View style={styles.loginForm}>
           <Text style={styles.detailinfo}>Please enter details</Text>
           <View style={styles.inputbox}>
+            <Text>Name : </Text>
             <TextInput
               placeholder="Name"
               value={name}
               onChangeText={(text) => setName(text)}
               style={styles.input}
             />
+            <Text>Email : </Text>
+
             <TextInput
               placeholder="Email"
               value={email}
               onChangeText={(text) => setEmail(text)}
               style={styles.input}
             />
+            <Text>Password : </Text>
+
             <TextInput
               placeholder="Password"
               value={password}
@@ -99,6 +132,8 @@ const Signup = ({navigation}) => {
               secureTextEntry={true}
               style={styles.input}
             />
+            <Text>Mobile Number : </Text>
+
             <TextInput
               placeholder="Mobile Number"
               value={mobile}

@@ -21,22 +21,20 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.deviant1341.Aslahah"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      [
-        "expo-font",
-        {
-          "fonts": [
-            "node_modules/@expo-google-fonts/inter/Inter_100Thin.ttf"
-          ]
-        }
-      ],
       "expo-secure-store",
       "expo-localization"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "e2a769f0-57ce-40a5-8f54-0b7fd6db86ec"
+      }
+    }
   }
 }

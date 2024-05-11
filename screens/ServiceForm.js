@@ -58,8 +58,8 @@ export default function ServiceForm({ route, navigation }) {
       Alert.alert("Booking created successfully", "We will reach you shortly");
       navigation.navigate("Tabs");
     } catch (error) {
-      console.error("Failed to book in:", error);
-      Alert.alert("Failed to book in", error.message);
+      console.error("Failed to book in:", error.response.data.message );
+      Alert.alert("Failed to book in", error.response.data.message || "Unknown error occurred");
     }
   };
 

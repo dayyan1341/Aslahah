@@ -1,11 +1,24 @@
-import { Pressable, StyleSheet, Text, View, Image } from "react-native";
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Dimensions,
+  ScrollView,
+} from "react-native";
 import React from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Review from "../components/Review";
+import details from "../context/details";
+import expertise from "../context/expertise";
 
 export default function ServiceDesc({ route, navigation }) {
   const ins = useSafeAreaInsets();
-  const { service,desc,exp } = route.params;
+  const { service } = route.params;
+
+  const desc = details[service];
+  const exp = expertise[service];
   return (
     <View style={[styles.container, { paddingTop: ins.top }]}>
       <View style={styles.x}>
@@ -20,16 +33,14 @@ export default function ServiceDesc({ route, navigation }) {
           />
         </Pressable>
       </View>
-      <View style={styles.wrapper}>
+      <ScrollView contentContainerStyle={styles.wrapper} showsVerticalScrollIndicator={false}>
         <View style={styles.box}>
           <Text style={styles.headings}>{service}</Text>
-          <Text style={styles.description}>
-            {desc}
+          <Text style={styles.description}>{desc}</Text>
+          <Text style={[styles.headings, { marginTop: 20 }]}>
+            Our Expertise
           </Text>
-          <Text style={[styles.headings,{marginTop:10}]}>Our Expertise</Text>
-          <Text style={styles.description}>
-           {exp}
-          </Text>
+          <Text style={styles.description}>{exp}</Text>
         </View>
         {/* <View style={styles.box}>
           <Text style={styles.headings}>Our Expertise:</Text>
@@ -75,16 +86,18 @@ export default function ServiceDesc({ route, navigation }) {
             <Text>See all reviews</Text>
           </View>
         </Pressable> */}
-        <Pressable
-          style={styles.rightbox}
-          onPress={() => navigation.navigate("Form", route.params)}
-        >
-          <Text style={styles.contactbtn}>Book Now</Text>
-        </Pressable>
-      </View>
+      </ScrollView>
+      <Pressable
+        style={styles.rightbox}
+        onPress={() => navigation.navigate("Form", route.params)}
+      >
+        <Text style={styles.contactbtn}>Book Now</Text>
+      </Pressable>
     </View>
   );
 }
+
+const dim = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
@@ -105,16 +118,13 @@ const styles = StyleSheet.create({
 
   wrapper: {
     display: "flex",
-    width: "90%",
-    height: "auto",
-
+    width: dim.width * 0.9,
     alignSelf: "center",
     justifyContent: "space-between",
-    maxHeight: "100%",
     flexGrow: 1,
   },
   bannerimg: {
-    width: "100%",
+    width: dim.width,
     height: 200,
     marginBottom: 15,
     borderBottomLeftRadius: 50,
@@ -155,7 +165,7 @@ const styles = StyleSheet.create({
     // width:'80%'
   },
   contactbtn: {
-    marginTop: 20,
+    marginTop: 10,
     color: "white",
     textAlign: "center",
     fontSize: 15,

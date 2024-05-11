@@ -45,8 +45,8 @@ export default function Profile({ navigation }) {
       setemail(response.data.user.email);
       setphone(response.data.user.mobileNumber);
     } catch (error) {
-      console.error("Something went wrong while fetching profile", error);
-      Alert.alert("Something went wrong while fetching profile");
+      console.error("Something went wrong while fetching profile", error.response.data.message );
+      Alert.alert("Something went wrong while fetching profile",error.response.data.message || "Unknown error occurred");
     }
   }
   return (

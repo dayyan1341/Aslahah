@@ -1,11 +1,14 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import React from "react";
 import Search from "../components/Search";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import i18n from "../context/i18n";
 import { useAuth } from "../context/AuthContext";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Header(props) {
+  const navigation = useNavigation()
+
   const pad = useSafeAreaInsets()
   const {locale} = useAuth()
   return (
@@ -15,10 +18,12 @@ export default function Header(props) {
           <Text style={styles.usergreeting}>Hi, {props.name}</Text>
           <Text>{i18n[locale].letsFindServices}</Text>
         </View>
+        <Pressable onPress={()=>navigation.navigate("Profile")}>
         <Image
           source={require("../assets/static/20240221_000353_0007.png")}
           style={styles.userimg}
         />
+        </Pressable>
       </View>
       <View style={styles.searchbar}>
         <Search place={i18n[locale].searchForServices}  />
@@ -42,6 +47,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   usergreeting: {
+    width:'50%',
     fontSize: 30,
     fontWeight: "bold",
     borderBottomWidth: 2,
@@ -54,7 +60,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   userimg: {
-    aspectRatio: 1,
+    height: 70,
     width: 70,
   },
 });

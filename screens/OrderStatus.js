@@ -54,8 +54,8 @@ import {
         // setLoading(false);
       } catch (error) {
         // setLoading(false);
-        console.error("Something went wrong while fetching Orders", error);
-        Alert.alert("Something went wrong while fetching Orders");
+        console.error("Something went wrong while fetching Orders", error.response.data.message );
+        Alert.alert("Something went wrong while fetching Orders",error.response.data.message || "Unknown error occurred");
       }
     };
   

@@ -56,8 +56,14 @@ export default function Cart({ navigation }) {
       // setLoading(false);
     } catch (error) {
       // setLoading(false);
-      console.error("Something went wrong while fetching Orders", error);
-      Alert.alert("Something went wrong while fetching Orders");
+      console.error(
+        "Something went wrong while fetching Orders",
+        error.response.data.message
+      );
+      Alert.alert(
+        "Something went wrong while fetching Orders",
+        error.response.data.message || "Unknown error occurred"
+      );
     }
   };
 
@@ -75,14 +81,20 @@ export default function Cart({ navigation }) {
         }
       );
       console.log("this order:", response.data);
-      setStatus(response.data.booking.bookingStatus)
-      console.log(status)
+      setStatus(response.data.booking.bookingStatus);
+      console.log(status);
 
       // setLoading(false);
     } catch (error) {
       // setLoading(false);
-      console.error("Something went wrong while fetching Orders", error);
-      Alert.alert("Something went wrong while fetching Orders");
+      console.error(
+        "Something went wrong while fetching Orders",
+        error.response.data.message
+      );
+      Alert.alert(
+        "Something went wrong while fetching Orders",
+        error.response.data.message || "Unknown error occurred"
+      );
     }
   };
 
@@ -129,20 +141,27 @@ export default function Cart({ navigation }) {
 
         <FlatList
           data={status}
-          ItemSeparatorComponent={<View style={{ marginVertical: 10 }}/>}
+          ItemSeparatorComponent={<View style={{ marginVertical: 10 }} />}
+          ListEmptyComponent={ListEmptyComponent}
           renderItem={({ item }) => (
-            <View style={{position: "relative",
-            backgroundColor: "#00e9f1",
-            // width: screen.width * 0.9,
-            height: 70,
-            alignItems: "center",
-            justifyContent: "center",
-            borderBottomLeftRadius: 50,
-            borderTopLeftRadius: 50,
-            borderTopRightRadius: 10,
-            borderBottomRightRadius: 50,}}>
-              <Text style={{fontWeight:'bold'}}>{orders[0].serviceType}</Text>
-              <Text style={{fontWeight:'bold'}}>{item.status}</Text>
+            <View
+              style={{
+                position: "relative",
+                backgroundColor: "#00e9f1",
+                // width: screen.width * 0.9,
+                height: 70,
+                alignItems: "center",
+                justifyContent: "center",
+                borderBottomLeftRadius: 50,
+                borderTopLeftRadius: 50,
+                borderTopRightRadius: 10,
+                borderBottomRightRadius: 50,
+              }}
+            >
+              <Text style={{ fontWeight: "bold" }}>
+                {orders[0].serviceType}
+              </Text>
+              <Text style={{ fontWeight: "bold" }}>{item.status}</Text>
               <Text>{item.updatedAt}</Text>
             </View>
           )}
@@ -284,4 +303,8 @@ const styles = StyleSheet.create({
   infohead: {
     width: "45%",
   },
+  buzz:{
+    width:'100%',
+    alignItems:'center',
+  }
 });

@@ -20,7 +20,7 @@ export default function ServicesShowcase() {
         <View style={styles.servicebox}>
           <Pressable
             onPress={() => {
-              navigation.navigate("Description", { service: "Ac Repairment" });
+              navigation.navigate("Description", { service: "AC Repairing" });
             }}
           >
             <View style={styles.serviceimg}>
@@ -32,49 +32,84 @@ export default function ServicesShowcase() {
           </Pressable>
           <Text style={styles.service}>{i18n[locale].acRepairing}</Text>
         </View>
+
         <View style={styles.servicebox}>
+        <Pressable
+            onPress={() => {
+              navigation.navigate("Description", { service: "Carpentry" });
+            }}
+          >
           <View style={styles.serviceimg}>
             <Image
               source={require("../assets/static/20240221_000353_0012.png")}
               style={styles.img}
             />
           </View>
+          </Pressable>
           <Text style={styles.service}>{i18n[locale].carpentry}</Text>
         </View>
+
         <View style={styles.servicebox}>
+        <Pressable
+            onPress={() => {
+              navigation.navigate("Description", { service: "Plumbing" });
+            }}
+          >
           <View style={styles.serviceimg}>
             <Image
               source={require("../assets/static/20240221_000353_0013.png")}
               style={styles.img}
             />
           </View>
+          </Pressable>
           <Text style={styles.service}>{i18n[locale].plumbing}</Text>
         </View>
+
         <View style={styles.servicebox}>
+        <Pressable
+            onPress={() => {
+              navigation.navigate("Description", { service: "Painter" });
+            }}
+          >
           <View style={styles.serviceimg}>
             <Image
               source={require("../assets/static/20240221_000353_0014.png")}
               style={styles.img}
             />
           </View>
+          </Pressable>
           <Text style={styles.service}>{i18n[locale].painter}</Text>
         </View>
+
         <View style={styles.servicebox}>
+        <Pressable
+            onPress={() => {
+              navigation.navigate("Description", { service: "Lift Repairing" });
+            }}
+          >
           <View style={styles.serviceimg}>
             <Image
               source={require("../assets/static/20240221_000353_0014.png")}
               style={styles.img}
             />
           </View>
+          </Pressable>
           <Text style={styles.service}>{i18n[locale].liftRepairing}</Text>
         </View>
+
         <View style={styles.servicebox}>
+        <Pressable
+            onPress={() => {
+              navigation.navigate("Description", { service: "Wall Works" });
+            }}
+          >
           <View style={styles.serviceimg}>
             <Image
               source={require("../assets/static/20240221_000353_0014.png")}
               style={styles.img}
             />
           </View>
+          </Pressable>
           <Text style={styles.service}>{i18n[locale].wallWorks}</Text>
         </View>
       </View>
@@ -92,6 +127,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     gap: 25,
     paddingLeft: 20,
+    paddingRight: 20,
   },
   servicebox: {
     alignItems: "center",
