@@ -11,13 +11,15 @@ import {
 } from "react-native";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
+import imageMap from "../context/technicianCartoons";
 import CartItem from "../components/CartItem";
+import i18n from "../context/i18n";
 
 const PrevOrders = ({ navigation }) => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const { getToken } = useAuth();
+  const { getToken, locale } = useAuth();
 
   useEffect(() => {
     fetchOrders();
@@ -47,14 +49,14 @@ const PrevOrders = ({ navigation }) => {
     }
   };
 
-  const imageMap = {
-    "AC Repairing": require("../assets/static/ac_repairing.png"),
-    "Lift Reapiring": require("../assets/static/lift_repairing.png"),
-    Carpentry: require("../assets/static/carpentry.png"),
-    Painter: require("../assets/static/painter.png"),
-    "Wall Works": require("../assets/static/wall_works.png"),
-    Plumbing: require("../assets/static/plumbing.png"),
-  };
+  // const imageMap = {
+  //   "AC Repairing": require("../assets/static/ac_repairing.png"),
+  //   "Lift Reapiring": require("../assets/static/lift_repairing.png"),
+  //   Carpentry: require("../assets/static/carpentry.png"),
+  //   Painter: require("../assets/static/painter.png"),
+  //   "Wall Works": require("../assets/static/wall_works.png"),
+  //   Plumbing: require("../assets/static/plumbing.png"),
+  // };
 
   const ListEmptyComponent = () => (
     <View style={styles.buzz}>
@@ -73,9 +75,9 @@ const PrevOrders = ({ navigation }) => {
           />
         </Pressable>
       </View>
-      <Text style={styles.headings}>Your Previous Orders :</Text>
+      <Text style={styles.headings}>{i18n[locale].previousOrders} :</Text>
       {loading ? (
-        <Text>Loading...</Text>
+        <Text>{i18n[locale].loading}</Text>
       ) : (
         <View style={styles.container}>
           <FlatList
@@ -85,6 +87,7 @@ const PrevOrders = ({ navigation }) => {
             ItemSeparatorComponent={<View style={{ marginVertical: 10 }} />}
             renderItem={({ item }) => (
               <CartItem
+              id={item._id}
               name={item.serviceType}
               img={imageMap[item.serviceType]}
               status={item.bookingStatus}

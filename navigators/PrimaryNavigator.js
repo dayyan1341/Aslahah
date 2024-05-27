@@ -22,6 +22,7 @@ const Stack = createNativeStackNavigator();
 
 export default function PrimaryNavigator() {
   const { isLoggedIn } = useAuth();
+  
 
   return (
     <NavigationContainer>

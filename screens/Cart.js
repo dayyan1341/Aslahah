@@ -11,23 +11,20 @@ import CartItem from "../components/CartItem";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
+import i18n from "../context/i18n";
+import imageMap from "../context/technicianCartoons";
+import formatDate from "../context/formatDate";
+import formatTime from "../context/formatTime";
+
+
 
 export default function Cart({ navigation }) {
   const [orders, setOrders] = useState([]);
   const [status, setStatus] = useState([]);
 
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
-  const { getToken } = useAuth();
-
-  const imageMap = {
-    "AC Repairing": require("../assets/static/ac_repairing.png"),
-    "Lift Reapiring": require("../assets/static/lift_repairing.png"),
-    Carpentry: require("../assets/static/carpentry.png"),
-    Painter: require("../assets/static/painter.png"),
-    "Wall Works": require("../assets/static/wall_works.png"),
-    Plumbing: require("../assets/static/plumbing.png"),
-  };
+  const { getToken, locale } = useAuth();
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -53,9 +50,9 @@ export default function Cart({ navigation }) {
       console.log("Orders:", response.data);
       setOrders(response.data.data);
       fetchStatus(response.data.data[0]["_id"]);
-      // setLoading(false);
+      setLoading(false);
     } catch (error) {
-      // setLoading(false);
+      setLoading(false);
       console.error(
         "Something went wrong while fetching Orders",
         error.response.data.message
@@ -100,8 +97,8 @@ export default function Cart({ navigation }) {
 
   const ListEmptyComponent = () => (
     <View style={styles.buzz}>
-      <Text>Nothing to show here</Text>
-      <Text>Request some services!!</Text>
+      <Text>{i18n[locale].nothingToShow}</Text>
+      <Text>{i18n[locale].requestSome}</Text>
     </View>
   );
 
@@ -117,7 +114,7 @@ export default function Cart({ navigation }) {
       </View>
 
       <View style={styles.bookingWrapper}>
-        <Text style={styles.headings}>My Cart</Text>
+        <Text style={styles.headings}>{i18n[locale].myCart}</Text>
         {/* <Pressable style={styles.bookingBtn}>
           <Text
             style={styles.bookingBtnText}
@@ -132,40 +129,26 @@ export default function Cart({ navigation }) {
       </View>
 
       <View style={[styles.box, styles.white]}>
-        {/* <Text>My Bookings</Text>
-
-        <Text>Booking Recieved</Text>
-        <Text>Techinician visit</Text>
-        <Text>Booking Recieved</Text>
-        <Text>Booking Recieved</Text> */}
-
+      {loading ? (
+        <View style={styles.container}>
+          <Text>{i18n[locale].loading}</Text>
+        </View>
+      ) : (
         <FlatList
           data={status}
+          ListHeaderComponent={<Text style={styles.headings}>{i18n[locale][orders[0].serviceType]}</Text>}
+          ListHeaderComponentStyle={{marginBottom:10}}
           ItemSeparatorComponent={<View style={{ marginVertical: 10 }} />}
           ListEmptyComponent={ListEmptyComponent}
           renderItem={({ item }) => (
             <View
-              style={{
-                position: "relative",
-                backgroundColor: "#00e9f1",
-                // width: screen.width * 0.9,
-                height: 70,
-                alignItems: "center",
-                justifyContent: "center",
-                borderBottomLeftRadius: 50,
-                borderTopLeftRadius: 50,
-                borderTopRightRadius: 10,
-                borderBottomRightRadius: 50,
-              }}
+              style={styles.orderStatus}
             >
-              <Text style={{ fontWeight: "bold" }}>
-                {orders[0].serviceType}
-              </Text>
               <Text style={{ fontWeight: "bold" }}>{item.status}</Text>
-              <Text>{item.updatedAt}</Text>
+              <Text>Time : {formatTime(new Date(item.updatedAt))} on {formatDate(new Date(item.updatedAt)) }</Text>
             </View>
           )}
-        />
+        />)}
 
         {/* <FlatList
           data={orders}
@@ -219,6 +202,18 @@ const styles = StyleSheet.create({
   btnimg: {
     height: 60,
     width: 60,
+  },
+  orderStatus:{
+    position: "relative",
+    backgroundColor: "#00e9f1",
+    // width: screen.width * 0.9,
+    height: 70,
+    alignItems: "center",
+    justifyContent: "center",
+    borderBottomLeftRadius: 50,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 50,
   },
   bookingWrapper: {
     // display: "flex",
@@ -281,7 +276,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     height: 1,
     width: "100%",
-    backgroundColor: "black",
+    backgroundColor: "#00e9f1",
     borderRadius: 10,
     opacity: 1,
     alignSelf: "center",
@@ -303,8 +298,8 @@ const styles = StyleSheet.create({
   infohead: {
     width: "45%",
   },
-  buzz:{
-    width:'100%',
-    alignItems:'center',
-  }
+  buzz: {
+    width: "100%",
+    alignItems: "center",
+  },
 });

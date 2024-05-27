@@ -12,11 +12,13 @@ import Search from "../components/Search";
 import ServiceCard from "../components/ServiceCard";
 import i18n from "../context/i18n";
 import { useAuth } from "../context/AuthContext";
-import details from "../context/details";
-import expertise from "../context/expertise";
 
 function Services({ navigation }) {
-  const { locale } = useAuth();
+  const { locale, getName } = useAuth();
+
+  React.useEffect(
+    () => console.log(getName())
+  )
 
   return (
     <View style={styles.wrapper}>
@@ -40,37 +42,45 @@ function Services({ navigation }) {
       </View>
       <ScrollView contentContainerStyle={styles.cardholder}>
         <ServiceCard
-          name={i18n[locale].acRepairing}
+          locale = {locale}
+          name={"acRepairing"}
           cardImage={require("../assets/static/ac_repairing.png")}
         />
         <ServiceCard
-          name={i18n[locale].liftRepairing}
+          locale = {locale}
+          name={"liftRepairing"}
           cardImage={require("../assets/static/lift_repairing.png")}
         />
         <ServiceCard
-          name={i18n[locale].plumbing}
+          locale = {locale}
+          name={"carpentry"}
           cardImage={require("../assets/static/plumbing.png")}
         />
         <ServiceCard
-          name={i18n[locale].carpentry}
+          locale = {locale}
+          name={"plumbing"}
           cardImage={require("../assets/static/carpentry.png")}
         />
         <ServiceCard
-          name={i18n[locale].wallWorks}
+          locale = {locale}
+          name={"wallWorks"}
           cardImage={require("../assets/static/wall_works.png")}
         />
         <ServiceCard
-          name={i18n[locale].painter}
+          locale = {locale}
+          name={"painter"}
           cardImage={require("../assets/static/painter.png")}
         />
-        {/* <ServiceCard
-          name="All Services"
+        <ServiceCard
+          locale = {locale}
+          name="packersAndDroppers"
           cardImage={require("../assets/static/all_services.png")}
-        /> */}
-        {/* <ServiceCard
-          name="Become a technician"
-          cardImage={require("../assets/static/all_services.png")}
-        /> */}
+        />
+        <ServiceCard
+          locale = {locale}
+          name="electrician"
+          cardImage={require("../assets/static/electrician.png")}
+        />
       </ScrollView>
     </View>
   );
@@ -110,7 +120,8 @@ const styles = StyleSheet.create({
   },
   cardholder: {
     marginTop: 20,
-    marginBottom: 20,
+    // marginBottom: 20,
+    paddingBottom:20,
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",

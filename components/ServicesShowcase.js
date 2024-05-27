@@ -25,7 +25,7 @@ export default function ServicesShowcase() {
           >
             <View style={styles.serviceimg}>
               <Image
-                source={require("../assets/static/20240221_000353_0011.png")}
+                source={require("../assets/static/ac.png")}
                 style={styles.img}
               />
             </View>
@@ -89,7 +89,7 @@ export default function ServicesShowcase() {
           >
           <View style={styles.serviceimg}>
             <Image
-              source={require("../assets/static/20240221_000353_0014.png")}
+              source={require("../assets/static/lift.png")}
               style={styles.img}
             />
           </View>

@@ -8,6 +8,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [authToken, setAuthToken] = useState(null);
+  const [details ,setDetails] = useState()
   const [locale, setLocale] = useState(getLocales()[0].languageCode);
 
   useEffect(() => {
@@ -16,18 +17,17 @@ export const AuthProvider = ({ children }) => {
     if(locale !=  'ar') setLocale('en')
     console.log(locale)
     console.log("token : "+authToken)
+    console.log("Details : "+details)
 
-  }, []); // Remove locale from the dependency array
-  
-  // const handleLocalesChange = () => {
-  //   setLocale(getLocales()[0].languageCode);
-  // };
+  }, []);  
   
   const checkStoredToken = async () => {
     try {
       const token = await SecureStore.getItemAsync('authToken');
+      const detail = await SecureStore.getItemAsync('details');
       if (token) {
         setAuthToken(token);
+        if (detail) setDetails(JSON.parse(detail))
         setIsLoggedIn(true);
       }
     } catch (error) {
@@ -35,10 +35,12 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const signIn = async (token) => {
+  const signIn = async (user) => {
     try {
-      await SecureStore.setItemAsync('authToken', token);
-      setAuthToken(token);
+      await SecureStore.setItemAsync('authToken', user.token);
+      await SecureStore.setItemAsync('details', JSON.stringify(user));
+      setAuthToken(user.token);
+      setDetails(user)
       setIsLoggedIn(true);
     } catch (error) {
       console.error('Error storing authentication token:', error);
@@ -49,7 +51,9 @@ export const AuthProvider = ({ children }) => {
   const signOut = async () => {
     try {
       await SecureStore.deleteItemAsync('authToken');
+      await SecureStore.deleteItemAsync('details');
       setAuthToken(null);
+      setDetails(null)
       setIsLoggedIn(false);
     } catch (error) {
       console.error('Error removing authentication token:', error);
@@ -61,8 +65,19 @@ export const AuthProvider = ({ children }) => {
     return authToken;
   };
 
+  const getName = () => {
+    return details.name;
+  }
+
+  const getEmail = () => {
+    return details.email;
+  }
+  const getNumber = () => {
+    return details.mobileNumber;
+  }
+
   return (
-    <AuthContext.Provider value={{ isLoggedIn, signIn, signOut, getToken , locale, setLocale }}>
+    <AuthContext.Provider value={{ isLoggedIn, signIn, signOut, getToken , locale ,setLocale, getName, getEmail, getNumber }}>
       {children}
     </AuthContext.Provider>
   );

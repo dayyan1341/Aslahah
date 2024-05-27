@@ -1,14 +1,18 @@
 const formatTime = (time) => {
-  const timeStr = time.toLocaleTimeString().split(" ");
-  const mer = timeStr[1];
+  // Use Intl.DateTimeFormat to get the time in a consistent (English) format
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
 
-  const timeString = timeStr[0].split(":");
-
-  const hours = parseInt(timeString[0]);
-  const minutes = timeString[1].padStart(2, "0");
-
-  if (mer === "AM") return `${timeString[0].padStart(2, "0")}:${minutes}`;
-  else return `${hours + 12}:${minutes}`;
+  // Get the formatted time
+  const formattedTime = formatter
+    .formatToParts(time)
+    .filter((part) => part.type === "hour" || part.type === "minute")
+    .map((part) => part.value.padStart(2, "0"));
+  
+  return `${formattedTime[0]}:${formattedTime[1]}`;
 };
 
 export default formatTime;

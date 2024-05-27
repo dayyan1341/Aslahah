@@ -7,14 +7,19 @@ import {
   Button,
   Pressable,
   Alert,
+  ScrollView,
 } from "react-native";
 // import React from "react";
 import React, { useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import axios from "axios";
-import formatTime from "../context/formatTime";
 import { useAuth } from "../context/AuthContext";
+import i18n from "../context/i18n";
+import Dropdown from "../components/Dropdown";
+import servicesForLocale from "../context/servicesFor";
+import formatDate from "../context/formatDate";
+import formatTime from "../context/formatTime";
 
 export default function ServiceForm({ route, navigation }) {
   const ins = useSafeAreaInsets();
@@ -24,15 +29,17 @@ export default function ServiceForm({ route, navigation }) {
   const [date, setDate] = useState();
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [istimePickerVisible, settimePickerVisibility] = useState(false);
+  const [serviceFor, setServiceFor] = useState("");
   const { service } = route.params;
-  const { getToken } = useAuth();
+  const { getToken, locale } = useAuth();
 
   const handleBooking = async () => {
     console.log(
       service,
       address,
       contact,
-      date.toLocaleDateString(),
+      serviceFor,
+      formatDate(date),
       formatTime(time)
       // preferredTime
     );
@@ -45,7 +52,8 @@ export default function ServiceForm({ route, navigation }) {
           serviceType: service,
           address: address,
           contactNumber: contact,
-          preferredDate: date.toLocaleDateString(),
+          serviceFor:serviceFor,
+          preferredDate: formatDate(date),
           preferredTime: formatTime(time),
         },
         {
@@ -58,8 +66,11 @@ export default function ServiceForm({ route, navigation }) {
       Alert.alert("Booking created successfully", "We will reach you shortly");
       navigation.navigate("Tabs");
     } catch (error) {
-      console.error("Failed to book in:", error.response.data.message );
-      Alert.alert("Failed to book in", error.response.data.message || "Unknown error occurred");
+      console.error("Failed to book in:", error.response.data.message);
+      Alert.alert(
+        "Failed to book in",
+        error.response.data.message || "Unknown error occurred"
+      );
     }
   };
 
@@ -73,6 +84,7 @@ export default function ServiceForm({ route, navigation }) {
 
   const handleConfirmdate = (date) => {
     console.warn(date);
+    console.log(formatDate(date))
     setDate(date);
     hideDatePicker();
   };
@@ -87,6 +99,7 @@ export default function ServiceForm({ route, navigation }) {
 
   const handleConfirmtime = (time) => {
     console.warn("A time has been picked: ", time);
+    console.log(formatTime(time))
     setTime(time);
     hidetimePicker();
   };
@@ -99,112 +112,146 @@ export default function ServiceForm({ route, navigation }) {
           style={[styles.iconimg, styles.backbtn]}
         />
       </Pressable>
-      <View>
-        <Text style={[styles.headings, { marginTop: 15 }]}>Service Type</Text>
-        <View style={styles.input}>
-          <Image
-            source={require("../assets/static/20240228_031624_0030.png")}
-            style={styles.iconimg}
-          />
-          <TextInput style={styles.inputarea} value={service} readOnly />
-        </View>
-      </View>
-      <View>
-        <Text style={styles.headings}>Address</Text>
-        <View style={styles.input}>
-          <Image
-            source={require("../assets/static/20240228_031624_0031.png")}
-            style={styles.iconimg}
-          />
-          <View style={styles.addressinput}>
-            <TextInput
-              style={[styles.inputarea]}
-              multiline={true}
-              numberOfLines={4}
-              onChangeText={setAddress}
-              value={address}
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View>
+          <Text style={[styles.headings, { marginTop: 15 }]}>
+            {i18n[locale].serviceType}
+          </Text>
+          <View style={styles.input}>
+            <Image
+              source={require("../assets/static/20240228_031624_0030.png")}
+              style={styles.iconimg}
             />
-            <Pressable style={styles.linkbtn}>
-              <Text>Send location on Whatsapp</Text>
-              <Image
-                source={require("../assets/static/20240228_031624_0029.png")}
-                style={[{ height: 20 }, { width: 20 }]}
-              />
-            </Pressable>
+            <TextInput
+              style={styles.inputarea}
+              value={i18n[locale][service]}
+              readOnly
+            />
           </View>
         </View>
-      </View>
-      <View>
-        <Text style={styles.headings}>Contact Number (Whatsapp)</Text>
-        <View style={styles.input}>
-          <Image
-            source={require("../assets/static/20240228_031624_0032.png")}
-            style={styles.iconimg}
-          />
-          <TextInput
-            style={styles.inputarea}
-            onChangeText={setContact}
-            value={contact}
-            keyboardType="phone-pad"
-          />
-        </View>
-      </View>
-      <View>
-        <Text style={styles.headings}>Schedule Date & Time</Text>
-        <View style={styles.inputdandt}>
-          <>
-            <Text style={styles.subheadings}>Choose preferred date</Text>
-            <Pressable onPress={showDatePicker}>
-              <View style={styles.dateandtimeselector}>
-                <Image
-                  source={require("../assets/static/20240228_031624_0035.png")}
-                  style={styles.iconimg}
-                />
-                <Text>
-                  {date ? date.toLocaleDateString() : "No date selected"}
-                </Text>
-                <Image
-                  source={require("../assets/static/20240228_031624_0033.png")}
-                  style={styles.iconimg}
-                />
-              </View>
-            </Pressable>
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirmdate}
-              onCancel={hideDatePicker}
+        <View>
+          <Text style={styles.headings}>{i18n[locale].address}</Text>
+          <View style={styles.input}>
+            <Image
+              source={require("../assets/static/20240228_031624_0031.png")}
+              style={styles.iconimg}
             />
-          </>
-          <>
-            <Text style={styles.subheadings}>Choose preferred time</Text>
-            <Pressable onPress={showtimePicker}>
-              <View style={styles.dateandtimeselector}>
+            <View style={styles.addressinput}>
+              <TextInput
+                style={[styles.inputarea]}
+                multiline={true}
+                numberOfLines={4}
+                onChangeText={setAddress}
+                value={address}
+              />
+              <Pressable style={styles.linkbtn}>
+                <Text>{i18n[locale].sendLocationOnWhatsApp}</Text>
                 <Image
-                  source={require("../assets/static/20240228_031624_0035.png")}
-                  style={styles.iconimg}
+                  source={require("../assets/static/20240228_031624_0029.png")}
+                  style={[{ height: 20 }, { width: 20 }]}
                 />
-                <Text>
-                  {time ? time.toLocaleTimeString() : "No Time selected"}
-                </Text>
-                <Image
-                  source={require("../assets/static/20240228_031624_0033.png")}
-                  style={styles.iconimg}
-                />
-              </View>
-            </Pressable>
-            <DateTimePickerModal
-              isVisible={istimePickerVisible}
-              mode="time"
-              onConfirm={handleConfirmtime}
-              onCancel={hidetimePicker}
-            />
-          </>
+              </Pressable>
+            </View>
+          </View>
         </View>
-      </View>
-      <Pressable style={styles.rightbox} onPress={handleBooking}>
-        <Text style={styles.contactbtn}>Confirm Booking</Text>
-      </Pressable>
+        <View>
+          <Text style={styles.headings}>{i18n[locale].contactNumber}</Text>
+          <View style={styles.input}>
+            <Image
+              source={require("../assets/static/20240228_031624_0032.png")}
+              style={styles.iconimg}
+            />
+            <TextInput
+              style={styles.inputarea}
+              onChangeText={setContact}
+              value={contact}
+              keyboardType="phone-pad"
+            />
+          </View>
+        </View>
+
+        <View>
+          <Text style={styles.headings}>{i18n[locale].serviceFor}</Text>
+          <View style={styles.input}>
+            <Image
+              source={require("../assets/static/building.png")}
+              style={{ height: "100%", width: 40 }}
+            />
+            <Dropdown
+              data={servicesForLocale(locale)}
+              onSelect={setServiceFor}
+            />
+            {/* {selectedService && (
+              <Text style={styles.selectedText}>
+                Selected Service: {selectedService.label}
+              </Text>
+            )} */}
+          </View>
+        </View>
+
+        <View>
+          <Text style={styles.headings}>
+            {i18n[locale].scheduleDateAndTime}
+          </Text>
+          <View style={styles.inputdandt}>
+            <>
+              <Text style={styles.subheadings}>
+                {i18n[locale].choosePreferredDate}
+              </Text>
+              <Pressable onPress={showDatePicker}>
+                <View style={styles.dateandtimeselector}>
+                  <Image
+                    source={require("../assets/static/20240228_031624_0035.png")}
+                    style={styles.iconimg}
+                  />
+                  <Text>
+                    {date ? date.toLocaleDateString() : i18n[locale].warnDate}
+                  </Text>
+                  <Image
+                    source={require("../assets/static/down-outline-black.png")}
+                    style={styles.iconimg}
+                  />
+                </View>
+              </Pressable>
+              <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                onConfirm={handleConfirmdate}
+                onCancel={hideDatePicker}
+              />
+            </>
+            <>
+              <Text style={styles.subheadings}>
+                {i18n[locale].choosePreferredTime}
+              </Text>
+              <Pressable onPress={showtimePicker}>
+                <View style={styles.dateandtimeselector}>
+                  <Image
+                    source={require("../assets/static/20240228_031624_0035.png")}
+                    style={styles.iconimg}
+                  />
+                  <Text>
+                    {time ? time.toLocaleTimeString() : i18n[locale].warnTime}
+                  </Text>
+                  <Image
+                    source={require("../assets/static/down-outline-black.png")}
+                    style={styles.iconimg}
+                  />
+                </View>
+              </Pressable>
+              <DateTimePickerModal
+                isVisible={istimePickerVisible}
+                mode="time"
+                onConfirm={handleConfirmtime}
+                onCancel={hidetimePicker}
+              />
+            </>
+          </View>
+        </View>
+        <Pressable style={styles.rightbox} onPress={handleBooking}>
+          <Text style={styles.contactbtn}>{i18n[locale].confirmBooking}</Text>
+        </Pressable>
+      </ScrollView>
     </View>
   );
 }
@@ -278,6 +325,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
     marginTop: 20,
+    marginBottom: 20,
   },
   contactbtn: {
     color: "white",

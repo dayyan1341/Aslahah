@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   usergreeting: {
-    width:'50%',
+    // width:'50%',
     fontSize: 30,
     fontWeight: "bold",
     borderBottomWidth: 2,

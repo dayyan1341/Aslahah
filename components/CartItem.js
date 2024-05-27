@@ -11,6 +11,7 @@ const localeMap = {
   Painter: "painter",
   "Wall Works": "wallWorks",
   Plumbing: "plumbing",
+  
 };
 
 export default function CartItem(props) {
@@ -18,15 +19,14 @@ export default function CartItem(props) {
   const navigation = useNavigation()
   const text = localeMap[props.name];
   const isCompleted = props.status.length >= 4;
-  console.log(isCompleted)
 
   return (
-    <Pressable style={styles.item} onPress={()=>navigation.navigate("Status")}>
+    <Pressable style={styles.item} onPress={()=>navigation.navigate("Status",props)}>
       <View style={styles.itemimg}>
         <Image source={props.img} style={styles.img} />
       </View>
       <View style={styles.itemnamebox}>
-        <Text style={styles.itemname}>{i18n[locale][text]}</Text>
+        <Text style={styles.itemname}>{i18n[locale][props.name]}</Text>
       </View>
       <View style={styles.delete}>
         <Image

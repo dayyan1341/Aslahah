@@ -41,7 +41,7 @@ export default function Login({ navigation }) {
         }
       );
       console.log("User logged in successfully:", response.data.user);
-      signIn(response.data.user.token);
+      signIn(response.data.user);
 
     } catch (error) {
       if (error.response.data.message === "User not verified"){

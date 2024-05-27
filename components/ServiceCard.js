@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
+import i18n from "../context/i18n";
 
 function ServiceCard(props) {
   const navigation = useNavigation();
@@ -19,7 +20,7 @@ function ServiceCard(props) {
       style={styles.ServiceCard}
     >
       <View style={styles.ServiceCardHead}>
-        <Text style={styles.ServiceCardText}>{props.name}</Text>
+        <Text style={styles.ServiceCardText}>{i18n[props.locale][props.name]}</Text>
         <Image
           source={require("../assets/static/20240228_031623_0002.png")}
           style={styles.arrow}

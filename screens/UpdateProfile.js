@@ -120,13 +120,7 @@ export default function UpdateProfile({ navigation, route }) {
                 style={styles.followpic}
               />
             </Pressable>
-            <Pressable style={styles.linkbox}>
-              <Text>{i18n[locale].changeMobileNumber}</Text>
-              <Image
-                source={require("../assets/static/20240228_031624_0026.png")}
-                style={styles.followpic}
-              />
-            </Pressable>
+           
           </View>
           <Pressable style={styles.linkbox}>
             <Text style={styles.headings}>{i18n[locale].aboutUs}</Text>
@@ -261,6 +255,7 @@ const styles = StyleSheet.create({
   },
   blurbox: {
     zIndex: 10,
-    opacity: 0.2,
+    opacity: 0.3,
+    pointerEvents:'none'
   },
 });

@@ -12,18 +12,24 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Review from "../components/Review";
 import details from "../context/details";
 import expertise from "../context/expertise";
+import serviceBanners from "../context/serviceBanners";
+import i18n from "../context/i18n";
+import { useAuth } from "../context/AuthContext";
 
 export default function ServiceDesc({ route, navigation }) {
   const ins = useSafeAreaInsets();
   const { service } = route.params;
+  const { locale } = useAuth()
 
-  const desc = details[service];
-  const exp = expertise[service];
+  const desc = details[service][locale];
+  const exp = expertise[service][locale];
+  const img = serviceBanners[service];
+
   return (
     <View style={[styles.container, { paddingTop: ins.top }]}>
       <View style={styles.x}>
         <Image
-          source={require("../assets/static/20240228_031623_0014.png")}
+          source={img}
           style={styles.bannerimg}
         />
         <Pressable onPress={() => navigation.pop()}>
@@ -35,10 +41,10 @@ export default function ServiceDesc({ route, navigation }) {
       </View>
       <ScrollView contentContainerStyle={styles.wrapper} showsVerticalScrollIndicator={false}>
         <View style={styles.box}>
-          <Text style={styles.headings}>{service}</Text>
+          <Text style={styles.headings}>{i18n[locale][service]}</Text>
           <Text style={styles.description}>{desc}</Text>
           <Text style={[styles.headings, { marginTop: 20 }]}>
-            Our Expertise
+            {i18n[locale]["ourExpertise"]}
           </Text>
           <Text style={styles.description}>{exp}</Text>
         </View>
@@ -91,7 +97,7 @@ export default function ServiceDesc({ route, navigation }) {
         style={styles.rightbox}
         onPress={() => navigation.navigate("Form", route.params)}
       >
-        <Text style={styles.contactbtn}>Book Now</Text>
+        <Text style={styles.contactbtn}>{i18n[locale]["bookNow"]}</Text>
       </Pressable>
     </View>
   );
@@ -102,6 +108,8 @@ const dim = Dimensions.get("window");
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:'white'
+
   },
 
   x: {
@@ -127,8 +135,12 @@ const styles = StyleSheet.create({
     width: dim.width,
     height: 200,
     marginBottom: 15,
+    borderWidth:1,
+    borderColor:'rgba(0,0,0,0.1)',
     borderBottomLeftRadius: 50,
     borderBottomRightRadius: 50,
+    // borderRadius:50,
+  
   },
   box: {
     marginBottom: 20,

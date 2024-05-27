@@ -17,78 +17,58 @@ import axios from "axios";
 import i18n from "../context/i18n";
 
 function Home({ navigation }) {
-  const { locale, getToken } = useAuth();
+  const { locale, getName} = useAuth();
   const [name, setname] = React.useState();
 
   React.useEffect(() => {
-    getProf();
+    setname(getName())
   }, []);
 
-  async function getProf() {
-    try {
-      const token = getToken();
-
-      const response = await axios.get(
-        "https://server.aslahah.com/api/auth/profile",
-
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log("User Details:", response.data);
-      setname(response.data.user.name);
-    } catch (error) {
-      console.error("Something went wrong while fetching profile", error.response.data.message );
-      Alert.alert("Something went wrong while fetching profile",error.response.data.message || "Unknown error occurred");
-    }
-  }
-
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <>
       <Header name={name} />
-      <Banner />
-      <ServicesShowcase />
-      <View style={styles.reviewbox}>
-        <View style={styles.reviewboxhead}>
-          <Text style={styles.reviewboxtext}>
-            {i18n[locale].whatOurClientsSay}
-          </Text>
-          <Image
-            source={require("../assets/static/20240221_000353_0016.png")}
-            style={styles.tripledot}
-          />
-        </View>
-        <ScrollView
-          style={styles.scroll}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          fadingEdgeLength={10}
-        >
-          <View style={styles.cardholder}>
-            <ReviewCard
-              text={
-                "Incredible service! Quick response time and fixed my leaking faucet in no time. Highly recommend this app for all your plumbing needs!"
-              }
-              reviwer={"Zidaan"}
-            />
-            <ReviewCard
-              text={
-                "Outstanding experience! From booking to completion, everything went smoothly. The plumber was skilled and friendly, making the whole process stress-free. Highly recommend!"
-              }
-              reviwer={"Furkaan"}
-            />
-            <ReviewCard
-              text={
-                "Fantastic carpentry service! The carpenter was skilled and attentive to detail. Built me a beautiful custom wardrobe exactly to my specifications. Will definitelyuseagain!"
-              }
-              reviwer={"Zidaan"}
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <Banner />
+        <ServicesShowcase />
+        <View style={styles.reviewbox}>
+          <View style={styles.reviewboxhead}>
+            <Text style={styles.reviewboxtext}>
+              {i18n[locale].whatOurClientsSay}
+            </Text>
+            <Image
+              source={require("../assets/static/20240221_000353_0016.png")}
+              style={styles.tripledot}
             />
           </View>
-        </ScrollView>
-      </View>
-      {/* <Pressable
+          <ScrollView
+            style={styles.scroll}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            fadingEdgeLength={10}
+          >
+            <View style={styles.cardholder}>
+              <ReviewCard
+                text={
+                  "Incredible service! Quick response time and fixed my leaking faucet in no time. Highly recommend this app for all your plumbing needs!"
+                }
+                reviwer={"Zidaan"}
+              />
+              <ReviewCard
+                text={
+                  "خدمة إصلاح المصاعد لدينا ممتازة. الفريق محترف ومهني، ويقوم بعمل رائع في تحديد وإصلاح المشكلات بسرعة وفعالية. الآن يعمل المصعد بسلاسة وأمان تام. أنصح بشدة باستخدام خدماتهم."
+                }
+                reviwer={"Furkaan"}
+              />
+              <ReviewCard
+                text={
+                  "Fantastic carpentry service! The carpenter was skilled and attentive to detail. Built me a beautiful custom wardrobe exactly to my specifications. Will definitelyuseagain!"
+                }
+                reviwer={"Zidaan"}
+              />
+            </View>
+          </ScrollView>
+        </View>
+        {/* <Pressable
         android_ripple={{ color: "#eee", radius: 60 }}
         style={styles.btn}
         onPress={() => navigation.navigate("SelectLanguage")}
@@ -97,7 +77,8 @@ function Home({ navigation }) {
           {i18n[locale].becomeTechnician}
         </BlinkerText>
       </Pressable> */}
-    </ScrollView>
+      </ScrollView>
+    </>
   );
 }
 
