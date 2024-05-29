@@ -4,11 +4,11 @@
     "slug": "Aslahah",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/static/logo.png",
+    "icon": "./assets/static/logo1.png",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/static/logo.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
@@ -23,7 +23,7 @@
         "foregroundImage": "./assets/static/logo.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.deviant1341.Aslahah"
+      "package": "com.furkan.Aslahah"
     },
     "web": {
       "favicon": "./assets/favicon.png"
