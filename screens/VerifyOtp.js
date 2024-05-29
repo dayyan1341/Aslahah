@@ -10,10 +10,11 @@ import {
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 
-const VerifyOtp = ({navigation,route}) => {
+const VerifyOtp = ({ navigation, route }) => {
   const [otp, setOtp] = useState("");
-  const {email,password,forgot} = route.params
-  
+  const [loading, setLoading] = useState(false);
+  const { email, password, forgot } = route.params;
+
   const { signIn } = useAuth();
 
   const reqLogin = async () => {
@@ -28,47 +29,56 @@ const VerifyOtp = ({navigation,route}) => {
       console.log("User logged in successfully:", response.data.user);
       signIn(response.data.user.token);
     } catch (error) {
-      console.error("Failed to log in:", error.response.data.message );
-      Alert.alert("Failed to log in", error.response.data.message || "Unknown error occurred");
-      navigation.navigate("Login")
+      console.error("Failed to log in:", error.response.data.message);
+      Alert.alert(
+        "Failed to log in",
+        error.response.data.message || "Unknown error occurred"
+      );
+      navigation.navigate("Login");
     }
   };
 
-
   const handleVerify = async () => {
+    setLoading(true);
     try {
-     
       const response = await axios.post(
         "https://server.aslahah.com/api/auth/verify",
         {
-          email :email,
+          email: email,
           otp: otp,
         }
       );
       console.log("OTP verified successfully:", response.data);
-      reqLogin()
+      setLoading(false);
+      reqLogin();
     } catch (error) {
+      setLoading(false);
       console.error("Failed to verify OTP:", error.response.data);
-      Alert.alert("Failed to verify OTP", error.response.data.message || "Unknown error occurred");
+      Alert.alert(
+        "Failed to verify OTP",
+        error.response.data.message || "Unknown error occurred"
+      );
     }
   };
 
   const resendOtp = async () => {
     try {
-     
       const response = await axios.post(
         "https://server.aslahah.com/api/auth/resend-otp",
         {
-          email :email,
+          email: email,
         }
       );
       console.log("OTP Resent successfully:", response.data);
-      Alert.alert("Otp Resent Successfully","Please enter the new otp")
+      Alert.alert("Otp Resent Successfully", "Please enter the new otp");
     } catch (error) {
       console.error("Failed to verify OTP:", error.response.data);
-      Alert.alert("Failed to verify OTP", error.response.data.message || "Unknown error occurred");
+      Alert.alert(
+        "Failed to verify OTP",
+        error.response.data.message || "Unknown error occurred"
+      );
     }
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -81,12 +91,16 @@ const VerifyOtp = ({navigation,route}) => {
         keyboardType="numeric"
       />
       <View style={styles.btns}>
-      <Pressable style={styles.button} onPress={resendOtp}>
-        <Text style={styles.buttonText}>Resend</Text>
-      </Pressable>
-      <Pressable style={styles.button} onPress={handleVerify}>
-        <Text style={styles.buttonText}>Verify</Text>
-      </Pressable>
+        <Pressable style={styles.button} onPress={resendOtp}>
+          <Text style={styles.buttonText}>Resend</Text>
+        </Pressable>
+        <Pressable
+          style={[styles.button,{ backgroundColor: loading ? "grey" : "#333341" }]}
+          onPress={handleVerify}
+          disabled={loading}
+        >
+          <Text style={styles.buttonText}>Verify</Text>
+        </Pressable>
       </View>
     </View>
   );
@@ -113,10 +127,10 @@ const styles = StyleSheet.create({
     width: "80%",
     fontSize: 18,
   },
-  btns:{
-    flexDirection:'row',
-    justifyContent:'space-between',
-    width:'80%'
+  btns: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "80%",
   },
   button: {
     backgroundColor: "#333",

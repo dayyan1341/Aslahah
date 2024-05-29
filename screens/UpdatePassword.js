@@ -93,15 +93,6 @@ export default function UpdatePassword({ navigation, route }) {
           </Pressable>
           <View style={styles.blurbox}>
             <Text style={styles.headings}>Security</Text>
-            <View style={styles.security}>
-              <Pressable style={styles.linkbox}>
-                <Text>Change mobile number</Text>
-                <Image
-                  source={require("../assets/static/20240228_031624_0026.png")}
-                  style={styles.followpic}
-                />
-              </Pressable>
-            </View>
             <Pressable style={styles.linkbox}>
               <Text style={styles.headings}>About Us</Text>
               <Image

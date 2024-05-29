@@ -44,7 +44,7 @@ export default function ReviewCard(props) {
             source={require("../assets/static/20240221_000353_0019.png")}
             style={styles.star}
           />
-          <Text style={styles.name}>4.4</Text>
+          <Text style={styles.name}>{props.stars}</Text>
         </View>
       </View>
     </View>

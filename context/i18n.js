@@ -84,6 +84,7 @@ export default {
       office:"Office",
       selectService:"Select an option :",
       loading:"Loading ...",
+      aboutUsDesc:"Aslahah is your go-to app for booking skilled technicians for all your needs. Whether it's electrical work, plumbing, HVAC, or any other service, Aslahah connects you with certified professionals ready to help. Enjoy the convenience of scheduling appointments, receiving reliable service, and ensuring your home or office runs smoothly with just a few taps. Your satisfaction and peace of mind are our top priorities."
     },
     ar: {
       start: "البدء",
@@ -168,6 +169,7 @@ export default {
       villa:"فيلا",
       office:"مكتب",
       selectService:"اختر خيارًا",
-      loading: "جاري التحميل..."
+      loading: "جاري التحميل...",
+      aboutUsDesc:"أسلحah هو تطبيقك المفضل لحجز الفنيين المهرة لجميع احتياجاتك. سواء كانت أعمال كهربائية أو سباكة أو تكييف هواء أو أي خدمة أخرى، أسلحah يوصلك بالمهنيين المعتمدين المستعدين للمساعدة. استمتع بسهولة جدولة المواعيد، والحصول على خدمة موثوقة، وضمان سير عمل منزلك أو مكتبك بسلاسة بنقرات قليلة. رضاك وراحة بالك هما أولوياتنا القصوى."
     }
   };

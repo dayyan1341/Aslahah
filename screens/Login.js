@@ -18,17 +18,20 @@ export default function Login({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [fieldEmpty, setFieldEmpty] = useState();
-  const { signIn, locale } = useAuth(); 
- 
+  const [loading, setLoading] = useState(false);
 
-  const handlePhoneText = (num) =>{
-    setFieldEmpty(false)
-    setPhoneNumber(num)
-  }
- 
+  const { signIn, locale } = useAuth();
+
+  const handlePhoneText = (num) => {
+    setFieldEmpty(false);
+    setPhoneNumber(num);
+  };
+
   const handleLogin = () => {
-    if (phoneNumber && password) reqLogin();
-    else setFieldEmpty(true);
+    if (phoneNumber && password) {
+      reqLogin();
+      setLoading(true)
+    } else setFieldEmpty(true);
   };
 
   const reqLogin = async () => {
@@ -40,14 +43,16 @@ export default function Login({ navigation }) {
           password: password,
         }
       );
+      setLoading(false)
+      console.log(loading)
       console.log("User logged in successfully:", response.data.user);
-      signIn(response.data.user);
-
+      signIn(response.data.user.token);
     } catch (error) {
-      if (error.response.data.message === "User not verified"){
-        navigation.navigate("Verify",{email:phoneNumber,password})
-      }
-      else if (error.response) {
+      setLoading(false)
+      console.log(loading)
+      if (error.response.data.message === "User not verified") {
+        navigation.navigate("Verify", { email: phoneNumber, password });
+      } else if (error.response) {
         console.error(
           "Failed to login user. Server responded with:",
           error.response.data
@@ -61,10 +66,7 @@ export default function Login({ navigation }) {
         console.error(
           "Failed to Login user. No response received from server."
         );
-        Alert.alert(
-          "Failed to Login user",
-          "No response received from server"
-        );
+        Alert.alert("Failed to Login user", "No response received from server");
       } else {
         console.error("Failed to login user. Error:", error.message);
         Alert.alert("Failed to login user", error.message);
@@ -87,11 +89,15 @@ export default function Login({ navigation }) {
         <View style={styles.greeting}>
           {/* <BlinkerText styles={{fontSize:3}}>Hi !</BlinkerText> */}
           <Text style={styles.greetingmsg}>{i18n[locale].hi}</Text>
-          <Text style={styles.greetingmsg}>{i18n[locale].welcomeToAslahah}</Text>
+          <Text style={styles.greetingmsg}>
+            {i18n[locale].welcomeToAslahah}
+          </Text>
         </View>
 
         <View style={styles.loginForm}>
-          <Text style={styles.detailinfo}>{i18n[locale].pleaseEnterDetails}</Text>
+          <Text style={styles.detailinfo}>
+            {i18n[locale].pleaseEnterDetails}
+          </Text>
           <View style={styles.inputbox}>
             <TextInput
               style={styles.input}
@@ -100,7 +106,9 @@ export default function Login({ navigation }) {
               value={phoneNumber}
               keyboardType="email-address"
             />
-            {fieldEmpty && <Text style={styles.error}>Please enter a phone number</Text>}
+            {fieldEmpty && (
+              <Text style={styles.error}>Please enter a phone number</Text>
+            )}
             <TextInput
               style={styles.input}
               placeholder={i18n[locale].password}
@@ -110,14 +118,27 @@ export default function Login({ navigation }) {
             />
           </View>
           <View style={styles.miscbox}>
-            <BlinkerText style={styles.miscboxmsg}>{i18n[locale].rememberMe}</BlinkerText>
-            <Pressable onPress={()=>{navigation.navigate("Forgot")}}>
-            <Text style={styles.miscboxmsg}>{i18n[locale].forgotPassword}</Text>
+            <BlinkerText style={styles.miscboxmsg}>
+              {i18n[locale].rememberMe}
+            </BlinkerText>
+            <Pressable
+              onPress={() => {
+                navigation.navigate("Forgot");
+              }}
+            >
+              <Text style={styles.miscboxmsg}>
+                {i18n[locale].forgotPassword}
+              </Text>
             </Pressable>
           </View>
 
           <View style={styles.loginbtn}>
-            <Pressable onPress={handleLogin} android_ripple>
+            <Pressable
+              style={{ backgroundColor: loading?'grey':'#333341' }}
+              onPress={handleLogin}
+              android_ripple
+              disabled={loading}
+            >
               <Text style={styles.loginbtnmsg}>{i18n[locale].loginButton}</Text>
             </Pressable>
           </View>
@@ -126,8 +147,10 @@ export default function Login({ navigation }) {
       <View style={styles.signupbtn}>
         <Pressable onPress={() => navigation.navigate("SignUp")}>
           <Text>
-          {i18n[locale].dontHaveAccount}
-            <Text style={{ fontSize: 15, fontWeight: "bold" }}>{i18n[locale].signUp}</Text>
+            {i18n[locale].dontHaveAccount}
+            <Text style={{ fontSize: 15, fontWeight: "bold" }}>
+              {i18n[locale].signUp}
+            </Text>
           </Text>
         </Pressable>
       </View>
@@ -140,7 +163,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     justifyContent: "center",
-    alignItems: "center", 
+    alignItems: "center",
     backgroundColor: "#00e9f1",
   },
 
@@ -172,12 +195,11 @@ const styles = StyleSheet.create({
     color: "#333341", // Use 'color' instead of 'fontcolor'
     margin: -8,
   },
-  error:{
-    marginTop:-20,
-    marginBottom:20,
-    color:'red',
-
-  },  
+  error: {
+    marginTop: -20,
+    marginBottom: 20,
+    color: "red",
+  },
   loginForm: {},
   detailinfo: {
     fontSize: 20,
@@ -208,6 +230,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#333341",
     verticalAlign: "center",
     marginBottom: 20,
+    paddingEnd:25,
   },
   loginbtnmsg: {
     width: "100%",

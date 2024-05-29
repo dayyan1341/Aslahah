@@ -6,6 +6,7 @@ import {
   View,
   ScrollView,
   Alert,
+  Linking,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -13,9 +14,9 @@ import { useAuth } from "../context/AuthContext";
 import i18n from "../context/i18n";
 
 export default function Profile({ navigation }) {
-  const [name, setname] = useState([]);
-  const [email, setemail] = useState([]);
-  const [phone, setphone] = useState([]);
+  const [name, setname] = useState();
+  const [email, setemail] = useState();
+  const [phone, setphone] = useState();
 
   const { signOut, getToken,locale } = useAuth();
 
@@ -49,6 +50,49 @@ export default function Profile({ navigation }) {
       Alert.alert("Something went wrong while fetching profile",error.response.data.message || "Unknown error occurred");
     }
   }
+
+  const phoneNumber = '69390766';
+
+  const openWhatsApp = () => {
+    const whatsappURL = `whatsapp://send?phone=${phoneNumber}`;
+
+    Linking.canOpenURL(whatsappURL)
+      .then((supported) => {
+        if (!supported) {
+          askToSendSMS();
+        } else {
+          return Linking.openURL(whatsappURL);
+        }
+      })
+      .catch((err) => console.error('An error occurred', err));
+  };
+
+  const askToSendSMS = () => {
+    Alert.alert(
+      'WhatsApp not installed',
+      'Would you like to send an SMS instead?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Send SMS', onPress: openSMSApp },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  const openSMSApp = () => {
+    const smsURL = `sms:${phoneNumber}`;
+
+    Linking.canOpenURL(smsURL)
+      .then((supported) => {
+        if (!supported) {
+          Alert.alert('SMS app is not available on your device');
+        } else {
+          return Linking.openURL(smsURL);
+        }
+      })
+      .catch((err) => console.error('An error occurred', err));
+  };
+
   return (
     <View style={styles.wrapper}>
       <View style={styles.bellandback}>
@@ -131,17 +175,18 @@ export default function Profile({ navigation }) {
               style={styles.followpic}
             />
           </Pressable>
-          <Pressable style={styles.linkbox}>
+          <Text>{i18n[locale].aboutUsDesc}</Text>
+          {/* <Pressable style={styles.linkbox}>
             <Text style={styles.headings}>{i18n[locale].faqs}</Text>
             <Image
               source={require("../assets/static/20240228_031624_0027.png")}
               style={styles.followpic}
             />
-          </Pressable>
+          </Pressable> */}
           <Pressable style={styles.linkbox} onPress={signOut}>
             <Text style={styles.signoutbtn}>{i18n[locale].signOut}</Text>
           </Pressable>
-          <Pressable style={styles.rightbox}>
+          <Pressable style={styles.rightbox} onPress={openSMSApp}>
             <Text style={styles.contactbtn}>{i18n[locale].contactUs}</Text>
             <Image
               source={require("../assets/static/20240228_031624_0029.png")}

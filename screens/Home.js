@@ -17,12 +17,33 @@ import axios from "axios";
 import i18n from "../context/i18n";
 
 function Home({ navigation }) {
-  const { locale, getName} = useAuth();
+  const { locale, getToken } = useAuth();
   const [name, setname] = React.useState();
 
   React.useEffect(() => {
-    setname(getName())
+    getProf();
   }, []);
+
+  async function getProf() {
+    try {
+      const token = getToken();
+
+      const response = await axios.get(
+        "https://server.aslahah.com/api/auth/profile",
+
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("User Details:", response.data);
+      setname(response.data.user.name);
+    } catch (error) {
+      console.error("Something went wrong while fetching profile", error.response.data.message );
+      Alert.alert("Something went wrong while fetching profile",error.response.data.message || "Unknown error occurred");
+    }
+  }
 
   return (
     <>
@@ -52,18 +73,21 @@ function Home({ navigation }) {
                   "Incredible service! Quick response time and fixed my leaking faucet in no time. Highly recommend this app for all your plumbing needs!"
                 }
                 reviwer={"Zidaan"}
+                stars={4.7}
               />
               <ReviewCard
                 text={
                   "خدمة إصلاح المصاعد لدينا ممتازة. الفريق محترف ومهني، ويقوم بعمل رائع في تحديد وإصلاح المشكلات بسرعة وفعالية. الآن يعمل المصعد بسلاسة وأمان تام. أنصح بشدة باستخدام خدماتهم."
                 }
                 reviwer={"Furkaan"}
+                stars={4.2}
               />
               <ReviewCard
                 text={
                   "Fantastic carpentry service! The carpenter was skilled and attentive to detail. Built me a beautiful custom wardrobe exactly to my specifications. Will definitelyuseagain!"
                 }
-                reviwer={"Zidaan"}
+                reviwer={"Ayan"}
+                stars={4.4}
               />
             </View>
           </ScrollView>

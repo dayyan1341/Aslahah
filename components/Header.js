@@ -48,10 +48,12 @@ const styles = StyleSheet.create({
   },
   usergreeting: {
     // width:'50%',
+    // maxWidth:'50%',
     fontSize: 30,
     fontWeight: "bold",
-    borderBottomWidth: 2,
-    borderBottomColor: "black",
+    // borderBottomWidth: 2,
+    // borderBottomColor: "black",
+    // flexWrap:'wrap',
   },
   searchbar: {
     width: "70%",

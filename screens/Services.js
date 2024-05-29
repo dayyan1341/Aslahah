@@ -14,11 +14,7 @@ import i18n from "../context/i18n";
 import { useAuth } from "../context/AuthContext";
 
 function Services({ navigation }) {
-  const { locale, getName } = useAuth();
-
-  React.useEffect(
-    () => console.log(getName())
-  )
+  const { locale } = useAuth();
 
   return (
     <View style={styles.wrapper}>

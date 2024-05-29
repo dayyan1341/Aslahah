@@ -49,10 +49,10 @@ export default function Cart({ navigation }) {
       );
       console.log("Orders:", response.data);
       setOrders(response.data.data);
-      fetchStatus(response.data.data[0]["_id"]);
-      setLoading(false);
+      if(response.data.data[0]) fetchStatus(response.data.data[0]["_id"]);
+      
     } catch (error) {
-      setLoading(false);
+     
       console.error(
         "Something went wrong while fetching Orders",
         error.response.data.message
@@ -81,9 +81,9 @@ export default function Cart({ navigation }) {
       setStatus(response.data.booking.bookingStatus);
       console.log(status);
 
-      // setLoading(false);
+      setLoading(false);
     } catch (error) {
-      // setLoading(false);
+      setLoading(false);
       console.error(
         "Something went wrong while fetching Orders",
         error.response.data.message
@@ -136,7 +136,7 @@ export default function Cart({ navigation }) {
       ) : (
         <FlatList
           data={status}
-          ListHeaderComponent={<Text style={styles.headings}>{i18n[locale][orders[0].serviceType]}</Text>}
+          ListHeaderComponent={<Text style={styles.headings}>{orders[0] && (i18n[locale][orders[0].serviceType])}</Text>}
           ListHeaderComponentStyle={{marginBottom:10}}
           ItemSeparatorComponent={<View style={{ marginVertical: 10 }} />}
           ListEmptyComponent={ListEmptyComponent}

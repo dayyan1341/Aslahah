@@ -17,14 +17,14 @@ const Signup = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mobile, setMobile] = useState("");
+  const [loading, setLoading] = useState(false);
   const { locale } = useAuth();
 
-
   const handleSignup = () => {
-    if (name && email && mobile && password) reqSignup();
-    else Alert.alert("Field Empty","Please enter in all the details");
+    if (name && email && mobile && password) {
+      reqSignup();
+    } else Alert.alert("Field Empty", "Please enter in all the details");
   };
-
 
   const reqSignup = async () => {
     // Password validation criteria
@@ -45,7 +45,9 @@ const Signup = ({ navigation }) => {
       );
       return;
     }
+
     try {
+      setLoading(true);
       const response = await axios.post(
         "https://server.aslahah.com/api/auth/register",
         {
@@ -58,10 +60,12 @@ const Signup = ({ navigation }) => {
       console.log("User registered successfully:", response.data);
       if (response.data.user) {
         navigation.navigate("Verify", { email, password });
-      }else {
-        Alert.alert("Something Bad Happened","Please try again later")
+      } else {
+        Alert.alert("Something Bad Happened", "Please try again later");
       }
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       if (error.response) {
         console.error(
           "Failed to register user. Server responded with:",
@@ -143,8 +147,11 @@ const Signup = ({ navigation }) => {
             />
           </View>
 
-          <View style={styles.loginbtn}>
-            <Pressable onPress={handleSignup}>
+          <View style={[styles.loginbtn,{ backgroundColor: loading ? "grey" : "#333341" }]}>
+            <Pressable
+              onPress={handleSignup}
+              disabled={loading}
+            >
               <Text style={styles.loginbtnmsg}>Sign Up</Text>
             </Pressable>
           </View>
@@ -228,6 +235,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#333341",
     verticalAlign: "center",
     marginBottom: 20,
+    paddingEnd:25,
   },
   loginbtnmsg: {
     width: "100%",
