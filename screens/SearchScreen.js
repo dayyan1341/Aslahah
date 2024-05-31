@@ -23,11 +23,9 @@ const servicesData = [
   { name: "Carpentry", img: require("../assets/static/carpentry.png") },
   { name: "Wall Works", img: require("../assets/static/wall_works.png") },
   { name: "Painter", img: require("../assets/static/painter.png") },
-  // { name: "All Services", img: require("../assets/static/all_services.png") },
-  // {
-  //   name: "Become a technician",
-  //   img: require("../assets/static/all_services.png"),
-  // },
+  { name: "Packers and Droppers", img: require("../assets/static/all_services.png") },
+  { name: "Electrician", img: require("../assets/static/electrician.png") },
+  
 ];
 
 const localeMap = {
@@ -37,6 +35,8 @@ const localeMap = {
   Painter: "painter",
   "Wall Works": "wallWorks",
   Plumbing: "plumbing",
+  Electrician:'electrician',
+  "Packers and Droppers":'packersAndDroppers',
 };
 
 const SearchScreen = ({ navigation, route }) => {
@@ -81,7 +81,7 @@ const SearchScreen = ({ navigation, route }) => {
         renderItem={({ item }) => (
           <Pressable
             onPress={() => {
-              navigation.navigate("Description", { service: item.name });
+              navigation.navigate("Description", { service: localeMap[item.name] });
             }}
           >
             <View style={styles.item}>

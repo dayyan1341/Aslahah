@@ -26,7 +26,7 @@ export default function Header(props) {
         </Pressable>
       </View>
       <View style={styles.searchbar}>
-        <Search place={i18n[locale].searchForServices}  />
+        <Search placeholder={i18n[locale].searchForServices}  />
       </View>
     </View>
   );

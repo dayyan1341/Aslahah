@@ -3,12 +3,14 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import { getLocales, addEventListener } from 'expo-localization';
 
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [authToken, setAuthToken] = useState(null);
   const [locale, setLocale] = useState(getLocales()[0].languageCode);
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     checkStoredToken();
@@ -30,6 +32,8 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('Error checking stored token:', error);
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -60,7 +64,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, signIn, signOut, getToken , locale, setLocale }}>
+    <AuthContext.Provider value={{ isLoggedIn, signIn, signOut, getToken , locale, setLocale , loading}}>
       {children}
     </AuthContext.Provider>
   );

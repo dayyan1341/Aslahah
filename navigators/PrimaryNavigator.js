@@ -16,14 +16,16 @@ import Notifications from "../screens/Notifications";
 import ForgotPass from "../screens/ForgotPass"
 import SearchScreen from "../screens/SearchScreen";
 import OrderStatus from "../screens/OrderStatus"
+import SplashScreen from "../screens/SplashScreen";
 
 
 const Stack = createNativeStackNavigator();
 
 export default function PrimaryNavigator() {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, loading } = useAuth();
   
-
+  if (loading) return <SplashScreen/>
+  
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>

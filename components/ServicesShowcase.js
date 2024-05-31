@@ -20,7 +20,7 @@ export default function ServicesShowcase() {
         <View style={styles.servicebox}>
           <Pressable
             onPress={() => {
-              navigation.navigate("Description", { service: "AC Repairing" });
+              navigation.navigate("Description", { service: "acRepairing" });
             }}
           >
             <View style={styles.serviceimg}>
@@ -36,7 +36,7 @@ export default function ServicesShowcase() {
         <View style={styles.servicebox}>
         <Pressable
             onPress={() => {
-              navigation.navigate("Description", { service: "Carpentry" });
+              navigation.navigate("Description", { service: "carpentry" });
             }}
           >
           <View style={styles.serviceimg}>
@@ -52,7 +52,7 @@ export default function ServicesShowcase() {
         <View style={styles.servicebox}>
         <Pressable
             onPress={() => {
-              navigation.navigate("Description", { service: "Plumbing" });
+              navigation.navigate("Description", { service: "plumbing" });
             }}
           >
           <View style={styles.serviceimg}>
@@ -68,7 +68,7 @@ export default function ServicesShowcase() {
         <View style={styles.servicebox}>
         <Pressable
             onPress={() => {
-              navigation.navigate("Description", { service: "Painter" });
+              navigation.navigate("Description", { service: "painter" });
             }}
           >
           <View style={styles.serviceimg}>
@@ -84,7 +84,7 @@ export default function ServicesShowcase() {
         <View style={styles.servicebox}>
         <Pressable
             onPress={() => {
-              navigation.navigate("Description", { service: "Lift Repairing" });
+              navigation.navigate("Description", { service: "liftRepairing" });
             }}
           >
           <View style={styles.serviceimg}>
@@ -100,17 +100,17 @@ export default function ServicesShowcase() {
         <View style={styles.servicebox}>
         <Pressable
             onPress={() => {
-              navigation.navigate("Description", { service: "Wall Works" });
+              navigation.navigate("Services");
             }}
           >
           <View style={styles.serviceimg}>
             <Image
-              source={require("../assets/static/20240221_000353_0014.png")}
+              source={require("../assets/static/dotdotdot.png")}
               style={styles.img}
             />
           </View>
           </Pressable>
-          <Text style={styles.service}>{i18n[locale].wallWorks}</Text>
+          <Text style={styles.service}>{i18n[locale].more}</Text>
         </View>
       </View>
     </ScrollView>

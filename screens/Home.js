@@ -57,7 +57,7 @@ function Home({ navigation }) {
               {i18n[locale].whatOurClientsSay}
             </Text>
             <Image
-              source={require("../assets/static/20240221_000353_0016.png")}
+              source={require("../assets/static/dotdotdot.png")}
               style={styles.tripledot}
             />
           </View>

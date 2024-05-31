@@ -20,7 +20,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/static/logo.png",
+        "foregroundImage": "./assets/static/icon_aslahah.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.furkan.Aslahah"

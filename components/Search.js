@@ -13,9 +13,9 @@ export default function Search(props) {
         style={styles.input}
         onChangeText={onChangeText}
         value={text}
-        placeholder={props.place}
+        placeholder={props.placeholder}
       />
-      <Pressable onPress={()=> navigation.navigate("Search",{searchParam:text,place:props.place})}>
+      <Pressable onPress={()=> navigation.navigate("Search",{searchParam:text,placeholder:props.placeholder})}>
       <Image
         source={require("../assets/static/20240221_000353_0008.png")}
         style={styles.searchimg}
