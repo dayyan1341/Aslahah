@@ -6,6 +6,7 @@ import {
   View,
   ScrollView,
   FlatList,
+  ActivityIndicator,
 } from "react-native";
 import CartItem from "../components/CartItem";
 import React, { useEffect, useState } from "react";
@@ -16,13 +17,11 @@ import imageMap from "../context/technicianCartoons";
 import formatDate from "../context/formatDate";
 import formatTime from "../context/formatTime";
 
-
-
 export default function Cart({ navigation }) {
   const [orders, setOrders] = useState([]);
   const [status, setStatus] = useState([]);
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const { getToken, locale } = useAuth();
 
@@ -36,6 +35,7 @@ export default function Cart({ navigation }) {
 
   const fetchOrders = async () => {
     try {
+      setLoading(true);
       const token = getToken();
 
       const response = await axios.get(
@@ -49,10 +49,10 @@ export default function Cart({ navigation }) {
       );
       console.log("Orders:", response.data);
       setOrders(response.data.data);
-      if(response.data.data[0]) fetchStatus(response.data.data[0]["_id"]);
-      
+      if (response.data.data[0]) fetchStatus(response.data.data[0]["_id"]);
+      else setLoading(false);
     } catch (error) {
-     
+      setLoading(false);
       console.error(
         "Something went wrong while fetching Orders",
         error.response.data.message
@@ -77,11 +77,10 @@ export default function Cart({ navigation }) {
           },
         }
       );
+      setLoading(false);
       console.log("this order:", response.data);
       setStatus(response.data.booking.bookingStatus);
       console.log(status);
-
-      setLoading(false);
     } catch (error) {
       setLoading(false);
       console.error(
@@ -129,26 +128,33 @@ export default function Cart({ navigation }) {
       </View>
 
       <View style={[styles.box, styles.white]}>
-      {loading ? (
-        <View style={styles.container}>
-          <Text>{i18n[locale].loading}</Text>
-        </View>
-      ) : (
-        <FlatList
-          data={status}
-          ListHeaderComponent={<Text style={styles.headings}>{orders[0] && (i18n[locale][orders[0].serviceType])}</Text>}
-          ListHeaderComponentStyle={{marginBottom:10}}
-          ItemSeparatorComponent={<View style={{ marginVertical: 10 }} />}
-          ListEmptyComponent={ListEmptyComponent}
-          renderItem={({ item }) => (
-            <View
-              style={styles.orderStatus}
-            >
-              <Text style={{ fontWeight: "bold" }}>{item.status}</Text>
-              <Text>Time : {formatTime(new Date(item.updatedAt))} on {formatDate(new Date(item.updatedAt)) }</Text>
-            </View>
-          )}
-        />)}
+        {loading ? (
+          <View >
+            <ActivityIndicator size="large" color="#00e9f1" />
+          </View>
+        ) : (
+          <FlatList
+            data={status}
+            ListHeaderComponent={
+              <Text style={styles.headings}>
+                {orders[0] && i18n[locale][orders[0].serviceType]}
+              </Text>
+            }
+            ListHeaderComponentStyle={{ marginBottom: 10 }}
+            ItemSeparatorComponent={<View style={{ marginVertical: 10 }} />}
+            ListEmptyComponent={ListEmptyComponent}
+            refre
+            renderItem={({ item }) => (
+              <View style={styles.orderStatus}>
+                <Text style={{ fontWeight: "bold" }}>{item.status}</Text>
+                <Text>
+                  Time : {formatTime(new Date(item.updatedAt))} on{" "}
+                  {formatDate(new Date(item.updatedAt))}
+                </Text>
+              </View>
+            )}
+          />
+        )}
 
         {/* <FlatList
           data={orders}
@@ -203,7 +209,7 @@ const styles = StyleSheet.create({
     height: 60,
     width: 60,
   },
-  orderStatus:{
+  orderStatus: {
     position: "relative",
     backgroundColor: "#00e9f1",
     // width: screen.width * 0.9,

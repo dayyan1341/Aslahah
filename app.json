@@ -4,7 +4,7 @@
     "slug": "Aslahah",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/static/logo1.png",
+    "icon": "./assets/static/logo_blue.png",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/static/logo.png",

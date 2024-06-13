@@ -23,7 +23,7 @@ const Signup = ({ navigation }) => {
   const handleSignup = () => {
     if (name && email && mobile && password) {
       reqSignup();
-    } else Alert.alert("Field Empty", "Please enter in all the details");
+    } else Alert.alert(i18n[locale].fieldEmpty, "Please enter in all the details");
   };
 
   const reqSignup = async () => {
@@ -39,10 +39,7 @@ const Signup = ({ navigation }) => {
       !numberRegex.test(password) ||
       !specialCharRegex.test(password)
     ) {
-      Alert.alert(
-        "Weak Password",
-        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character."
-      );
+      Alert.alert(i18n[locale].weakPassword, i18n[locale].weakPassword);
       return;
     }
 
@@ -61,7 +58,7 @@ const Signup = ({ navigation }) => {
       if (response.data.user) {
         navigation.navigate("Verify", { email, password });
       } else {
-        Alert.alert("Something Bad Happened", "Please try again later");
+        Alert.alert(i18n[locale].somethingBadHappened, i18n[locale].somethingBadHappened);
       }
       setLoading(false);
     } catch (error) {
@@ -73,20 +70,20 @@ const Signup = ({ navigation }) => {
         );
         console.error("Status code:", error.response.status);
         Alert.alert(
-          "Failed to register user",
-          error.response.data.message || "Unknown error occurred"
+          i18n[locale].failedToRegisterUser,
+          error.response.data.message || i18n[locale].unknownErrorOccurred
         );
       } else if (error.request) {
         console.error(
           "Failed to register user. No response received from server."
         );
         Alert.alert(
-          "Failed to register user",
-          "No response received from server"
+          i18n[locale].failedToRegisterUser,
+          i18n[locale].noResponseReceived
         );
       } else {
         console.error("Failed to register user. Error:", error.message);
-        Alert.alert("Failed to register user", error.message);
+        Alert.alert(i18n[locale].failedToRegisterUser, error.message);
       }
     }
   };
@@ -105,41 +102,41 @@ const Signup = ({ navigation }) => {
       </View>
       <View style={styles.wrapper}>
         <View style={styles.greeting}>
-          <Text style={styles.greetingmsg}>Register to</Text>
-          <Text style={styles.greetingmsg}>AS-LAHAH</Text>
+          <Text style={styles.greetingmsg}>{i18n[locale].registerTo}</Text>
+          {/* <Text style={styles.greetingmsg}>As-lahah</Text> */}
         </View>
 
         <View style={styles.loginForm}>
-          <Text style={styles.detailinfo}>Please enter details</Text>
+          <Text style={styles.detailinfo}>{i18n[locale].pleaseEnterDetails}</Text>
           <View style={styles.inputbox}>
-            <Text>Name : </Text>
+            <Text>{i18n[locale].name} : </Text>
             <TextInput
-              placeholder="Name"
+              // placeholder={i18n[locale].name}
               value={name}
               onChangeText={(text) => setName(text)}
               style={styles.input}
             />
-            <Text>Email : </Text>
+            <Text>{i18n[locale].email} : </Text>
 
             <TextInput
-              placeholder="Email"
+              // placeholder={i18n[locale].email}
+              keyboardType="email-address"
               value={email}
               onChangeText={(text) => setEmail(text)}
               style={styles.input}
             />
-            <Text>Password : </Text>
+            <Text>{i18n[locale].password} : </Text>
 
             <TextInput
-              placeholder="Password"
+              // placeholder={i18n[locale].password}
               value={password}
               onChangeText={(text) => setPassword(text)}
               secureTextEntry={true}
               style={styles.input}
             />
-            <Text>Mobile Number : </Text>
-
+            <Text>{i18n[locale].phone} : </Text>
             <TextInput
-              placeholder="Mobile Number"
+              // placeholder={i18n[locale].mobileNumber}
               value={mobile}
               onChangeText={(text) => setMobile(text)}
               keyboardType="phone-pad"
@@ -152,7 +149,7 @@ const Signup = ({ navigation }) => {
               onPress={handleSignup}
               disabled={loading}
             >
-              <Text style={styles.loginbtnmsg}>Sign Up</Text>
+              <Text style={styles.loginbtnmsg}>{i18n[locale].signUp}</Text>
             </Pressable>
           </View>
         </View>

@@ -6,6 +6,7 @@ import {
   Image,
   Dimensions,
   ScrollView,
+  useWindowDimensions,
 } from "react-native";
 import React from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -15,11 +16,13 @@ import expertise from "../context/expertise";
 import serviceBanners from "../context/serviceBanners";
 import i18n from "../context/i18n";
 import { useAuth } from "../context/AuthContext";
+import RenderHTML from "react-native-render-html";
 
 export default function ServiceDesc({ route, navigation }) {
   const ins = useSafeAreaInsets();
   const { service } = route.params;
   const { locale } = useAuth()
+  const { width } = useWindowDimensions();
 
   const desc = details[service][locale];
   const exp = expertise[service][locale];
@@ -46,7 +49,7 @@ export default function ServiceDesc({ route, navigation }) {
           <Text style={[styles.headings, { marginTop: 20 }]}>
             {i18n[locale]["ourExpertise"]}
           </Text>
-          <Text style={styles.description}>{exp}</Text>
+          <RenderHTML contentWidth={width-10} source={{ html: exp }} />
         </View>
         {/* <View style={styles.box}>
           <Text style={styles.headings}>Our Expertise:</Text>

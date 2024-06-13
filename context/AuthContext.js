@@ -14,14 +14,14 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     checkStoredToken();
-    
-    if(locale !=  'ar') setLocale('en')
-    console.log(locale)
+    handleLocalesChange()
   }, []); 
   
-  // const handleLocalesChange = () => {
-  //   setLocale(getLocales()[0].languageCode);
-  // };
+  const handleLocalesChange = () => {
+    setLocale(getLocales()[0].languageCode);
+    if(locale !=  'ar') setLocale('en')
+    console.log(locale)
+  };
   
   const checkStoredToken = async () => {
     try {

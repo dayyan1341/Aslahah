@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Image,
   Pressable,
+  ActivityIndicator,
 } from "react-native";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
@@ -19,10 +20,14 @@ const PrevOrders = ({ navigation }) => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const { getToken,locale } = useAuth();
+  const { getToken, locale } = useAuth();
 
   useEffect(() => {
-    fetchOrders();
+    const unsubscribe = navigation.addListener("focus", () => {
+      fetchOrders();
+    });
+
+    return unsubscribe;
   }, []);
 
   const fetchOrders = async () => {
@@ -43,20 +48,17 @@ const PrevOrders = ({ navigation }) => {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      console.error("Something went wrong while fetching Orders", error.response.data.message );
-      Alert.alert("Something went wrong while fetching Orders",error.response.data.message || "Unknown error occurred");
+      console.error(
+        "Something went wrong while fetching Orders",
+        error.response.data.message
+      );
+      Alert.alert(
+        "Something went wrong while fetching Orders",
+        error.response.data.message || "Unknown error occurred"
+      );
       navigation.navigate("Cart");
     }
   };
-
-  // const imageMap = {
-  //   "AC Repairing": require("../assets/static/ac_repairing.png"),
-  //   "Lift Reapiring": require("../assets/static/lift_repairing.png"),
-  //   Carpentry: require("../assets/static/carpentry.png"),
-  //   Painter: require("../assets/static/painter.png"),
-  //   "Wall Works": require("../assets/static/wall_works.png"),
-  //   Plumbing: require("../assets/static/plumbing.png"),
-  // };
 
   const ListEmptyComponent = () => (
     <View style={styles.buzz}>
@@ -77,9 +79,7 @@ const PrevOrders = ({ navigation }) => {
       </View>
       <Text style={styles.headings}>{i18n[locale].currentOrders} :</Text>
       {loading ? (
-        <View style={styles.container}>
-          <Text>{i18n[locale].loading}</Text>
-        </View>
+        <ActivityIndicator size="large" color="#00e9f1" />
       ) : (
         <View style={styles.container}>
           <FlatList
@@ -89,11 +89,11 @@ const PrevOrders = ({ navigation }) => {
             ItemSeparatorComponent={<View style={{ marginVertical: 10 }} />}
             renderItem={({ item }) => (
               <CartItem
-              id={item._id}
-              name={item.serviceType}
-              img={imageMap[item.serviceType]}
-              status={item.bookingStatus}
-            />
+                id={item._id}
+                name={item.serviceType}
+                img={imageMap[item.serviceType]}
+                status={item.bookingStatus}
+              />
             )}
           />
         </View>

@@ -9,26 +9,33 @@ import {
   Alert,
 } from "react-native";
 import axios from "axios";
+import { useAuth } from "../context/AuthContext";
+import i18n from "../context/i18n";
 
 const ForgotPass = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [pass, setPass] = useState("");
   const [otp, setOtp] = useState();
+  const [lod1 , setLod1 ] = useState(false);
+  const [lod2 , setLod2 ] = useState(false);
+
+  const {locale} = useAuth()
 
   const handleForgotPassword = async () => {
     if (!email) {
-      Alert.alert("Enter email", "Please enter your registered email");
+      Alert.alert(i18n[locale]["Enter email"], i18n[locale]["Please enter your registered email"]);
       return;
     }
     try {
+      setLod1(true)
       const response = await axios.post(
         "https://server.aslahah.com/api/auth/forgot-password",
         {
           email: email,
         }
       );
-      console.log("Otp sent:", response.data);
+      console.log(i18n[locale]["Otp sent"], response.data);
       setOtpSent(true);
     } catch (error) {
       if (error.response) {
@@ -38,25 +45,28 @@ const ForgotPass = ({ navigation }) => {
         );
         console.error("Status code:", error.response.status);
         Alert.alert(
-          "Failed to send otp",
-          error.response.data.message || "Unknown error occurred"
+          i18n[locale]["Failed to send otp"],
+          error.response.data.message || i18n[locale]["Unknown error occurred"]
         );
       } else if (error.request) {
         console.error("Failed to send otp. No response received from server.");
-        Alert.alert("Failed to send otp", "No response received from server");
+        Alert.alert(i18n[locale]["Failed to send otp"], i18n[locale]["No response received from server"]);
       } else {
         console.error("Failed to send otp. Error:", error.message);
-        Alert.alert("Failed to send otp", error.message);
+        Alert.alert(i18n[locale]["Failed to send otp"], error.message);
       }
+    } finally {
+      setLod1(false)
     }
   };
 
   const handleVerifyOtp = async () => {
     if (!otp) {
-      Alert.alert("Otp Missing", "Please enter the sent Otp");
+      Alert.alert(i18n[locale]["Otp Missing"], i18n[locale]["Please enter the sent Otp"]);
       return;
     }
     try {
+      setLod2(true)
       const response = await axios.post(
         "https://server.aslahah.com/api/auth/reset-password",
         {
@@ -69,31 +79,33 @@ const ForgotPass = ({ navigation }) => {
 
       if (response.data.message == "Password reset successfully") {
         Alert.alert(
-          "Password reset succesfull",
-          "Please login with your new password"
+          i18n[locale]["Password reset succesfull"],
+          i18n[locale]["Please login with your new password"]
         );
       } else {
-        Alert.alert("Please try again", "Something went wrong");
+        Alert.alert(i18n[locale]["Please try again"], i18n[locale]["Something went wrong"]);
       }
       navigation.navigate("Login");
     } catch (error) {
       if (error.response) {
         console.error(
-          "Failed to send otp. Server responded with:",
+          "Failed to change password. Server responded with:",
           error.response.data
         );
         console.error("Status code:", error.response.status);
         Alert.alert(
-          "Failed to send otp",
-          error.response.data.message || "Unknown error occurred"
+          i18n[locale]["Failed to change password"],
+          error.response.data.message || i18n[locale]["Unknown error occurred"]
         );
       } else if (error.request) {
-        console.error("Failed to send otp. No response received from server.");
-        Alert.alert("Failed to send otp", "No response received from server");
+        console.error("Failed to change password. No response received from server.");
+        Alert.alert(i18n[locale]["Failed to change password"], i18n[locale]["No response received from server"]);
       } else {
-        console.error("Failed to send otp. Error:", error.message);
-        Alert.alert("Failed to send otp", error.message);
+        console.error("Failed to change password. Error:", error.message);
+        Alert.alert(i18n[locale]["Failed to change password"], error.message);
       }
+    } finally {
+      setLod2(false)
     }
   };
 
@@ -101,8 +113,8 @@ const ForgotPass = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.topright}>
         <View style={styles.toprightwrapper}>
-          <Text style={styles.toprightmsg}>Repairing at</Text>
-          <Text style={styles.toprightmsg}>your doorstep</Text>
+          <Text style={styles.toprightmsg}>{i18n[locale]["Repairing at"]}</Text>
+          <Text style={styles.toprightmsg}>{i18n[locale]["your doorstep"]}</Text>
         </View>
         <Image
           source={require("../assets/static/20240221_000353_0005.png")}
@@ -111,15 +123,15 @@ const ForgotPass = ({ navigation }) => {
       </View>
       <View style={styles.wrapper}>
         <View style={styles.greeting}>
-          <Text style={styles.greetingmsg}>Forgot Your Pass</Text>
-          <Text style={styles.greetingmsg}>Don't Worry</Text>
+          <Text style={styles.greetingmsg}>{i18n[locale]["Forgot Your Pass"]}</Text>
+          <Text style={styles.greetingmsg}>{i18n[locale]["Don't Worry"]}</Text>
         </View>
 
         <View style={styles.loginForm}>
-          <Text style={styles.detailinfo}>Please enter Email</Text>
+          <Text style={styles.detailinfo}>{i18n[locale]["Please enter Email"]}</Text>
           <View style={styles.inputbox}>
             <TextInput
-              placeholder="Email"
+              placeholder={i18n[locale].Email}
               value={email}
               onChangeText={(text) => setEmail(text)}
               style={styles.input}
@@ -128,13 +140,13 @@ const ForgotPass = ({ navigation }) => {
             {otpSent && (
               <>
                 <TextInput
-                  placeholder="Otp"
+                  placeholder={i18n[locale].Otp}
                   value={otp}
                   onChangeText={setOtp}
                   style={styles.input}
                 />
                 <TextInput
-                  placeholder="New Password"
+                  placeholder={i18n[locale]["New Password"]}
                   value={pass}
                   onChangeText={setPass}
                   style={styles.input}
@@ -145,12 +157,12 @@ const ForgotPass = ({ navigation }) => {
 
           <View style={styles.loginbtn}>
             {otpSent ? (
-              <Pressable onPress={handleVerifyOtp}>
-                <Text style={styles.loginbtnmsg}>Verify Otp</Text>
+              <Pressable onPress={handleVerifyOtp} disabled={lod2}>
+                <Text style={styles.loginbtnmsg}>{i18n[locale]["Verify Otp"]}</Text>
               </Pressable>
             ) : (
-              <Pressable onPress={handleForgotPassword}>
-                <Text style={styles.loginbtnmsg}>Send Otp</Text>
+              <Pressable onPress={handleForgotPassword} disabled={lod1}>
+                <Text style={styles.loginbtnmsg}>{i18n[locale]["Send Otp"]}</Text>
               </Pressable>
             )}
           </View>

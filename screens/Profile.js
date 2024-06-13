@@ -51,20 +51,15 @@ export default function Profile({ navigation }) {
     }
   }
 
-  const phoneNumber = '69390766';
+  const phoneNumber = '96569390766';
 
-  const openWhatsApp = () => {
+  const openWhatsApp = async () => {
     const whatsappURL = `whatsapp://send?phone=${phoneNumber}`;
-
-    Linking.canOpenURL(whatsappURL)
-      .then((supported) => {
-        if (!supported) {
-          askToSendSMS();
-        } else {
-          return Linking.openURL(whatsappURL);
-        }
-      })
-      .catch((err) => console.error('An error occurred', err));
+    try{
+      await Linking.openURL(whatsappURL);
+    } catch {
+      askToSendSMS()
+    }
   };
 
   const askToSendSMS = () => {
@@ -85,7 +80,7 @@ export default function Profile({ navigation }) {
     Linking.canOpenURL(smsURL)
       .then((supported) => {
         if (!supported) {
-          Alert.alert('SMS app is not available on your device');
+          Alert.alert('Something bad happened','We will try to fix it as soon as we can');
         } else {
           return Linking.openURL(smsURL);
         }
@@ -186,7 +181,7 @@ export default function Profile({ navigation }) {
           <Pressable style={styles.linkbox} onPress={signOut}>
             <Text style={styles.signoutbtn}>{i18n[locale].signOut}</Text>
           </Pressable>
-          <Pressable style={styles.rightbox} onPress={openSMSApp}>
+          <Pressable style={styles.rightbox} onPress={openWhatsApp}>
             <Text style={styles.contactbtn}>{i18n[locale].contactUs}</Text>
             <Image
               source={require("../assets/static/20240228_031624_0029.png")}

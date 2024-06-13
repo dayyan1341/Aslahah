@@ -13,6 +13,7 @@ import { useAuth } from "../context/AuthContext";
 const VerifyOtp = ({ navigation, route }) => {
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
+  const [resLoading, setResLoading] = useState(false);
   const { email, password, forgot } = route.params;
 
   const { signIn } = useAuth();
@@ -63,6 +64,7 @@ const VerifyOtp = ({ navigation, route }) => {
 
   const resendOtp = async () => {
     try {
+      setResLoading(true);
       const response = await axios.post(
         "https://server.aslahah.com/api/auth/resend-otp",
         {
@@ -71,7 +73,9 @@ const VerifyOtp = ({ navigation, route }) => {
       );
       console.log("OTP Resent successfully:", response.data);
       Alert.alert("Otp Resent Successfully", "Please enter the new otp");
+      setResLoading(false);
     } catch (error) {
+      setResLoading(false);
       console.error("Failed to verify OTP:", error.response.data);
       Alert.alert(
         "Failed to verify OTP",
@@ -91,11 +95,21 @@ const VerifyOtp = ({ navigation, route }) => {
         keyboardType="numeric"
       />
       <View style={styles.btns}>
-        <Pressable style={styles.button} onPress={resendOtp}>
+        <Pressable
+          style={[
+            styles.button,
+            { backgroundColor: resLoading ? "grey" : "#333341" },
+          ]}
+          disabled={loading}
+          onPress={resendOtp}
+        >
           <Text style={styles.buttonText}>Resend</Text>
         </Pressable>
         <Pressable
-          style={[styles.button,{ backgroundColor: loading ? "grey" : "#333341" }]}
+          style={[
+            styles.button,
+            { backgroundColor: loading ? "grey" : "#333341" },
+          ]}
           onPress={handleVerify}
           disabled={loading}
         >

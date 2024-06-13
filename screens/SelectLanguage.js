@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import { View, Text, Image, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../context/AuthContext'; 
+import i18n from '../context/i18n';
 export default function SelectLanguage() {
   const navigation = useNavigation();
-  const { setLocale } = useAuth(); 
+  const { locale, setLocale } = useAuth(); 
 
   const handleLocaleSelection = (locale) => {
     setLocale(locale);
@@ -21,7 +22,7 @@ export default function SelectLanguage() {
       </View>
       <View style={styles.box}>
         <Text style={{ fontSize: 25, fontWeight: "bold", opacity: 1 }}>
-          Select your language
+          {i18n[locale].selectLanguage}
         </Text>
       </View>
 
@@ -30,7 +31,7 @@ export default function SelectLanguage() {
         style={styles.btn}
         onPress={() => navigation.navigate('Login') } 
       >
-        <Text style={styles.btnText}>Device (auto detect)</Text>
+        <Text style={styles.btnText}>{i18n[locale].deviceAutoDetect}</Text>
       </Pressable>
       <Pressable
         android_ripple={{ color: "#eee", radius: 60 }}
@@ -44,7 +45,7 @@ export default function SelectLanguage() {
         style={styles.btn}
         onPress={() => handleLocaleSelection('ar')}
       >
-        <Text style={styles.btnText}>Arabic</Text>
+        <Text style={styles.btnText}>العربية</Text>
       </Pressable>
     </View>
   );

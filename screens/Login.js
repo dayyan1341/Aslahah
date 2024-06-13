@@ -6,8 +6,9 @@ import {
   Pressable,
   View,
   Alert,
+  Keyboard,
 } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import * as SecureStore from "expo-secure-store";
 import i18n from "../context/i18n";
 import BlinkerText from "../components/BilnkerText";
@@ -19,6 +20,29 @@ export default function Login({ navigation }) {
   const [password, setPassword] = useState("");
   const [fieldEmpty, setFieldEmpty] = useState();
   const [loading, setLoading] = useState(false);
+
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardVisible(true); // or any other logic you want when the keyboard is shown
+      }
+    );
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false); // or any other logic you want when the keyboard is hidden
+      }
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
 
   const { signIn, locale } = useAuth();
 
@@ -99,19 +123,21 @@ export default function Login({ navigation }) {
             {i18n[locale].pleaseEnterDetails}
           </Text>
           <View style={styles.inputbox}>
+          <Text>{i18n[locale].email} : </Text>
             <TextInput
               style={styles.input}
-              placeholder={i18n[locale].email}
+              // placeholder={i18n[locale].email}
               onChangeText={handlePhoneText}
               value={phoneNumber}
               keyboardType="email-address"
             />
             {fieldEmpty && (
-              <Text style={styles.error}>Please enter a phone number</Text>
+              <Text style={styles.error}>{i18n[locale].pleaseEnterPhoneNumber}</Text>
             )}
+            <Text>{i18n[locale].password} : </Text>
             <TextInput
               style={styles.input}
-              placeholder={i18n[locale].password}
+              // placeholder={i18n[locale].password}
               onChangeText={setPassword}
               value={password}
               secureTextEntry={true}
@@ -132,19 +158,18 @@ export default function Login({ navigation }) {
             </Pressable>
           </View>
 
-          <View style={styles.loginbtn}>
+          <View style={[styles.loginbtn,{ backgroundColor: loading?'grey':'#333341' }]}>
             <Pressable
-              style={{ backgroundColor: loading?'grey':'#333341' }}
-              onPress={handleLogin}
               android_ripple
               disabled={loading}
+              onPress={handleLogin}
             >
               <Text style={styles.loginbtnmsg}>{i18n[locale].loginButton}</Text>
             </Pressable>
           </View>
         </View>
       </View>
-      <View style={styles.signupbtn}>
+      <View style={[styles.signupbtn,{ display: keyboardVisible?'none':'flex' }]}>
         <Pressable onPress={() => navigation.navigate("SignUp")}>
           <Text>
             {i18n[locale].dontHaveAccount}

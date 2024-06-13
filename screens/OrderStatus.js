@@ -6,6 +6,7 @@ import {
   View,
   ScrollView,
   FlatList,
+  ActivityIndicator,
 } from "react-native";
 import CartItem from "../components/CartItem";
 import React, { useEffect, useState } from "react";
@@ -19,14 +20,14 @@ export default function OrderStatus({ route, navigation }) {
   const [order, setOrder] = useState([]);
   const [status, setStatus] = useState([]);
 
-  const { id , name } = route.params;
+  const { id, name } = route.params;
 
   const [loading, setLoading] = useState(true);
 
-  const { getToken ,locale } = useAuth();
+  const { getToken, locale } = useAuth();
 
   useEffect(() => {
-    fetchStatus(id)
+    fetchStatus(id);
   }, []);
 
   const fetchStatus = async (id) => {
@@ -44,7 +45,7 @@ export default function OrderStatus({ route, navigation }) {
       );
       console.log("this order:", response.data);
       setStatus(response.data.booking.bookingStatus);
-      setOrder(response.data.booking)
+      setOrder(response.data.booking);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -82,25 +83,25 @@ export default function OrderStatus({ route, navigation }) {
       </View>
 
       <View style={[styles.summaryBox, styles.primary]}>
-            <View style={styles.infobox}>
-              <Text style={styles.infohead}>{i18n[locale].address}</Text>
-              <Text style={styles.info}>{order.address}</Text>
-              <Text style={styles.infohead}>{i18n[locale].contactNumber}</Text>
-              <Text style={styles.info}>{order.contactNumber}</Text>
-              <Text style={styles.infohead}>Preferred Time</Text>
-              <Text style={styles.info}>{order.preferredTime}</Text>
-            </View>
-          </View>
+        <View style={styles.infobox}>
+          <Text style={styles.infohead}>{i18n[locale].address}</Text>
+          <Text style={styles.info}>{order.address}</Text>
+          <Text style={styles.infohead}>{i18n[locale].contactNumber}</Text>
+          <Text style={styles.info}>{order.contactNumber}</Text>
+          <Text style={styles.infohead}>Preferred Time</Text>
+          <Text style={styles.info}>{order.preferredTime}</Text>
+        </View>
+      </View>
       <View style={[styles.box, styles.white]}>
         {loading ? (
-          <View style={styles.container}>
-            <Text>{i18n[locale].loading}</Text>
-          </View>
+          <ActivityIndicator size="large" color="#00e9f1" />
         ) : (
           <FlatList
             data={status}
-            ListHeaderComponent={<Text style={styles.headings}>{i18n[locale][name]}</Text>}
-            ListHeaderComponentStyle={{marginBottom:10}}
+            ListHeaderComponent={
+              <Text style={styles.headings}>{i18n[locale][name]}</Text>
+            }
+            ListHeaderComponentStyle={{ marginBottom: 10 }}
             ItemSeparatorComponent={<View style={{ marginVertical: 10 }} />}
             ListEmptyComponent={ListEmptyComponent}
             renderItem={({ item }) => (
@@ -114,8 +115,6 @@ export default function OrderStatus({ route, navigation }) {
             )}
           />
         )}
-
-       
       </View>
     </View>
   );
@@ -138,7 +137,7 @@ const styles = StyleSheet.create({
     height: 60,
     width: 60,
   },
-  orderStatus:{
+  orderStatus: {
     position: "relative",
     backgroundColor: "#00e9f1",
     // width: screen.width * 0.9,

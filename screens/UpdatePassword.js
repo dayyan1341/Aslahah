@@ -72,14 +72,14 @@ export default function UpdatePassword({ navigation, route }) {
             <Text>Current Password</Text>
             <TextInput
               style={styles.input}
-              placeholder="New Password"
+              placeholder="Old Password"
               onChangeText={setOldpass}
               value={oldPass}
             />
             <Text>New Password</Text>
             <TextInput
               style={styles.input}
-              placeholder="Confirm Password"
+              placeholder="New Password"
               onChangeText={setPass}
               value={pass}
             />
